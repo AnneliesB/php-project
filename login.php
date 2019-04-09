@@ -1,17 +1,23 @@
 <?php
 if (!empty($_POST)) {
     $config = parse_ini_file("config/config.ini");
-    $conn = new PDO("mysql:host=localhost;dbname=".$config['db_name'], $config['db_user'], $config['db_password']);
-    $email=$_POST['email'];
-    $password=$_POST['password'];
+    $conn = new PDO("mysql:host=localhost;dbname=" . $config['db_name'], $config['db_user'], $config['db_password']);
+        /**
+         * htmlspecialchars prevents the abuse of html tags in the input fields
+         * the tags included will be transformed into text instead and will be part of the input
+         */
+    $email = htmlspecialchars($_POST['email']);
+    $password = htmlspecialchars($_POST['password']);
 
     $statement = $conn->prepare("select * from user where email = :email");
-    $statement->bindParam(":email", $email);
+    $statement->bindParam(":email", $email); # the email parameter is bound to :email to prevent sql-injection
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
-    if(password_verify($password, $user['password'])){
-        header ("Location: index.php");
+    if (password_verify($password, $user['password'])) {
+        session_start();
+        $_SESSION['imdstagram'] = true;
+        header("Location: index.php");
     } else {
         $error = true;
     }
