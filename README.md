@@ -10,3 +10,7 @@
 
 ## functions
 * camelcase: setFirstname
+
+## branch names
+* mention which feature the branch belongs to
+* also include some info on what the feature is about
