@@ -2,10 +2,10 @@
 if (!empty($_POST)) {
     $config = parse_ini_file("config/config.ini");
     $conn = new PDO("mysql:host=localhost;dbname=" . $config['db_name'], $config['db_user'], $config['db_password']);
-        /**
-         * htmlspecialchars prevents the abuse of html tags in the input fields
-         * the tags included will be transformed into text instead and will be part of the input
-         */
+    /**
+     * htmlspecialchars prevents the abuse of html tags in the input fields
+     * the tags included will be transformed into text instead and will be part of the input
+     */
     $email = htmlspecialchars($_POST['email']);
     $password = htmlspecialchars($_POST['password']);
 
@@ -30,6 +30,8 @@ if (!empty($_POST)) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
     <title>IMDSTAGRAM - login</title>
 </head>
 <body>
@@ -37,7 +39,7 @@ if (!empty($_POST)) {
 <div class="login">
     <div class="form formLogin">
         <form action="" method="post">
-            <h2 class="formTitle">Sign In</h2>
+            <h2 class="formTitle">Login</h2>
 
             <?php if (isset($error)): ?>
                 <div class="formError">
@@ -46,21 +48,23 @@ if (!empty($_POST)) {
                     </p>
                 </div>
             <?php endif; ?>
+            <div class="formInput">
+                <div class="formField">
+                    <label for="email">Email</label>
+                    <input type="text" name="email">
+                </div>
+                <div class="formField">
+                    <label for="password">Password</label>
+                    <input type="password" name="password">
+                </div>
 
-            <div class="formField">
-                <label for="email">Email</label>
-                <input type="text" name="email">
-            </div>
-            <div class="formField">
-                <label for="password">Password</label>
-                <input type="password" name="password">
-            </div>
-            <div class="formField">
-                <input type="submit" value="Sign In" class="btn btnPrimary">
-                <input type="checkbox" id="rememberMe"><label for="rememberMe" class="labelInline">Remember me</label>
+                <div class="formField">
+                    <input type="submit" value="login" class="btn btnPrimary">
+                    <!--                <input type="checkbox" id="rememberMe"><label for="rememberMe" class="labelInline">Remember me</label>-->
+                </div>
             </div>
 
-            <div>
+            <div class="redirectLink">
                 <p>No account yet? <a href="register.php"> Sign up here</a></p>
             </div>
         </form>
