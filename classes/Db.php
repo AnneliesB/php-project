@@ -1,5 +1,4 @@
 <?php
-
     //Abstract class means we cannot get a new instance (object) of this class HOWEVER we van adress it to get a connection established
     abstract class Db{
         private static $conn; //Using static since we don't get any instances
