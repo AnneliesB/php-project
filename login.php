@@ -1,7 +1,8 @@
 <?php
+require_once("bootstrap/bootstrap.php");
 if (!empty($_POST)) {
     $config = parse_ini_file("config/config.ini");
-    $conn = new PDO("mysql:host=localhost;dbname=" . $config['db_name'], $config['db_user'], $config['db_password']);
+    $conn = Db::getConnection();
     /**
      * htmlspecialchars prevents the abuse of html tags in the input fields
      * the tags included will be transformed into text instead and will be part of the input
