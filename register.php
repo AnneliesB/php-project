@@ -13,6 +13,21 @@
             $password = htmlspecialchars($_POST['password']);
             $passwordConfirm = htmlspecialchars($_POST['passwordConfirm']);
 
+            //Check if firstname is not longer than 30chars
+            if( User::checkLength($firstname, 30)){
+                $error = "Firstname cannot be longer than 30 characters.";
+            }
+
+            //Check if lastname is not longer than 30chars
+            if( User::checkLength($lastname, 30)){
+                $error = "Lastname cannot be longer than 30 characters.";
+            }
+
+            //Check if username is not longer than 30chars
+            if( User::checkLength($username, 30)){
+                $error = "Username cannot be longer than 30 characters.";
+            }
+
             //Check if email is legit
             if( filter_var($email, FILTER_VALIDATE_EMAIL) ) {
                 //Email has valid input

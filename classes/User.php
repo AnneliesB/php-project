@@ -171,6 +171,19 @@ class User{
     }
 
     /*
+    * Check length of a string for user property
+    */
+    public static function checkLength($string, $allowedLength){
+        if( strlen($string) > $allowedLength){
+            //String is too long, return true for error handling
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    /*
     * Find a user based on email addres
     */
     public static function findByEmail($email){
