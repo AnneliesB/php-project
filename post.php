@@ -17,7 +17,11 @@
             // GET description
             $description = $_POST['description'];            
 
-            $statement = $conn->prepare("insert into photo (`description`, `url`) VALUES ('$description', '$image')");
+            $statement = $conn->prepare("insert into photo (`description`, `url`) VALUES (:description, :image)");
+
+            $statement->bindParam(":description", $description); 
+            $statement->bindParam(":image", $image); 
+
             $statement->execute(); 
             
             // GET latest id
