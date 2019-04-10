@@ -1,7 +1,6 @@
 <?php
 require_once("bootstrap/bootstrap.php");
 if (!empty($_POST)) {
-    $config = parse_ini_file("config/config.ini");
     $conn = Db::getConnection();
     /**
      * htmlspecialchars prevents the abuse of html tags in the input fields
