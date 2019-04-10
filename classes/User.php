@@ -171,11 +171,24 @@ class User{
     }
 
     /*
-    * Check length of a string for user property
+    * Returns true if length of a string is longer than given allowedLength
     */
-    public static function checkLength($string, $allowedLength){
-        if( strlen($string) > $allowedLength){
+    public static function maxLength($string, $maxLength){
+        if( strlen($string) > $maxLength){
             //String is too long, return true for error handling
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    /*
+    * Returns true if length of a string is shorter than given allowedLength
+    */
+    public static function minLength($string, $minLength){
+        if( strlen($string) < $minLength){
+            //String is too short, return true for error handling
             return true;
         }
         else{

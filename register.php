@@ -14,17 +14,17 @@
             $passwordConfirm = htmlspecialchars($_POST['passwordConfirm']);
 
             //Check if firstname is not longer than 30chars
-            if( User::checkLength($firstname, 30)){
+            if( User::maxLength($firstname, 30)){
                 $error = "Firstname cannot be longer than 30 characters.";
             }
 
             //Check if lastname is not longer than 30chars
-            if( User::checkLength($lastname, 30)){
+            if( User::maxLength($lastname, 30)){
                 $error = "Lastname cannot be longer than 30 characters.";
             }
 
             //Check if username is not longer than 30chars
-            if( User::checkLength($username, 30)){
+            if( User::maxLength($username, 30)){
                 $error = "Username cannot be longer than 30 characters.";
             }
 
@@ -51,6 +51,12 @@
             }else{
                 //Username is not available, show error to user
                 $error = "This username is already registered.";
+            }
+
+            //Check if password has minimum length of 8 chars
+            //Check if username is not longer than 30chars
+            if( User::minLength($password, 8)){
+                $error = "Password must be minimum 8 chars long.";
             }
 
             //Do passwords equal?
