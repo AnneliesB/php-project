@@ -4,7 +4,7 @@
         $conn = new PDO("mysql:host=localhost;dbname=" . $config['db_name'], $config['db_user'], $config['db_password']);
 
         // Initialize message variable
-        $msg = "";
+        //$msg = "";
   
         // UPLOAD image
         if(isset($_POST['upload'])) {
@@ -30,7 +30,7 @@
             $target = "images/".$last_id.basename($image);
 
             if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-                $msg = "Image uploaded successfully";
+                //$msg = "Image uploaded successfully";
 
                 // GET image                
                 $im = imagecreatefrompng($target);
@@ -40,14 +40,14 @@
                 $im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
 
                 if ($im2 !== FALSE) {
-                    imagepng($im2, 'cropped-'.$last_id.basename($image));
+                    imagepng($im2, "images/".'cropped-'.$last_id.basename($image));
                     imagedestroy($im2);
                 }
 
             }
                 
             else{
-                $msg = "Failed to upload image";
+                //$msg = "Failed to upload image";
             }
 
         }   
