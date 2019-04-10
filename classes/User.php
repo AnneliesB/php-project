@@ -150,7 +150,9 @@ class User{
         
         try{
             $pdo = Db::getConnection();
-            $statement = $pdo->prepare("insert into user (username, email, password) values (:username,:email,:password)");
+            $statement = $pdo->prepare("insert into user (firstname, lastname, username, email, password) values (:firstname,:lastname,:username,:email,:password)");
+            $statement->bindParam(":firstname", $this->firstname);
+            $statement->bindParam(":lastname", $this->lastname);
             $statement->bindParam(':username', $this->username);
             $statement->bindParam(":email", $this->email);
             $statement->bindParam(":password", $hash);

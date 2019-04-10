@@ -6,10 +6,12 @@
         //Check if register fields are not empty strings
         if( !empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['passwordConfirm']) ){
 
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $passwordConfirm = $_POST['passwordConfirm'];
+            $firstname = htmlspecialchars($_POST['firstname']);
+            $lastname = htmlspecialchars($_POST['lastname']);
+            $username = htmlspecialchars($_POST['username']);
+            $email = htmlspecialchars($_POST['email']);
+            $password = htmlspecialchars($_POST['password']);
+            $passwordConfirm = htmlspecialchars($_POST['passwordConfirm']);
 
             //Check if email is legit
             if( filter_var($email, FILTER_VALIDATE_EMAIL) ) {
@@ -48,9 +50,11 @@
                 //Start new user obj, set properties and call the register function
                 $user = new User();
 
-                $user->setUsername( htmlspecialchars($username) );
-                $user->setEmail( htmlspecialchars($email) );
-                $user->setPassword( htmlspecialchars($password) );
+                $user->setFirstname($firstname);
+                $user->setLastname($lastname);
+                $user->setUsername($username);
+                $user->setEmail($email);
+                $user->setPassword($password);
 
                 if( $user->register() ){
                     //Start new session for registered user
@@ -101,7 +105,15 @@
             <?php endif; ?>
 
             <div class="formInput">
-            <div class="formField">
+                <div class="formField">
+                    <label for="firstname">Firstname</label>
+                    <input type="text" name="firstname">
+                </div>
+                <div class="formField">
+                    <label for="lastname">Lastname</label>
+                    <input type="text" name="lastname">
+                </div>
+                <div class="formField">
                     <label for="username">Username</label>
                     <p id="usernameFeedback" class="hidden"></p>
                     <input type="text" id="username" name="username">
