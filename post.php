@@ -14,6 +14,7 @@
             // GET image name / filename
             $image = $_FILES['image']['name'];
 
+
             // GET description
             $description = $_POST['description'];            
 
@@ -30,19 +31,29 @@
             // image file directory
             $target = "images/".$last_id.basename($image);
 
-
-
             if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
                 $msg = "Image uploaded successfully";
+
+                // GET image
+                $im = imagecreatefrompng($target);
+
+                $size = min(imagesx($im), imagesy($im));
+                $im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
+                if ($im2 !== FALSE) {
+                    imagepng($im2, 'cropped-'.$last_id.basename($image));
+                    imagedestroy($im2);
+                }
+                //imagedestroy($im);
+
 
             }else{
                 $msg = "Failed to upload image";
             }
-        }    
+
+        }   
+        
         
     }    
-
-
 
 ?><!DOCTYPE html>
 <html lang="en">
