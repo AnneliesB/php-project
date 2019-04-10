@@ -6,22 +6,20 @@
         // Initialize message variable
         $msg = "";
   
-        // TODO: save crop image
-
-
         // UPLOAD image
         if(isset($_POST['upload'])) {
             // GET image name / filename
             $image = $_FILES['image']['name'];
-
+            $croppedImage = "cropped-".$_FILES['image']['name'];
 
             // GET description
             $description = $_POST['description'];            
 
-            $statement = $conn->prepare("insert into photo (`description`, `url`) VALUES (:description, :image)");
+            $statement = $conn->prepare("insert into photo (`description`, `url`, `urlCrop`) VALUES (:description, :image, :croppedImage)");
 
             $statement->bindParam(":description", $description); 
-            $statement->bindParam(":image", $image); 
+            $statement->bindParam(":image", $image);
+            $statement->bindParam(":croppedImage", $croppedImage);
 
             $statement->execute(); 
             
@@ -34,19 +32,21 @@
             if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
                 $msg = "Image uploaded successfully";
 
-                // GET image
+                // GET image                
                 $im = imagecreatefrompng($target);
 
+                //CROP image
                 $size = min(imagesx($im), imagesy($im));
                 $im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
+
                 if ($im2 !== FALSE) {
                     imagepng($im2, 'cropped-'.$last_id.basename($image));
                     imagedestroy($im2);
                 }
-                //imagedestroy($im);
 
-
-            }else{
+            }
+                
+            else{
                 $msg = "Failed to upload image";
             }
 
