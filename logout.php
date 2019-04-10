@@ -1,5 +1,6 @@
 <?php
-session_start();
+require_once("bootstrap/bootstrap.php");
+//setcookie('imdstagram', null, time()-3600);
+unset ($_SESSION['email']);
 session_destroy();
-setcookie('imdstagram', null, time()-3600);
 header('location: login.php');
