@@ -17,7 +17,7 @@ if (!empty($_POST)) {
     if (password_verify($password, $user['password'])) {
         session_start();
         $_SESSION['imdstagram'] = true;
-        header("Location: index.php");
+        header("location: index.php");
     } else {
         $error = true;
     }
