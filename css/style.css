@@ -53,6 +53,14 @@ input[type=text], input[type=password] {
     font-size: 1em;
 }
 
+.ajaxFeedback{
+    color: tomato;
+}
+
+.hidden{
+    display: none;
+}
+
 .btnPrimary{
     width: 100%;
     border: 1px solid #50a2a7;

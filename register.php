@@ -115,12 +115,12 @@
                 </div>
                 <div class="formField">
                     <label for="username">Username</label>
-                    <p id="usernameFeedback" class="hidden"></p>
+                    <p id="usernameFeedback" class="ajaxFeedback hidden"></p>
                     <input type="text" id="username" name="username">
                 </div>
                 <div class="formField">
                     <label for="email">Email</label>
-                    <p id="emailFeedback" class="hidden"></p>
+                    <p id="emailFeedback" class="ajaxFeedback hidden"></p>
                     <input type="text" id="email" name="email">
                 </div>
                 <div class="formField">
