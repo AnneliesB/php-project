@@ -32,15 +32,39 @@
             if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
                 //$msg = "Image uploaded successfully";
 
+
+                $info = getimagesize($target);
+                $mime = $info['mime'];
+
+                var_dump($mime);
+
+                switch($mime) {
+                    case 'image/jpeg':
+                        $image_create_func = 'imagecreatefromjpeg';
+                        $image_save_func = 'imagejpeg';
+                        //$new_image_ext = 'jpg';
+                        break;
+                    
+                    case 'image/png':
+                        $image_create_func = 'imagecreatefrompng';
+                        $image_save_func = 'imagepng';
+                        //$new_image_ext = 'png';
+                        break;
+
+                    default:
+                        throw new Exception('Unknown image type.');                    
+                }
+
+
                 // GET image                
-                $im = imagecreatefrompng($target);
+                $im = $image_create_func($target);
 
                 //CROP image
                 $size = min(imagesx($im), imagesy($im));
                 $im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
 
                 if ($im2 !== FALSE) {
-                    imagepng($im2, "images/".'cropped-'.$last_id.basename($image));
+                    $image_save_func($im2, "images/".'cropped-'.$last_id.basename($image));
                     imagedestroy($im2);
                 }
 
