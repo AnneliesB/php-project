@@ -36,7 +36,7 @@
                 $info = getimagesize($target);
                 $mime = $info['mime'];
 
-                var_dump($mime);
+                //var_dump($mime);
 
                 switch($mime) {
                     case 'image/jpeg':
@@ -59,11 +59,12 @@
                 // GET image                
                 $im = $image_create_func($target);
 
-                //CROP image
+                // CROP image
                 $size = min(imagesx($im), imagesy($im));
                 $im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
 
                 if ($im2 !== FALSE) {
+                    // SAVE cropped image
                     $image_save_func($im2, "images/".'cropped-'.$last_id.basename($image));
                     imagedestroy($im2);
                 }
@@ -79,33 +80,40 @@
         
     }    
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <title>Add post</title>
+    <title>IMSTAGRAM - add post</title>
 </head>
-<body>
-    <form action="" method="POST" enctype="multipart/form-data">
-        <h2 formTitle>Post picture</h2>
-        
-        <div class="formField">
-            <label for="image">Picture</label>
-			<input type="file" id="image" name="image">
-        </div>
-		<div class="formField">
-			<label for="description">Description</label>
-			<input type="text" id="description" name="description">
-		</div>
 
-		<div class="formField">
-			<input type="submit" value="Post" name="upload" class="btn">	
-		</div>
-    </form>   
+<body>
+    <form action="index.php" method="POST" enctype="multipart/form-data">
+        <h2 formTitle>Add post</h2>
+
+        <div class="flexbox">
+            <div class="formField">
+                <label for="image">Picture</label>
+                <input type="file" id="image" name="image">
+            </div>
+            <div class="formField">
+                <label for="description">Description</label>
+                
+                <textarea id="description" name="description" rows="10" > </textarea>
+            </div>
+        </div>
+
+        <div class="formField">
+            <input type="submit" value="Post" name="upload" class="btn btnPrimary">
+        </div>
+    </form>
 </body>
+
 </html>
