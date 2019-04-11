@@ -59,7 +59,15 @@ input[type=text], input[type=password], input[type=file], #description {
     height: auto;
 }
 
-.btnPrimary {
+.ajaxFeedback{
+    color: tomato;
+}
+
+.hidden{
+    display: none;
+}
+
+.btnPrimary{
     width: 100%;
     border: 1px solid #50a2a7;
     background-color: white;

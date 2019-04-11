@@ -4,6 +4,7 @@
         private static $conn; //Using static since we don't get any instances
         
         public static function getConnection(){
+
             if( self::$conn != null ){ //using 'self' since 'this' can only be used on an instance/object
                 //connection found, return connection
                 return self::$conn;
@@ -13,5 +14,7 @@
                 self::$conn = new PDO("mysql:host=" . $config['host'] . ";dbname=" . $config['db_name'], $config['db_user'], $config['db_password']);
                 return self::$conn;
             }
+
         }
+
     }

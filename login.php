@@ -1,7 +1,7 @@
 <?php
+require_once("bootstrap/bootstrap.php");
 if (!empty($_POST)) {
-    $config = parse_ini_file("config/config.ini");
-    $conn = new PDO("mysql:host=localhost;dbname=" . $config['db_name'], $config['db_user'], $config['db_password']);
+    $conn = Db::getConnection();
     /**
      * htmlspecialchars prevents the abuse of html tags in the input fields
      * the tags included will be transformed into text instead and will be part of the input
@@ -15,9 +15,8 @@ if (!empty($_POST)) {
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     if (password_verify($password, $user['password'])) {
-        session_start();
-        $_SESSION['imdstagram'] = true;
-        header("Location: index.php");
+        $_SESSION['email'] = $email;
+        header("location: index.php");
     } else {
         $error = true;
     }
