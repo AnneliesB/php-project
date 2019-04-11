@@ -40,9 +40,10 @@ body {
 .formField label{
     display: block;
     padding-bottom: 0.5em;
+    text-align: left;
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=file], #description {
     width: 100%;
     height: 2em;
     background-color: #AFCFD2;
@@ -53,7 +54,12 @@ input[type=text], input[type=password] {
     font-size: 1em;
 }
 
-.btnPrimary{
+/* Amount of rows in HTML */
+#description {
+    height: auto;
+}
+
+.btnPrimary {
     width: 100%;
     border: 1px solid #50a2a7;
     background-color: white;
@@ -64,6 +70,14 @@ input[type=text], input[type=password] {
     font-size: 1em;
     color: #50a2a7;
     text-transform: uppercase;
+    cursor: pointer;
+    max-width: 526px;
+}
+
+.btnPrimary:hover {
+    color: white;
+    background-color: #50a2a7;
+    transition: 0.5s;
 }
 
 .redirectLink{
@@ -78,7 +92,7 @@ input[type=text], input[type=password] {
 }
 
 @media(min-width: 980px){
-    body{
+    body {
         background-image: url(../images/background.jpeg);
     }
 
@@ -89,6 +103,17 @@ input[type=text], input[type=password] {
         background-color: white;
         padding-bottom: 2em;
         margin-top: 7em;
+    }
+
+    .flexbox {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .flexbox .formField {
+        width: 40%;
+    
     }
 }
 
