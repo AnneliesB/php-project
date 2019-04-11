@@ -1,7 +1,9 @@
 <?php 
+    require_once("bootstrap/bootstrap.php");
+
+
     if(!empty($_POST)){
-        $config = parse_ini_file("config/config.ini");
-        $conn = new PDO("mysql:host=localhost;dbname=" . $config['db_name'], $config['db_user'], $config['db_password']);
+        $conn = Db::getConnection();
 
         // Initialize message variable
         //$msg = "";
@@ -15,7 +17,7 @@
             // GET description
             $description = $_POST['description'];            
 
-            $statement = $conn->prepare("insert into photo (`description`, `url`, `urlCrop`) VALUES (:description, :image, :croppedImage)");
+            $statement = $conn->prepare("insert into photo (`description`, `url`, `url_cropped`) VALUES (:description, :image, :croppedImage)");
 
             $statement->bindParam(":description", $description); 
             $statement->bindParam(":image", $image);
@@ -95,7 +97,7 @@
 </head>
 
 <body>
-    <form action="index.php" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
         <h2 formTitle>Add post</h2>
 
         <div class="flexbox">

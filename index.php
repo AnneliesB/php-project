@@ -1,7 +1,7 @@
 <?php 
-    
-    $config = parse_ini_file("config/config.ini");
-    $conn = new PDO("mysql:host=localhost;dbname=" . $config['db_name'], $config['db_user'], $config['db_password']);
+    require_once("bootstrap/bootstrap.php");
+
+    $conn = Db::getConnection();
     $statement = $conn->prepare("select description, url from photo");
     $statement->execute();
     $results = $statement->fetchAll();
