@@ -1,29 +1,26 @@
 <?php
-session_start();
-include 'Db.php';
+require_once("bootstrap/bootstrap.php");
+$conn = Db::getConnection();
 
         $username = $_POST['username'];
         $password = $_POST['password'];
         $newpassword = $_POST['newpassword'];
         $confirmnewpassword = $_POST['confirmnewpassword'];
-        $result = mysql_query("SELECT password FROM user_info WHERE 
-user_id='$username'");
-        if(!$result)
-        {
-        echo "The username you entered does not exist";
-        }
-        else if($password!= mysql_result($result, 0))
-        {
+        $result = mysql_query("SELECT password FROM user WHERE user_id='$username'");
+
+        if(!$result){
+        echo "The username you does not exist";
+        }else if($password!= mysql_result($result, 0)){
         echo "You entered an incorrect password";
         }
+
         if($newpassword=$confirmnewpassword)
-        $sql=mysql_query("UPDATE user_info SET password='$newpassword' where user_id='$username'");
-        if($sql)
-        {
+
+        $sql=mysql_query("UPDATE user SET password='$newpassword' where user_id='$username'");
+
+        if($sql){
         echo "Congrats, you have a new password";
-        }
-       else
-        {
+        }else{
        echo "Passwords do not match";
        }
 ?>
@@ -66,7 +63,7 @@ user_id='$username'");
     </table>
     <p><input type="submit" value="Update Password">
     </form>
-   <p><a href="home.php">Home</a>
+   <p><a href="index.php">Home</a>
    <p><a href="logout.php">Logout</a>
 </body>
 </html>
