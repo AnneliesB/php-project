@@ -1,5 +1,6 @@
 <?php
 require_once("bootstrap/bootstrap.php");
+include_once("User.php");
 if (!empty($_POST)){
 $conn = Db::getConnection();
 
@@ -25,6 +26,8 @@ $conn = Db::getConnection();
        echo "Passwords do not match";
        }
     }
+
+    $user->setDescription($description);
 ?>
 
 <!DOCTYPE html>
