@@ -2,10 +2,10 @@
 require_once("bootstrap/bootstrap.php");
 $conn = Db::getConnection();
 
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $newpassword = $_POST['newpassword'];
-        $confirmnewpassword = $_POST['confirmnewpassword'];
+        $username = htmlspecialchars($_POST['username']);
+        $password = htmlspecialchars($_POST['password']);
+        $newpassword = htmlspecialchars($_POST['newpassword']);
+        $confirmnewpassword = htmlspecialchars($_POST['confirmnewpassword']);
         $result = mysql_query("SELECT password FROM user WHERE user_id='$username'");
 
         if(!$result){
