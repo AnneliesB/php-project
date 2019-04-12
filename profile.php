@@ -43,8 +43,8 @@ $conn = Db::getConnection();
     <input type="submit" value="Upload Image" name="submit">
 </form>
 <p>
-<label for="file0desc">Description: </label>
-<textarea rows="10" cols="30" id="file0desc" class="textarea"></textarea>
+<label for="desc">Description: </label>
+<textarea rows="10" cols="30" id="desc" class="textarea"></textarea>
 </p>
 
 <h1>Change Password</h1>
