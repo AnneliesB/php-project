@@ -1,5 +1,6 @@
 <?php
 require_once("bootstrap/bootstrap.php");
+if (!empty($_POST)){
 $conn = Db::getConnection();
 
         $username = htmlspecialchars($_POST['username']);
@@ -23,6 +24,7 @@ $conn = Db::getConnection();
         }else{
        echo "Passwords do not match";
        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -37,9 +39,13 @@ $conn = Db::getConnection();
 
 <form action="upload.php" method="post" enctype="multipart/form-data">
     Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="file" name="profilepic" id="profilepic">
     <input type="submit" value="Upload Image" name="submit">
 </form>
+<p>
+<label for="file0desc">Description: </label>
+<textarea rows="10" cols="30" id="file0desc" class="textarea"></textarea>
+</p>
 
 <h1>Change Password</h1>
    <form method="POST" action="password_change.php">
