@@ -1,6 +1,6 @@
 <?php
 require_once("bootstrap/bootstrap.php");
-include_once("User.php");
+require_once("classes/User.php");
 if (!empty($_POST)){
 $conn = Db::getConnection();
 
@@ -27,7 +27,7 @@ $conn = Db::getConnection();
        }
     }
 
-    $user->setDescription($description);
+   // $user->setDescription($description);
 ?>
 
 <!DOCTYPE html>
