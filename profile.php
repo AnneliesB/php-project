@@ -1,7 +1,12 @@
 <?php
 require_once("bootstrap/bootstrap.php");
 require_once("classes/User.php");
-if (!empty($_POST)){
+if (isset($_SESSION['id'])){
+
+  $user->getUserD
+
+
+if (!empty($_POST['password','username'])){
 $conn = Db::getConnection();
 
         $username = htmlspecialchars($_POST['username']);
@@ -25,10 +30,24 @@ $conn = Db::getConnection();
         }else{
        echo "Passwords do not match";
        }
-    } else if (!empty($_POST)){
+       //description upload 
+      } else if (!empty($_POST['description'])) {
 
-      
+        $user->setDescription($_POST['description']);
+        $newdescription = $_POST['description'];
+        $user->setDescription($newdescription);
+       //change old with the new description
+        if ($user->update($id)) {
+            $error = "Your description is updated";
+        } else {
+            $error = "Something went wrong, Try again later.";
+        }
+    } else {
+        $newdescription = $description;
+        //nothing changes
     }
+      
+  }
 
    // $user->setDescription($description);
 ?>
@@ -49,8 +68,8 @@ $conn = Db::getConnection();
     <input type="submit" value="Upload Image" name="submit">
 </form>
 <p>
-<label for="desc">Description: </label>
-<textarea rows="10" cols="30" id="desc" class="textarea"></textarea>
+<label for="description">Description: </label>
+<textarea rows="10" cols="30" id="description" class="textarea"></textarea>
 </p>
 
 <h1>Change Password</h1>
