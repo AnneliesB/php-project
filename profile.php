@@ -63,9 +63,9 @@ $conn = Db::getConnection();
         echo "The username you does not exist"; //check of je de correcte username hebt
         }else if($password!= mysql_result($result, 0)){
         echo "You entered an incorrect password"; //oud password nietgevonden
-        }
-
-        if($newpassword=$confirmnewpassword) //checkt passwoorden
+        }else if( User::minLength($newpassword, 8)){
+          $error = "Password must be minimum 8 chars long.";
+        } else if($newpassword=$confirmnewpassword) //checkt passwoorden
 
         $sql=mysql_query("UPDATE user SET password='$newpassword' where user_id='$username'");
 
