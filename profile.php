@@ -7,9 +7,6 @@ require_once("classes/User.php");
     if (is_uploaded_file($_FILES['file']['tmp_name'])) {
         if ($_FILES['file']['error'] > 0) {
             switch ($_FILES['file']['error']) {
-                case 1:
-                    $error = "U mag maximaal 32MB opladen.";
-                    break;
                 default:
                     $error = "Sorry, uw upload kon niet worden verwerkt.";
             }
@@ -63,7 +60,7 @@ $conn = Db::getConnection();
         echo "The username you does not exist"; //check of je de correcte username hebt
         }else if($password!= mysql_result($result, 0)){
         echo "You entered an incorrect password"; //oud password nietgevonden
-        }else if( User::minLength($newpassword, 8)){
+        }else if( User::minLength($newpassword, 8)){//check lengte
           $error = "Password must be minimum 8 chars long.";
         } else if($newpassword=$confirmnewpassword) //checkt passwoorden
 
