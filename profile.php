@@ -48,8 +48,9 @@ require_once("classes/User.php");
         }
     }
 }
+
 //***************************************************************************************************************************************** */
-else if (!empty($_POST['password','username'])){
+else if (!empty($_POST['password'])){
 $conn = Db::getConnection();
 
         $username = htmlspecialchars($_POST['username']);
@@ -92,7 +93,7 @@ $conn = Db::getConnection();
         //nothing changes
     }
       
-  }
+  
 ?>
 
 <!DOCTYPE html>
