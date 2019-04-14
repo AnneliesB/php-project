@@ -8,15 +8,15 @@ $conn = Db::getConnection();
         $password = htmlspecialchars($_POST['password']);
         $newpassword = htmlspecialchars($_POST['newpassword']);
         $confirmnewpassword = htmlspecialchars($_POST['confirmnewpassword']);
-        $result = mysql_query("SELECT password FROM user WHERE user_id='$username'");
+        $result = mysql_query("SELECT password FROM user WHERE user_id='$username'"); 
 
         if(!$result){
-        echo "The username you does not exist";
+        echo "The username you does not exist"; //checking if the username is correct
         }else if($password!= mysql_result($result, 0)){
-        echo "You entered an incorrect password";
+        echo "You entered an incorrect password"; //old password isn't found
         }
 
-        if($newpassword=$confirmnewpassword)
+        if($newpassword=$confirmnewpassword) //making sure the passwords match
 
         $sql=mysql_query("UPDATE user SET password='$newpassword' where user_id='$username'");
 
@@ -25,6 +25,9 @@ $conn = Db::getConnection();
         }else{
        echo "Passwords do not match";
        }
+    } else if (!empty($_POST)){
+
+      
     }
 
    // $user->setDescription($description);
@@ -55,19 +58,19 @@ $conn = Db::getConnection();
     <table>
     <tr>
    <td>Enter your UserName</td>
-    <td><input type="username" size="10" name="username"></td>
+    <td><input type="username" size="30" name="username"></td>
     </tr>
     <tr>
     <td>Enter your existing password:</td>
-    <td><input type="password" size="10" name="password"></td>
+    <td><input type="password" size="30" name="password"></td>
     </tr>
   <tr>
     <td>Enter your new password:</td>
-    <td><input type="password" size="10" name="newpassword"></td>
+    <td><input type="password" size="30" name="newpassword"></td>
     </tr>
     <tr>
    <td>Re-enter your new password:</td>
-   <td><input type="password" size="10" name="confirmnewpassword"></td>
+   <td><input type="password" size="30" name="confirmnewpassword"></td>
     </tr>
     </table>
     <p><input type="submit" value="Update Password">
