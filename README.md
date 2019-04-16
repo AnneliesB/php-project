@@ -15,3 +15,6 @@
 * mention which feature the branch belongs to
 * also include some info on what the feature is about
 * eg: feature2_safe_login
+
+## variables
+* use camelcase: $firstName
