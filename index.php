@@ -57,7 +57,7 @@
         <?php if(isset($results)): ?>
             <?php foreach($results as $result): ?>
                 <article>    
-                    <img src="images/<?php echo $result['url'] ?>" alt="">    
+                    <img src="images/cropped-<?php echo $result['url'] ?>" alt="">    
                     <p><?php echo $result['description'] ?></p>
                 </article>
             <?php endforeach;?>
