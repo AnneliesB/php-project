@@ -18,8 +18,8 @@
         // UPLOAD image
         if(isset($_POST['upload'])) {
             // GET image name / filename
-            $image = $_FILES['image']['name'];
-            $croppedImage = "cropped-".$_FILES['image']['name'];
+            $image = $userProfile['id'] . $_FILES['image']['name'];
+            $croppedImage = $userProfile['id'] . "cropped-" .$_FILES['image']['name'];
 
             // GET description
             $description = $_POST['description'];            
@@ -34,11 +34,10 @@
 
             $statement->execute(); 
             
-            // GET latest id
-            $last_id = $conn->lastInsertId();   
+              
             
             // image file directory
-            $target = "images/" . $last_id . basename($image);
+            $target = "images/" . basename($image);
 
             if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
                 
@@ -73,7 +72,7 @@
 
                 if ($im2 !== FALSE) {
                     // SAVE cropped image
-                    $image_save_func($im2, "images/".'cropped-'.$last_id.basename($image));
+                    $image_save_func($im2, "images/" . $userProfile['id'] . 'cropped-' .  $_FILES['image']['name']);
                     imagedestroy($im2);
                 }
 
