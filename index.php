@@ -2,13 +2,20 @@
     require_once("bootstrap/bootstrap.php");
 
     $conn = Db::getConnection();
-    $statement = $conn->prepare("select description, url from photo");
-    $statement->execute();
-    $results = $statement->fetchAll();
     //var_dump($results);
 
-    
+    if(!empty($_POST)){ 
+        $query = $_POST['query'];
+        $statement = $conn->prepare("select description, url from photo where description like '%". $query ."%'"); 
+        $statement->execute();        
+    }
 
+    else {
+        $statement = $conn->prepare("select description, url from photo");
+        $statement->execute();        
+    }
+
+    $results = $statement->fetchAll();
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -23,7 +30,7 @@
     <header>
         <form action="" method="POST">
             <div class="formField">
-                <input type="text" id="search" name="search">
+                <input type="text" id="query" name="query">
                 <input  type="submit" name="submit" value="Search"> 
             </div>
         </form>
