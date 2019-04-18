@@ -48,7 +48,7 @@
     </main>
 
     <footer>
-    
+        <p> &copy; Copyright IMDSTAGRAM 2019 </p>
     </footer>
 
 
