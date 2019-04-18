@@ -145,9 +145,9 @@ class User{
      * @return boolean - true if successful, false if unsuccessful
      */
     public function register(){
-        
+
         $hash = Security::hash($this->password);
-        
+
         try{
             $pdo = Db::getConnection();
             $statement = $pdo->prepare("insert into user (firstname, lastname, username, email, password) values (:firstname,:lastname,:username,:email,:password)");
@@ -167,7 +167,7 @@ class User{
             fwrite($file, $err."\n");
             fclose($file);
         }
-        
+
     }
 
     /*
@@ -210,7 +210,7 @@ class User{
     //Check if a user exists by email address
     public static function isEmailAvailable($email){
         $result = self::findByEmail($email);
-        
+
         // PDO returns false if no records are found so let's check for that
         if($result == false){
             return true;
@@ -233,7 +233,7 @@ class User{
     //Check if a user exists by username
     public static function isUsernameAvailable($username){
         $result = self::findByUsername($username);
-        
+
         // PDO returns false if no records are found so let's check for that
         if($result == false){
             return true;

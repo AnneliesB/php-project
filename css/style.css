@@ -15,7 +15,7 @@ body {
     font-weight: bold;
 }
 
-.formError{
+.formError {
     width: 70%;
     background-color: #DD614A;
     color: white;
@@ -25,7 +25,7 @@ body {
     border-radius: 5px;
 }
 
-.formInput{
+.formInput {
     width: 70%;
     margin-top: 1.5em;
     text-align: left;
@@ -33,11 +33,11 @@ body {
     margin-right: auto;
 }
 
-.formField{
+.formField {
     padding-bottom: 2em;
 }
 
-.formField label{
+.formField label {
     display: block;
     padding-bottom: 0.5em;
     text-align: left;
@@ -59,15 +59,15 @@ input[type=text], input[type=password], input[type=file], #description {
     height: auto;
 }
 
-.ajaxFeedback{
+.ajaxFeedback {
     color: tomato;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
-.btnPrimary{
+.btnPrimary {
     width: 100%;
     border: 1px solid #50a2a7;
     background-color: white;
@@ -88,23 +88,55 @@ input[type=text], input[type=password], input[type=file], #description {
     transition: 0.5s;
 }
 
-.redirectLink{
+.btnProfile{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-decoration: none;
+    padding: 0.5em;
+    width: 60%;
+    border: 1px solid #50a2a7;
+    background-color: white;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #50a2a7;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.btnProfile:hover{
+    color: white;
+    background-color: #50a2a7;
+    transition: 0.5s;
+}
+
+.lastItem{
+    margin-bottom: 4em;
+}
+
+.profilePicture{
+    width: 40%;
+    max-width: 200px;
+}
+
+.redirectLink {
     color: #797979;
 }
 
-.redirectLink a{
+.redirectLink a {
     text-decoration: none;
     color: #797979;
     font-weight: bold;
     text-decoration: underline;
 }
 
-@media(min-width: 980px){
+@media (min-width: 980px) {
     body {
         background-image: url(../images/background.jpeg);
     }
 
-    .login {
+    .login, .profile, .editProfile, .editPassword {
         width: 50%;
         margin-left: auto;
         margin-right: auto;
@@ -121,7 +153,53 @@ input[type=text], input[type=password], input[type=file], #description {
 
     .flexbox .formField {
         width: 40%;
-    
+
     }
+
+    .profile{
+        text-align: center;
+        padding-top: 2em;
+        padding-bottom: 3em;
+    }
+
+    .profileContainer {
+        text-align: center;
+    }
+
+    .profileLabel {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+
+    .btnProfile{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-decoration: none;
+        padding: 0.5em;
+        width: 30%;
+        border: 1px solid #50a2a7;
+        background-color: white;
+        border-radius: 5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        color: #50a2a7;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    .btnProfile:hover {
+        color: white;
+        background-color: #50a2a7;
+        transition: 0.5s;
+    }
+
+    .editProfile, .editPassword{
+        padding: 2em;
+        margin-top: 5em;
+    }
+
+
 }
 
