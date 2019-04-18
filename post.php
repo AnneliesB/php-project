@@ -1,13 +1,20 @@
 <?php 
     require_once("bootstrap/bootstrap.php");
 
+    $conn = Db::getConnection();
 
-    if(!empty($_POST)){
-        $conn = Db::getConnection();
+    // GET username
+    $sessionEmail = $_SESSION['email'];
 
-        // Initialize message variable
-        //$msg = "";
-  
+    $statement = $conn->prepare("select * from user where email = :sessionEmail");
+    $statement->bindParam(":sessionEmail", $sessionEmail);
+    $statement->execute();
+    $userProfile = $statement->fetch(PDO::FETCH_ASSOC);
+
+
+    if(!empty($_POST)){    
+        
+        
         // UPLOAD image
         if(isset($_POST['upload'])) {
             // GET image name / filename
@@ -17,11 +24,13 @@
             // GET description
             $description = $_POST['description'];            
 
-            $statement = $conn->prepare("insert into photo (`description`, `url`, `url_cropped`) VALUES (:description, :image, :croppedImage)");
+            // ! user_id
+            $statement = $conn->prepare("insert into photo (`description`, `url`, `url_cropped`, `user_id`) VALUES (:description, :image, :croppedImage, :userId)");
 
             $statement->bindParam(":description", $description); 
             $statement->bindParam(":image", $image);
             $statement->bindParam(":croppedImage", $croppedImage);
+            $statement->bindParam(":userId", $userProfile['id']);
 
             $statement->execute(); 
             
@@ -29,17 +38,14 @@
             $last_id = $conn->lastInsertId();   
             
             // image file directory
-            $target = "images/".$last_id.basename($image);
+            $target = "images/" . $last_id . basename($image);
 
             if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-                //$msg = "Image uploaded successfully";
-
-
+                
                 $info = getimagesize($target);
                 $mime = $info['mime'];
 
-                //var_dump($mime);
-
+                
                 switch($mime) {
                     case 'image/jpeg':
                         $image_create_func = 'imagecreatefromjpeg';
@@ -54,7 +60,7 @@
                         break;
 
                     default:
-                        throw new Exception('Unknown image type.');                    
+                        $error = "Unknown image tye";
                 }
 
 
@@ -74,7 +80,7 @@
             }
                 
             else{
-                //$msg = "Failed to upload image";
+                $error = "Failed to upload image";
             }
 
         }   
@@ -98,6 +104,14 @@
 
 <body>
     <form action="" method="POST" enctype="multipart/form-data">
+        <?php if (isset($error)): ?>
+            <div class="formError">
+                <p>
+                    <?php echo $error ?>
+                </p>
+            </div>
+        <?php endif; ?>
+
         <h2 formTitle>Add post</h2>
 
         <div class="flexbox">
