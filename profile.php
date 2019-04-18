@@ -36,7 +36,13 @@ $profile = $statement->fetch(PDO::FETCH_ASSOC);
     <h2>Profile</h2>
 
     <!-- echo profile picture -->
-    <img src="images/profilePictures/<?php echo $profile['id'] . $profile['image']; ?>" alt="Profile Picture" class="profilePicture">
+    <?php if ($profile['image'] != "filler.png"): ?>
+        <img src="images/profilePictures/<?php echo $profile['id'] . $profile['image']; ?>" alt="Profile Picture"
+             class="profilePicture">
+    <?php else: ?>
+        <img src="images/profilePictures/filler.png" alt="Profile Picture"
+             class="profilePicture">
+    <?php endif ?>
 
     <!-- echo username -->
     <h3><?php echo $profile['username']; ?></h3>
