@@ -19,6 +19,13 @@
     $statement->execute();
     $userProfile = $statement->fetch(PDO::FETCH_ASSOC);
 
+    $statement = $conn->prepare("select id from photo order by id desc limit 1");
+    $statement->execute();
+    $photo = $statement->fetch(PDO::FETCH_ASSOC);
+
+
+    $currentId = $photo['id'] + 1;
+
 
     if(!empty($_POST)){    
         
@@ -26,8 +33,8 @@
         // UPLOAD image
         if(isset($_POST['upload'])) {
             // GET image name / filename
-            $image = $_FILES['image']['name'];
-            $croppedImage = "cropped-".$_FILES['image']['name'];
+            $image = $currentId . $_FILES['image']['name'];
+            $croppedImage = $currentId . "cropped-" .$_FILES['image']['name'];
 
             // GET description
             $description = $_POST['description'];            
@@ -42,11 +49,10 @@
 
             $statement->execute(); 
             
-            // GET latest id
-            $last_id = $conn->lastInsertId();   
+              
             
             // image file directory
-            $target = "images/" . $last_id . basename($image);
+            $target = "images/" . basename($image);
 
             if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
                 
@@ -81,7 +87,7 @@
 
                 if ($im2 !== FALSE) {
                     // SAVE cropped image
-                    $image_save_func($im2, "images/".'cropped-'.$last_id.basename($image));
+                    $image_save_func($im2, "images/" . $currentId . 'cropped-' .  $_FILES['image']['name']);
                     imagedestroy($im2);
                 }
 
