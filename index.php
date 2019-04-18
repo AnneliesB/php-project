@@ -20,13 +20,31 @@
 </head>
 <body>
 
-<?php foreach($results as $result): ?>
-    <div>    
-        <img src="images/<?php echo $result['url'] ?>" alt="">    
-        <p><?php echo $result['description'] ?></p>
-    </div>
+    <header>
+        <form action="" method="POST">
+            <div class="formField">
+                <input type="text" id="search" name="search">
+                <input  type="submit" name="submit" value="Search"> 
+            </div>
+        </form>
+    
+    </header>
 
-<?php endforeach;?>
+    <main>
+        <?php foreach($results as $result): ?>
+            <article>    
+                <img src="images/<?php echo $result['url'] ?>" alt="">    
+                <p><?php echo $result['description'] ?></p>
+            </article>
+        <?php endforeach;?>
+    
+    </main>
+
+    <footer>
+    
+    </footer>
+
+
 
     
 </body>
