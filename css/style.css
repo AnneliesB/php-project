@@ -131,9 +131,85 @@ input[type=text], input[type=password], input[type=file], #description {
     text-decoration: underline;
 }
 
+/*--------------------------------------
+            Index page
+--------------------------------------*/
+.index{
+    text-align: left;
+}
+
+.icon{
+    width: 2em;
+}
+
+.postContainer{
+    width: 90%;
+    margin: 0 auto;
+
+}
+
+.postImg{
+    width: 100%;
+    height: auto;
+}
+
+.postTopBar{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+}
+
+.postUsername{
+    display: inline-block;
+    width: calc(100% - 5em);
+    text-align: left;
+}
+
+.postDescription{
+    margin-top: 0;
+}
+
+.postStats{
+    display: flex;
+    justify-content: space-between;
+}
+
+.postLikes{
+    display: inline-block;
+    font-size: 1.5em;
+}
+
+.postComments{
+    display: inline-block;
+    font-size: 1.5em;
+}
+
+.commentInput{
+    width: calc(100% - 1em) !important;
+    padding-right: 5em;
+}
+
+.commentBtn{
+    border: 1px solid #50a2a7;
+    background-color: #50A2A7;
+    border-radius: 0px 5px 5px 0px;
+    height: 2em;
+    font-weight: bold;
+    font-size: 1em;
+    color: white;
+    cursor: pointer;
+    margin-left: -5em;
+    width: 5em;
+}
+
+
 @media (min-width: 980px) {
     body {
         background-image: url(../images/background.jpeg);
+    }
+
+    .index{
+        background-image: none;
     }
 
     .login, .profile, .editProfile, .editPassword {
@@ -198,6 +274,14 @@ input[type=text], input[type=password], input[type=file], #description {
     .editProfile, .editPassword{
         padding: 2em;
         margin-top: 5em;
+    }
+
+    /*--------------------------------------
+            Index page
+    --------------------------------------*/
+    .postContainer{
+        width: 30%;
+        margin: 0 auto;
     }
 
 
