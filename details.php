@@ -3,6 +3,8 @@
     // GET id of post
     $id = $_GET['id'];
 
+    //var_dump($id);
+
     // Connection
     $conn = Db::getConnection();
 
@@ -13,18 +15,10 @@
     $post = $statement->fetch(PDO::FETCH_ASSOC);
 
     // GET comments
-    $commentStatement = $conn->prepare("select * from comment where post_id = :postId");
+    $commentStatement = $conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId");
     $commentStatement->bindParam(":postId", $id);
     $commentStatement->execute();
     $comments = $commentStatement->fetchAll();
-
-    // GET user of comment
-    $userStatement = $conn->prepare("select * from user where user_id = :userId");
-    $commentStatement->bindParam(":postId", $id);
-    $commentStatement->execute();
-
-
-
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -51,10 +45,10 @@
         <!-- echo comments -->
         <?php foreach($comments as $comment): ?>
             <!-- echo username -->
-            <p><strong>  </strong></p>
+            <p><strong> <?php $comment['username'] ?> </strong></p>
 
             <!-- echo comment -->
-            <p> </p>
+            <p> <?php $comment['comment'] ?> </p>
         <?php endforeach;?>
 
     </main>
