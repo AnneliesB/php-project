@@ -118,6 +118,7 @@
     
     <?php } //Closing else ?>
 </div>
-    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/loadMore.js"></script>
 </body>
 </html>
