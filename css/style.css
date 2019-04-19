@@ -138,14 +138,17 @@ input[type=text], input[type=password], input[type=file], #description {
     text-align: left;
 }
 
+.feed{
+    width: 90%;
+    margin: 0 auto;
+}
+
 .icon{
     width: 2em;
 }
 
 .postContainer{
-    width: 90%;
-    margin: 0 auto;
-
+    padding: 2em 0em;
 }
 
 .postImg{
@@ -200,6 +203,34 @@ input[type=text], input[type=password], input[type=file], #description {
     cursor: pointer;
     margin-left: -5em;
     width: 5em;
+}
+
+.loadMoreBtn{
+    width: 50%;
+    margin: 2em auto 4em auto;
+    border: 1px solid #50a2a7;
+    background-color: white;
+    border-radius: 5px;
+    padding: 0.5em 0em;
+    font-weight: bold;
+    font-size: 1em;
+    color: #50a2a7;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+}
+
+.loadMoreBtn:hover{
+    border: 1px solid #50a2A7;
+    background-color: #50A2A7;
+    color: #fff;
+}
+
+.grow{
+    transition: all 0.2s ease-in-out;
+}
+.grow:hover{
+    transform: scale(1.1);
 }
 
 
@@ -279,9 +310,13 @@ input[type=text], input[type=password], input[type=file], #description {
     /*--------------------------------------
             Index page
     --------------------------------------*/
-    .postContainer{
+    .feed{
         width: 30%;
         margin: 0 auto;
+    }
+
+    .postContainer{
+        
     }
 
 

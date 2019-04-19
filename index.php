@@ -46,6 +46,7 @@
 </head>
 <body class="index">
 
+<div class="feed">
 <?php 
     //Check if no post results (no friends or posts of friends found)
     if( !empty($results) ){
@@ -82,15 +83,19 @@
 
         </div>
 
-        <?php endforeach; 
-    } //Closing if
+        <?php endforeach; ?>
+        
+        
+        <a><div class="loadMoreBtn grow">Load More</div></a>
+        
+    <?php } //Closing if
 
     else{ //No posts of friends found, show empty state message ?>
 
         <p class="postContainer">Try following friends and other users to see what they have been up to!</p>
     
     <?php } //Closing else ?>
-
+</div>
     
 </body>
 </html>
