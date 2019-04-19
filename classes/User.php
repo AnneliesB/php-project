@@ -242,6 +242,20 @@ class User{
         }
     }
 
+    public static function getUserId(){
+        //Get email of loggedin user via session
+        $sessionEmail = $_SESSION['email'];
+
+        //Get the ID of current user
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select id from user where email = :sessionEmail");
+        $statement->bindParam(":sessionEmail", $sessionEmail);
+        $statement->execute();
+        $user_id = $statement->fetch(PDO::FETCH_ASSOC);
+        $user_id = $user_id['id'];
+        return $user_id;
+    }
+
 
 
 }

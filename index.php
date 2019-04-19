@@ -13,12 +13,7 @@
     $conn = Db::getConnection();
 
     //Get ID of logged in user so we can later fetch the posts of users he follows.
-    $sessionEmail = $_SESSION['email'];
-    $statement = $conn->prepare("select id from user where email = :sessionEmail");
-    $statement->bindParam(":sessionEmail", $sessionEmail);
-    $statement->execute();
-    $user_id = $statement->fetch(PDO::FETCH_ASSOC);
-    $user_id = $user_id['id'];
+    $user_id = User::getUserId();
 
     //Check if Search is used
     if(!empty($_POST)){ 
