@@ -1,7 +1,7 @@
 //AJAX check for email and username via AXIOS
 
 /*--------------------
-    USERNAME CHECK
+    EMAIL CHECK
 --------------------*/
 //Select the email input field AND listen for the event of losing focus.
 var emailField = document.querySelector("#email");
@@ -21,7 +21,7 @@ emailField.addEventListener("focusout", function(){
         //response
         .then(function (response) {
             
-            //update UI if user is taken already
+            //update UI if email is taken already
             var feedback = document.querySelector("#emailFeedback");
                     
             if( response.data["status"] == "error"){

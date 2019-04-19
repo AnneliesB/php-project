@@ -6,7 +6,7 @@ loadMoreBtn.addEventListener("click", function(){
 
 
     //make Ajax call via Axios to loadMore.php
-    axios.post('ajax/loadMore.php',{
+    axios.post('ajax/load_more.php',{
         //something: something
     })
 
