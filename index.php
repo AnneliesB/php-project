@@ -25,7 +25,7 @@
     else {
         //No Search
         //Show 20 posts of friends on startpage
-        $statement = $conn->prepare("select * from photo where user_id IN ( select following_id from followers where user_id = :user_id ) order by id desc limit 20");
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) order by id desc limit 20");
         $statement->bindParam(":user_id", $user_id);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -57,7 +57,7 @@
         <div class="postContainer">
 
             <div class="postTopBar">
-                <div class="postUsername">Username<?php //Echo Username ?></div>
+                <div class="postUsername"><?php echo $result['username'] ?></div>
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
             </div>
 
