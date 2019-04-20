@@ -6,13 +6,15 @@ let posts = 2;
 //Select loadMore btn and listen for a click
 const loadMoreBtn = document.querySelector(".loadMoreBtn");
 loadMoreBtn.addEventListener("click", function(e){
+    //save current posts shown
+    shownPosts = posts;
     
     //increase posts to retrieve
     posts +=2;
 
     //make Ajax call via Axios to loadMore.php
     axios.post('ajax/load_more.php',{
-        posts: posts
+        shownPosts: shownPosts
     })
 
     //response

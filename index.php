@@ -86,16 +86,8 @@
         </div>
 
         <?php endforeach; ?>
-        
-        <form action="" method="post">
-            <input id="loadMoreValue" type="text" style="display: none" name="loadMore" value="2">
-            <input type="submit" class="loadMoreBtn grow" value="Load More">
-        </form>
 
-        <!--
-            //For Ajax feature
         <a><div class="loadMoreBtn grow">Load More</div></a>
-        -->
         
     <?php } //Closing if
 
