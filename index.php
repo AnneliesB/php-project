@@ -16,10 +16,11 @@
     $user_id = User::getUserId();
 
     //Check if Search is used
-    if(!empty($_POST['query'])){ 
-        $query = $_POST['query'];
-        $statement = $conn->prepare("select description, url from photo where description like '%". $query ."%'"); 
-        $statement->execute();       
+    if(!empty($_GET['query'])){ 
+        $query = $_GET['query'];
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%". $query ."%'"); 
+        $statement->execute();   
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);    
     }
 
     else {
@@ -48,6 +49,16 @@
 </head>
 <body class="index">
 
+    <header>
+        <form action="" method="GET">
+            <div class="formField">
+                <input type="text" id="query" name="query">
+                <input type="submit" name="submit" value="Search">
+            </div>
+        </form>
+
+    </header>
+
 <div class="feed">
 <?php 
     //Check if no post results (no friends or posts of friends found)
@@ -63,7 +74,7 @@
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
             </div>
 
-            <img class="postImg" src="images/<?php echo $result['url_cropped'] ?>"> 
+            <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg" src="images/<?php echo $result['url_cropped'] ?>"> </a>
             <p class="postDescription"><?php echo $result['description'] ?></p>
 
             <div class="postStats">
