@@ -15,7 +15,7 @@ body {
     font-weight: bold;
 }
 
-.formError{
+.formError {
     width: 70%;
     background-color: #DD614A;
     color: white;
@@ -25,7 +25,7 @@ body {
     border-radius: 5px;
 }
 
-.formInput{
+.formInput {
     width: 70%;
     margin-top: 1.5em;
     text-align: left;
@@ -33,11 +33,11 @@ body {
     margin-right: auto;
 }
 
-.formField{
+.formField {
     padding-bottom: 2em;
 }
 
-.formField label{
+.formField label {
     display: block;
     padding-bottom: 0.5em;
     text-align: left;
@@ -59,15 +59,15 @@ input[type=text], input[type=password], input[type=file], #description {
     height: auto;
 }
 
-.ajaxFeedback{
+.ajaxFeedback {
     color: tomato;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
-.btnPrimary{
+.btnPrimary {
     width: 100%;
     border: 1px solid #50a2a7;
     background-color: white;
@@ -88,23 +88,162 @@ input[type=text], input[type=password], input[type=file], #description {
     transition: 0.5s;
 }
 
-.redirectLink{
+.btnProfile{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-decoration: none;
+    padding: 0.5em;
+    width: 60%;
+    border: 1px solid #50a2a7;
+    background-color: white;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #50a2a7;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.btnProfile:hover{
+    color: white;
+    background-color: #50a2a7;
+    transition: 0.5s;
+}
+
+.lastItem{
+    margin-bottom: 4em;
+}
+
+.profilePicture{
+    width: 40%;
+    max-width: 200px;
+}
+
+.redirectLink {
     color: #797979;
 }
 
-.redirectLink a{
+.redirectLink a {
     text-decoration: none;
     color: #797979;
     font-weight: bold;
     text-decoration: underline;
 }
 
-@media(min-width: 980px){
+/*--------------------------------------
+            Index page
+--------------------------------------*/
+.index{
+    text-align: left;
+}
+
+.feed{
+    width: 90%;
+    margin: 0 auto;
+}
+
+.icon{
+    width: 2em;
+}
+
+.postContainer{
+    padding: 2em 0em;
+}
+
+.postImg{
+    width: 100%;
+    height: auto;
+}
+
+.postTopBar{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+}
+
+.postUsername{
+    display: inline-block;
+    width: calc(100% - 5em);
+    text-align: left;
+}
+
+.postDescription{
+    margin-top: 0;
+}
+
+.postStats{
+    display: flex;
+    justify-content: space-between;
+}
+
+.postLikes{
+    display: inline-block;
+    font-size: 1.5em;
+}
+
+.postComments{
+    display: inline-block;
+    font-size: 1.5em;
+}
+
+.commentInput{
+    width: calc(100% - 1em) !important;
+    padding-right: 5em;
+}
+
+.commentBtn{
+    border: 1px solid #50a2a7;
+    background-color: #50A2A7;
+    border-radius: 0px 5px 5px 0px;
+    height: 2em;
+    font-weight: bold;
+    font-size: 1em;
+    color: white;
+    cursor: pointer;
+    margin-left: -5em;
+    width: 5em;
+}
+
+.loadMoreBtn{
+    width: 50%;
+    margin: 2em auto 4em auto;
+    border: 1px solid #50a2a7;
+    background-color: white;
+    border-radius: 5px;
+    padding: 0.5em 0em;
+    font-weight: bold;
+    font-size: 1em;
+    color: #50a2a7;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+}
+
+.loadMoreBtn:hover{
+    border: 1px solid #50a2A7;
+    background-color: #50A2A7;
+    color: #fff;
+}
+
+.grow{
+    transition: all 0.2s ease-in-out;
+}
+.grow:hover{
+    transform: scale(1.1);
+}
+
+
+@media (min-width: 980px) {
     body {
         background-image: url(../images/background.jpeg);
     }
 
-    .login {
+    .index{
+        background-image: none;
+    }
+
+    .login, .profile, .editProfile, .editPassword {
         width: 50%;
         margin-left: auto;
         margin-right: auto;
@@ -121,7 +260,64 @@ input[type=text], input[type=password], input[type=file], #description {
 
     .flexbox .formField {
         width: 40%;
-    
-    }
-}
 
+    }
+
+    .profile{
+        text-align: center;
+        padding-top: 2em;
+        padding-bottom: 3em;
+    }
+
+    .profileContainer {
+        text-align: center;
+    }
+
+    .profileLabel {
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+
+    .btnProfile{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-decoration: none;
+        padding: 0.5em;
+        width: 30%;
+        border: 1px solid #50a2a7;
+        background-color: white;
+        border-radius: 5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        color: #50a2a7;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    .btnProfile:hover {
+        color: white;
+        background-color: #50a2a7;
+        transition: 0.5s;
+    }
+
+    .editProfile, .editPassword{
+        padding: 2em;
+        margin-top: 5em;
+    }
+
+    /*--------------------------------------
+            Index page
+    --------------------------------------*/
+    .feed{
+        width: 30%;
+        margin: 0 auto;
+    }
+
+    .postContainer{
+        
+    }
+
+
+}

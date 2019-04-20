@@ -1,7 +1,6 @@
 <?php
 require_once("Db.php");
 require_once("Security.php");
-
 class User{
     private $username;
     private $email;
@@ -11,8 +10,6 @@ class User{
     private $lastname;
     private $image;
     private $description;
-
-
     /**
      * @return username
      */
@@ -20,7 +17,6 @@ class User{
     {
         return $this->username;
     }
-
     /**
      * @param $username
      */
@@ -28,7 +24,6 @@ class User{
     {
         $this->username = $username;
     }
-
     /**
      * @return email
      */
@@ -36,7 +31,6 @@ class User{
     {
         return $this->email;
     }
-
     /**
      * @param $email
      */
@@ -44,7 +38,6 @@ class User{
     {
         $this->email = $email;
     }
-
     /**
      * @return password
      */
@@ -52,7 +45,6 @@ class User{
     {
         return $this->password;
     }
-
     /**
      * @param $password
      */
@@ -60,7 +52,6 @@ class User{
     {
         $this->password = $password;
     }
-
     /**
      * @return passwordConfirmation
      */
@@ -68,7 +59,6 @@ class User{
     {
         return $this->passwordConfirmation;
     }
-
     /**
      * @param $passwordConfirmation
      */
@@ -76,7 +66,6 @@ class User{
     {
         $this->passwordConfirmation = $passwordConfirmation;
     }
-
     /**
      * @return firstname
      */
@@ -84,7 +73,6 @@ class User{
     {
         return $this->firstname;
     }
-
     /**
      * @param $firstname
      */
@@ -92,7 +80,6 @@ class User{
     {
         $this->firstname = $firstname;
     }
-
     /**
      * @return lastname
      */
@@ -100,7 +87,6 @@ class User{
     {
         return $this->lastname;
     }
-
     /**
      * @param $lastname
      */
@@ -108,7 +94,6 @@ class User{
     {
         $this->lastname = $lastname;
     }
-
     /**
      * @return image
      */
@@ -116,7 +101,6 @@ class User{
     {
         return $this->image;
     }
-
     /**
      * @param $image
      */
@@ -124,7 +108,6 @@ class User{
     {
         $this->image = $image;
     }
-
     /**
      * @return description (bio)
      */
@@ -132,7 +115,6 @@ class User{
     {
         return $this->description;
     }
-
     /**
      * @param $description
      */
@@ -140,14 +122,11 @@ class User{
     {
         $this->description = $description;
     }
-
     /**
      * @return boolean - true if successful, false if unsuccessful
      */
     public function register(){
-        
         $hash = Security::hash($this->password);
-        
         try{
             $pdo = Db::getConnection();
             $statement = $pdo->prepare("insert into user (firstname, lastname, username, email, password) values (:firstname,:lastname,:username,:email,:password)");
@@ -161,15 +140,12 @@ class User{
         }
         catch( Throwable $t){
             $err = $t->getMessage();
-
             //Write this error to errorLog.txt file
             $file = fopen("errorLog.txt", "a");
             fwrite($file, $err."\n");
             fclose($file);
         }
-        
     }
-
     /*
     * Returns true if length of a string is longer than given allowedLength
     */
@@ -182,7 +158,6 @@ class User{
             return false;
         }
     }
-
     /*
     * Returns true if length of a string is shorter than given allowedLength
     */
@@ -195,7 +170,6 @@ class User{
             return false;
         }
     }
-
     /*
     * Find a user based on email addres
     */
@@ -206,11 +180,9 @@ class User{
         $statement->execute();
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
-
     //Check if a user exists by email address
     public static function isEmailAvailable($email){
         $result = self::findByEmail($email);
-        
         // PDO returns false if no records are found so let's check for that
         if($result == false){
             return true;
@@ -218,7 +190,6 @@ class User{
             return false;
         }
     }
-
     /*
     * Find a user based on username
     */
@@ -229,11 +200,9 @@ class User{
         $statement->execute();
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
-
     //Check if a user exists by username
     public static function isUsernameAvailable($username){
         $result = self::findByUsername($username);
-        
         // PDO returns false if no records are found so let's check for that
         if($result == false){
             return true;
@@ -241,7 +210,16 @@ class User{
             return false;
         }
     }
-
-
-
+    public static function getUserId(){
+        //Get email of loggedin user via session
+        $sessionEmail = $_SESSION['email'];
+        //Get the ID of current user
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select id from user where email = :sessionEmail");
+        $statement->bindParam(":sessionEmail", $sessionEmail);
+        $statement->execute();
+        $user_id = $statement->fetch(PDO::FETCH_ASSOC);
+        $user_id = $user_id['id'];
+        return $user_id;
+    }
 }

@@ -103,7 +103,7 @@
 </head>
 
 <body>
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="index.php" method="POST" enctype="multipart/form-data">
         <?php if (isset($error)): ?>
             <div class="formError">
                 <p>
