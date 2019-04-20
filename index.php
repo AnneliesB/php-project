@@ -17,8 +17,8 @@
     $user_id = User::getUserId();
 
     //Check if Search is used
-    if(!empty($_POST['query'])){ 
-        $query = $_POST['query'];
+    if(!empty($_GET['query'])){ 
+        $query = $_GET['query'];
         $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%". $query ."%'"); 
         $statement->execute();    
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -64,7 +64,7 @@
 <body class="index">
 
     <header>
-        <form action="" method="POST">
+        <form action="" method="GET">
             <div class="formField">
                 <input type="text" id="query" name="query">
                 <input type="submit" name="submit" value="Search">
