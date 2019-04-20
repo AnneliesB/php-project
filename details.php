@@ -29,10 +29,10 @@
     <link rel="stylesheet" href="css/style.css">
     <title>IMDSTAGRAM - detail page</title>
 </head>
-<body>
+<body class="index">
 
     <header>
-    
+
     </header>
 
     <main>
@@ -42,14 +42,16 @@
         <!-- echo description -->
         <p><?php echo $post['description']; ?></p>
 
-        <!-- echo comments -->
-        <?php foreach($comments as $comment): ?>
-            <!-- echo username -->
-            <p><strong> <?php $comment['username'] ?> </strong></p>
 
-            <!-- echo comment -->
-            <p> <?php $comment['comment'] ?> </p>
+        
+            <!-- echo comments -->
+        <?php foreach($comments as $comment): ?>
+            <div class="comments">
+                <!-- echo timestamp, username and comment -->
+                <p> <?php echo $comment['date'] . " " . $comment['username'] . " " . $comment['comment'] ?> </p>
+            </div>
         <?php endforeach;?>
+        
 
     </main>
 

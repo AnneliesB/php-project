@@ -187,6 +187,10 @@ input[type=text], input[type=password], input[type=file], #description {
     font-size: 1.5em;
 }
 
+.comments {
+    display: flex;
+}
+
 .commentInput{
     width: calc(100% - 1em) !important;
     padding-right: 5em;
