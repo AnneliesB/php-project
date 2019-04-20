@@ -69,25 +69,32 @@ if (!empty($_POST['query'])) {
 
             <div class="postContainer">
 
-                <div class="postTopBar">
-                    <div class="postUsername"><?php echo $result['username'] ?></div>
-                    <img class="icon postOptions" src="images/menu.svg" alt="options icon">
+            <div class="postTopBar">
+                <div class="postUsername"><?php echo $result['username'] ?></div>
+                <img class="icon postOptions" src="images/menu.svg" alt="options icon">
+            </div>
+
+            <img class="postImg" src="images/<?php echo $result['url_cropped'] ?>">
+            <p class="postDescription"><?php echo $result['description'] ?></p>
+
+            <div class="postStats">
+            <div>
+            <?php if (Likes::userHasLiked($result['id'], $user_id) == true) : ?>
+                <a href="#" data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon"
+                                                                                    src="images/liked.svg"
+                                                                                    alt="like icon"></a>
+            <?php else: ?>
+                    <a href="#" data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon"
+                                                                                        src="images/like.svg"
+                                                                                        alt="like icon"></a>
+                <?php endif ?>
+
+                <p class="postLikes"><?php echo Likes::getLikeAmount($result['id']); ?></p>
                 </div>
-
-                <img class="postImg" src="images/<?php echo $result['url_cropped'] ?>">
-                <p class="postDescription"><?php echo $result['description'] ?></p>
-
-                <div class="postStats">
-                    <div>
-                        <a href="#" data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon"
-                                                                                            src="images/like.svg"
-                                                                                            alt="like icon"></a>
-                        <p class="postLikes"><?php echo Likes::getLikeAmount($result['id']); ?></p>
-                    </div>
-                    <div>
-                        <p class="postComments">0<?php //echo number of comments ?></p>
-                        <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">
-                    </div>
+                <div>
+                    <p class="postComments">0<?php //echo number of comments ?></p>
+                    <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">
+                </div>
                 </div>
 
 
@@ -96,21 +103,21 @@ if (!empty($_POST['query'])) {
                     <input class="commentBtn" type="submit" value="Post">
                 </form>
 
-            </div>
+                </div>
 
-        <?php endforeach; ?>
+                <?php endforeach; ?>
 
-        <form action="" method="post">
-            <input type="text" style="display: none" name="loadMore" value="<?php echo $posts; ?>">
-            <input type="submit" class="loadMoreBtn grow" value="Load More">
-        </form>
+                <form action="" method="post">
+                    <input type="text" style="display: none" name="loadMore" value="<?php echo $posts; ?>">
+                    <input type="submit" class="loadMoreBtn grow" value="Load More">
+                </form>
 
-        <!--
-            //For Ajax feature
-        <a><div class="loadMoreBtn grow">Load More</div></a>
-        -->
+                <!--
+                    //For Ajax feature
+                <a><div class="loadMoreBtn grow">Load More</div></a>
+                -->
 
-    <?php } //Closing if
+                <?php } //Closing if
 
     else { //No posts of friends found, show empty state message
         ?>
@@ -127,6 +134,7 @@ if (!empty($_POST['query'])) {
 <script>
     $("a.like").on("click", function (e) {
         let postId = $(this).data("id");
+        let link = $(this);
         console.log("test");
 
         $.ajax({
@@ -136,8 +144,16 @@ if (!empty($_POST['query'])) {
             dataType: 'json'
         })
             .done(function (res) {
-                if (res.status == "success") {
-                    console.log("ja gelukt");
+                if (res.status == "liked") {
+                    let likes = link.next().html();
+                    link.children().attr("src", "images/liked.svg");
+                    likes++;
+                    link.next().html(likes);
+                } else {
+                    let likes = link.next().html();
+                    link.children().attr("src", "images/like.svg");
+                    likes--;
+                    link.next().html(likes);
                 }
             });
 
