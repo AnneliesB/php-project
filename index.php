@@ -130,36 +130,7 @@ if (!empty($_POST['query'])) {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-
-<script>
-    $("a.like").on("click", function (e) {
-        let postId = $(this).data("id");
-        let link = $(this);
-        console.log("test");
-
-        $.ajax({
-            method: "POST",
-            url: "ajax/likePost.php",
-            data: {postId: postId},
-            dataType: 'json'
-        })
-            .done(function (res) {
-                if (res.status == "liked") {
-                    let likes = link.next().html();
-                    link.children().attr("src", "images/liked.svg");
-                    likes++;
-                    link.next().html(likes);
-                } else {
-                    let likes = link.next().html();
-                    link.children().attr("src", "images/like.svg");
-                    likes--;
-                    link.next().html(likes);
-                }
-            });
-
-        e.preventDefault();
-    });
-</script>
+<script src="js/saveLikes.js"></script>
 
 </body>
 </html>
