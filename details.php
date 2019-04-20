@@ -42,16 +42,25 @@
         <!-- echo description -->
         <p><?php echo $post['description']; ?></p>
 
-
-        
+        <?php if( !empty($comments) ){ ?>        
             <!-- echo comments -->
-        <?php foreach($comments as $comment): ?>
-            <div class="comments">
-                <!-- echo timestamp, username and comment -->
-                <p> <?php echo $comment['date'] . " " . $comment['username'] . " " . $comment['comment'] ?> </p>
-            </div>
-        <?php endforeach;?>
+            <?php foreach($comments as $comment): ?>
+                <div class="comments">
+                    <!-- echo timestamp, username and comment -->
+                    <p> <?php echo $comment['date'] . " " . $comment['username'] . " " . $comment['comment'] ?> </p>
+                </div>
+            <?php endforeach;?>
+            
         
+        <?php } //Closing if
+            else{ //No comments ?>
+                <p class="postContainer">Be the first to comment!</p>
+        <?php } //Closing else ?>
+
+        <form>
+            <input class="commentInput" type="text" name="comment" placeholder="comment...">
+            <input class="commentBtn" type="submit" value="Post">
+        </form>
 
     </main>
 
