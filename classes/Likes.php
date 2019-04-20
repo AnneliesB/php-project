@@ -56,7 +56,8 @@ class Likes
     }
 
 
-    public static function getLikeAmount($postId){
+    public static function getLikeAmount($postId)
+    {
         $conn = Db::getConnection();
         // get post id from database
         $statement = $conn->prepare("select count(*) as count from likes where post_id = :postid AND liked_status='1'");
@@ -64,6 +65,25 @@ class Likes
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         return $result['count'];
+
+    }
+
+    public static function userHasLiked($postId, $userId)
+    {
+        $conn = Db::getConnection();
+        $statementCheck = $conn->prepare("SELECT count(*) as count from likes where post_id = :postId AND user_id = :userId AND liked_status='1'");
+        $statementCheck->bindParam(":postId", $postId);
+        $statementCheck->bindParam(":userId", $userId);
+        $statementCheck->execute();
+        $result = $statementCheck->fetch(PDO::FETCH_ASSOC);
+
+        if ($result['count'] == 0) {
+            # there are no records with this combo, so no likes from this user on this post yet
+            return false;
+        } else {
+            # there is a record from this user on this post where the liked_status is true
+            return true;
+        }
 
     }
 }
