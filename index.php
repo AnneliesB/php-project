@@ -1,4 +1,4 @@
-<?php 
+<?php
     require_once("bootstrap/bootstrap.php");
 
     //Check if user session is active (Is user logged in?)
@@ -16,10 +16,10 @@
     $user_id = User::getUserId();
 
     //Check if Search is used
-    if(!empty($_POST['query'])){ 
+    if(!empty($_POST['query'])){
         $query = $_POST['query'];
-        $statement = $conn->prepare("select description, url from photo where description like '%". $query ."%'"); 
-        $statement->execute();       
+        $statement = $conn->prepare("select description, url from photo where description like '%". $query ."%'");
+        $statement->execute();
     }
 
     else {
@@ -38,15 +38,15 @@
             //add extra posts to show
             $posts += 2;
         }
-        
+
         //Get posts from DB and put them in $results
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) order by id desc limit $posts");
+        $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) order by id desc limit $posts");
         $statement->bindParam(":user_id", $user_id);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    
+
 
 
 ?><!DOCTYPE html>
@@ -62,7 +62,7 @@
 <body class="index">
 
 <div class="feed">
-<?php 
+<?php
     //Check if no post results (no friends or posts of friends found)
     if( !empty($results) ){
 
@@ -76,20 +76,20 @@
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
             </div>
 
-            <img class="postImg" src="images/<?php echo $result['url_cropped'] ?>"> 
+            <img class="postImg" src="images/<?php echo $result['url_cropped'] ?>">
             <p class="postDescription"><?php echo $result['description'] ?></p>
 
             <div class="postStats">
                 <div>
-                    <a href=""><img class="icon postLikeIcon" src="images/like.svg" alt="like icon"></a>
-                    <p class="postLikes">0<?php //echo number of likes ?></p>
+                    <a href="" data-id="<?php echo $result['id'] ?>"><img class="icon postLikeIcon" src="images/like.svg" alt="like icon"></a>
+                    <p class="postLikes"><?php echo Likes::getLikeAmount($result['id']);?></p>
                 </div>
                 <div>
                     <p class="postComments">0<?php //echo number of comments ?></p>
-                    <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">  
+                    <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">
                 </div>
             </div>
-            
+
 
             <form>
                 <input class="commentInput" type="text" name="comment" placeholder="comment...">
@@ -99,7 +99,7 @@
         </div>
 
         <?php endforeach; ?>
-        
+
         <form action="" method="post">
             <input type="text" style="display: none" name="loadMore" value="<?php echo $posts; ?>">
             <input type="submit" class="loadMoreBtn grow" value="Load More">
@@ -109,15 +109,15 @@
             //For Ajax feature
         <a><div class="loadMoreBtn grow">Load More</div></a>
         -->
-        
+
     <?php } //Closing if
 
     else{ //No posts of friends found, show empty state message ?>
 
         <p class="postContainer">Try following friends and other users to see what they have been up to!</p>
-    
+
     <?php } //Closing else ?>
 </div>
-    
+
 </body>
 </html>
