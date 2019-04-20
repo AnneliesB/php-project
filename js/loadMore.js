@@ -2,7 +2,7 @@
 
 //Select loadMore btn and listen for a click
 const loadMoreBtn = document.querySelector(".loadMoreBtn");
-loadMoreBtn.addEventListener("click", function(){
+loadMoreBtn.addEventListener("click", function(e){
 
 
     //make Ajax call via Axios to loadMore.php
@@ -12,6 +12,9 @@ loadMoreBtn.addEventListener("click", function(){
 
     //response
     .then(function (response) {
+
+        //Check response in console
+        console.log(response.data);
         
         //update UI with posts
                 
@@ -22,5 +25,5 @@ loadMoreBtn.addEventListener("click", function(){
         console.log(error);
     });
 
-
+    e.preventDefault();
 });
