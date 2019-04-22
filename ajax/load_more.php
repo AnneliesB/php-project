@@ -18,7 +18,7 @@
     if( $searchQuery !== null){
 
         //we are on a search results page, show more search results!
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%". $searchQuery ."%' LIMIT $startpoint, 2"); 
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%". $searchQuery ."%' order by id desc LIMIT $startpoint, 2"); 
         $statement->execute();   
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
