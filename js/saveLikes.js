@@ -1,30 +1,36 @@
-$("a.like").on("click", function (e) {
-    let postId = $(this).data("id");
-    let link = $(this);
+let knop = document.querySelector("a.like");
+knop.addEventListener("click", function(e){
+    let postId = this.dataset.id;
+    let link = this;
     console.log("test");
+    console.log(postId + " post id");
 
-    $.ajax({
-        method: "POST",
-        url: "ajax/likePost.php",
-        data: {postId: postId},
-        dataType: 'json'
+    axios.post('ajax/likePost.php',{
+        postId : postId
+
     })
-        .done(function (res) {
-           //  let image = document.querySelector(".postLikeIcon");
-           //  let likeCounter = document.querySelector(".postLikes");
+        .then (function (res){
+            console.log(res.status + "ne res");
+            let img = document.querySelector(".postLikeIcon");
             if (res.status == "liked") {
+                console.log("we zitten ion de liked");
 
-                let likes = link.next().html();
-                link.children().attr("src", "images/liked.svg");
+                let likes = link.nextSibling.innerHTML;
+                link.children.src = "images/liked.svg";
                 likes++;
-                link.next().html(likes);
+                link.nextSibling.innerHTML=likes;
             } else {
-                let likes = link.next().html();
-                link.children().attr("src", "images/like.svg");
+                console.log("we zitten ion de niet liked");
+                let likes = link.nextSibling.innerHTML;
+                link.children.src = "images/like.svg";
                 likes--;
-                link.next().html(likes);
+                link.nextSibling.innerHTML=likes;
             }
+        })
+        .catch(function (error) {
+            console.log(error);
         });
+
 
     e.preventDefault();
 });
