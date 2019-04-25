@@ -10,7 +10,10 @@ $("a.like").on("click", function (e) {
         dataType: 'json'
     })
         .done(function (res) {
+           //  let image = document.querySelector(".postLikeIcon");
+           //  let likeCounter = document.querySelector(".postLikes");
             if (res.status == "liked") {
+
                 let likes = link.next().html();
                 link.children().attr("src", "images/liked.svg");
                 likes++;
