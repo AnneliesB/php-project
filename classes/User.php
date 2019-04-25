@@ -26,7 +26,26 @@ class User{
      */
     public function setUsername($username)
     {
+        //Check if not empty
+        if( empty($username) ){
+            throw new Exception("Username cannot be empty.");
+        }
+
+        //Check if username is not longer than 30chars
+        if( User::maxLength($username, 30)){
+            throw new Exception("Username cannot be longer than 30 characters.");
+        }
+
+        //Check if username is not in our DB yet
+        if( !User::isUsernameAvailable($username) ){
+            throw new Exception("This username is already registered.");
+        }
+        
+        //username not too long, set username
         $this->username = $username;
+        return $this;
+        
+        
     }
 
     /**
@@ -42,7 +61,22 @@ class User{
      */
     public function setEmail($email)
     {
+        //Check if not empty
+        if( empty($email) ){
+            throw new Exception("Email cannot be empty.");
+        }
+
+        //Check if email is legit
+        if( !filter_var($email, FILTER_VALIDATE_EMAIL) ) {
+            throw new Exception("Please use a valid email address!");
+        }
+        //Check if email is not in our DB yet
+        if( !User::isEmailAvailable($email) ){
+            throw new Exception("A user with this email address is already registered.");
+        }
+
         $this->email = $email;
+        return $this;
     }
 
     /**
@@ -58,7 +92,19 @@ class User{
      */
     public function setPassword($password)
     {
+
+        //Check if not empty
+        if( empty($password) ){
+            throw new Exception("Password cannot be empty.");
+        }
+
+        //Check if password has minimum length of 8 chars
+        if( User::minLength($password, 8)){
+            throw new Exception("Password must be minimum 8 chars long.");
+        }
+        
         $this->password = $password;
+        return $this;
     }
 
     /**
@@ -74,7 +120,19 @@ class User{
      */
     public function setPasswordConfirmation($passwordConfirmation)
     {
+        //Check if not empty
+        if( empty($passwordConfirmation) ){
+            throw new Exception("Password Confirmation cannot be empty.");
+        }
+
+        //Do passwords equal?
+        if( $this->getPassword() !== $passwordConfirmation){
+            //Passwords do not equal, throw exception
+            throw new Exception("Password fields are not equal, please enter them again");
+        }
+
         $this->passwordConfirmation = $passwordConfirmation;
+        return $this;
     }
 
     /**
@@ -90,7 +148,18 @@ class User{
      */
     public function setFirstname($firstname)
     {
+        //Check if not empty
+        if( empty($firstname) ){
+            throw new Exception("Firstname cannot be empty.");
+        }
+
+        //Check if firstname is not longer than 30chars
+        if( User::maxLength($firstname, 30)){
+            throw new Exception("Firstname cannot be longer than 30 characters.");
+        }
+
         $this->firstname = $firstname;
+        return $this;
     }
 
     /**
@@ -106,7 +175,18 @@ class User{
      */
     public function setLastname($lastname)
     {
+        //Check if not empty
+        if( empty($lastname) ){
+            throw new Exception("Lastname cannot be empty.");
+        }
+
+        //Check if lastname is not longer than 30chars
+        if( User::maxLength($lastname, 30)){
+            throw new Exception("Lastname cannot be longer than 30 characters.");
+        }
+
         $this->lastname = $lastname;
+        return $this;
     }
 
     /**
@@ -168,6 +248,15 @@ class User{
             fclose($file);
         }
 
+    }
+
+    public function login(){
+        //session start is already done in bootstrap!
+        //set email session
+        $_SESSION['email'] = $this->getEmail();
+
+        //Redirect to index
+        header("location: index.php");
     }
 
     /*
