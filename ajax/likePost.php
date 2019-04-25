@@ -18,7 +18,6 @@ $conn = Db::getConnection();
 $data = json_decode(file_get_contents("php://input"), true);
 //get start point of new posts to load
 $postId = $data['postId'];
-var_dump($data);
 # create empty response array
 $response = [];
 
