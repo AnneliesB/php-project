@@ -54,7 +54,10 @@ if (!empty($_POST)) {
             <input type="file" id="image" name="image">
         </div>
 
-        <h3><?php echo $userProfile['username']; ?></h3>
+        <div class="formField">
+            <label for="username">username</label>
+            <input type="text" id="username" name="username" value="<?php echo $userProfile['username']; ?>">
+        </div>
 
         <div class="formField">
             <label for="email">Email</label>
