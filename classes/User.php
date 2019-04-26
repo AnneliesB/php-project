@@ -312,7 +312,6 @@ class User
         }
     }
 
-
     public static function doChangeProfile($email, $password)
     {
         $sessionEmail = self::getSessionEmail();
