@@ -72,6 +72,7 @@
             <div class="postTopBar">
                 <div class="postUsername"><?php echo $result['username'] ?></div>
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
+                <a href="#" class="inappropiate">Inappropiate</a>
             </div>
 
             <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg" src="images/<?php echo $result['url_cropped'] ?>"> </a>
@@ -109,6 +110,13 @@
     <?php } //Closing else ?>
 </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="js/loadMore.js"></script>
+    <script src="js/inappropiate.js">
+    
+    
+    
+    
+    </script>
 </body>
 </html>
