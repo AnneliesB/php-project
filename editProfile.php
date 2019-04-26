@@ -55,7 +55,7 @@ if (!empty($_POST)) {
         </div>
 
         <div class="formField">
-            <label for="username">username</label>
+            <label for="username">Username</label>
             <input type="text" id="username" name="username" value="<?php echo $userProfile['username']; ?>">
         </div>
 
