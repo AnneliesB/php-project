@@ -280,6 +280,19 @@ class User
         $updateStatement->execute();
     }
 
+    public static function checkIfNewUsername($username)
+    {
+        if (empty($username)) {
+            return false;
+        } else {
+            if (User::isUsernameAvailable($username) != true) {
+                throw new Exception("Username is not available");
+            } else {
+                return true;
+            }
+        }
+    }
+
     public static function canChangePassword($oldPassword, $newPassword, $confirmNewPassword)
     {
         $sessionEmail = self::getSessionEmail();
@@ -336,12 +349,9 @@ class User
                         $image = $_FILES['image']['name'];
                         $description = $_POST['description'];
                         $username = $_POST['username'];
-                        if(empty($username)){
+
+                        if (self::checkIfNewUsername($username) == false) {
                             $username = $userProfile['username'];
-                        } else {
-                            if(User::isUsernameAvailable($username) != true){
-                                throw new Exception("Username is not available");
-                            }
                         }
 
                         # update the database
@@ -371,12 +381,9 @@ class User
                         $description = $_POST['description'];
                         $email = $_POST['email'];
                         $username = $_POST['username'];
-                        if(empty($username)){
+
+                        if (self::checkIfNewUsername($username) == false) {
                             $username = $userProfile['username'];
-                        } else {
-                            if(User::isUsernameAvailable($username) != true){
-                                throw new Exception("Username is not available");
-                            }
                         }
 
                         $updateStatement = $conn->prepare("UPDATE user set description= :newDescription, username = :username, email = :newEmail where email = :sessionEmail");
@@ -419,13 +426,11 @@ class User
                     $image = $_FILES['image']['name'];
                     $description = $_POST['description'];
                     $username = $_POST['username'];
-                    if(empty($username)){
+
+                    if (self::checkIfNewUsername($username) == false) {
                         $username = $userProfile['username'];
-                    } else {
-                        if(User::isUsernameAvailable($username) != true){
-                            throw new Exception("Username is not available");
-                        }
                     }
+
                     $updateStatement = $conn->prepare("UPDATE user set description=:newDescription, username = :username, image=:image where email=:sessionEmail");
                     $updateStatement->bindParam(":newDescription", $description);
                     $updateStatement->bindParam(":sessionEmail", $sessionEmail);
@@ -448,13 +453,11 @@ class User
 
                     $description = $_POST['description'];
                     $username = $_POST['username'];
-                    if(empty($username)){
+
+                    if (self::checkIfNewUsername($username) == false) {
                         $username = $userProfile['username'];
-                    } else {
-                        if(User::isUsernameAvailable($username) != true){
-                            throw new Exception("Username is not available");
-                        }
                     }
+
                     $updateStatement = $conn->prepare("UPDATE user set description= :newDescription, username = :username where email = :sessionEmail");
                     $updateStatement->bindParam(":newDescription", $description);
                     $updateStatement->bindParam(":sessionEmail", $sessionEmail);
