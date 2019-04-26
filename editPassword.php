@@ -10,69 +10,21 @@
     header("location: login.php");
     }
 
-
   if(!empty($_POST)) {
-    $conn = Db::getConnection();
 
-    # get current user's info
-    $sessionEmail = $_SESSION['email'];
-    $statement = $conn->prepare("SELECT * from user where email = :sessionEmail");
-    $statement->bindParam(':sessionEmail', $sessionEmail);
-    $statement->execute();
-    $user = $statement->fetch(PDO::FETCH_ASSOC);
+    $oldPassword = $_POST['password'];
+    $newPassword = $_POST['newPassword'];
+    $confirmNewPassword = $_POST['confirmNewPassword'];
 
-
-
-    $oldPassword = htmlspecialchars($_POST['password']);
-    $newPassword = htmlspecialchars($_POST['newPassword']);
-    $confirmNewPassword = htmlspecialchars($_POST['confirmNewPassword']);
-
-    // CHECK password to change data
-    # compare current password from input to database password
-    if (password_verify($oldPassword, $user['password'])) {
-
-        # check if newPassword is filled in // change to !empty?
-        if (isset($newPassword)) {
-
-            # check if newPassword is strong enough and is the same as confirmNewPassword
-            if ((strlen($newPassword) >= 8) && $newPassword == $confirmNewPassword) {
-
-              $hashNewPassword =  Security::hash($newPassword);
-
-              // UPDATE new data
-              $updateStatement = $conn->prepare("update user set password= :newPassword where email = :email");
-              $updateStatement->bindParam(":email", $sessionEmail);
-              $updateStatement->bindParam(":newPassword", $hashNewPassword);
-              $updateStatement->execute();
-
-
-              $error = "ok";
-
-            }
-
-            else {
-                # check why the newPassword is not accepted
-                if ((strlen($newPassword) >= 8) == false) {
-                    $error = "New password is not strong/long enough";
-                }
-
-                else {
-                    $error = "New password does not match the confirmation password";
-                }
-            }
-
-        }
-
-        else {
-            # we won't update the password
-            # check if email is not empty
-            # check if image is correct
-        }
+    try{if(User::canChangePassword($oldPassword, $newPassword, $confirmNewPassword) == true){
+        User::doChangePassword($newPassword);
+        $error="Your password has been successfully updated";
+    }
+    }catch(Throwable $t){
+        $error=$t->getMessage();
     }
 
-    else {
-        $error = "Wrong password";
-    }
+
   }
 
 ?><!DOCTYPE html>
