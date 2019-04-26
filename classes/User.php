@@ -381,10 +381,10 @@ class User
                     if (empty($email)) {
                         throw new Exception("Please fill in an email address");
 
-                    } else if (User::isEmailAvailable($email) == false){
+                    } else if (User::isEmailAvailable($email) == false) {
                         throw new Exception("This email is not available");
 
-                    } else if(filter_var($email, FILTER_VALIDATE_EMAIL) == false){
+                    } else if (filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
                         throw new Exception("Please use a valid email address");
                     } else {
                         throw new Exception("Something went wrong");

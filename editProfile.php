@@ -9,11 +9,9 @@ if (isset($_SESSION['email'])) {
     //User is not logged in, redirect to login.php!
     header("location: login.php");
 }
-
 # connect to load data
 $sessionEmail = User::getSessionEmail();
-$userProfile=User::findByEmail($sessionEmail);
-
+$userProfile = User::findByEmail($sessionEmail);
 if (!empty($_POST)) {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -26,8 +24,6 @@ if (!empty($_POST)) {
         $error = $t->getMessage();
     }
 }
-
-
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
