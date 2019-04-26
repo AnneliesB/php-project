@@ -256,6 +256,25 @@ class User{
         return $user_id;
     }
 
+    public static function canLogin($email, $password){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select * from user where email = :email");
+        $statement->bindParam(":email", $email); # the email parameter is bound to :email to prevent sql-injection
+        $statement->execute();
+        $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if (password_verify($password, $user['password'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function doLogin($email){
+        $_SESSION['email'] = $email;
+        header("location: index.php");
+    }
+
 
 
 }
