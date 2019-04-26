@@ -69,32 +69,32 @@ if (!empty($_POST['query'])) {
 
             <div class="postContainer">
 
-            <div class="postTopBar">
-                <div class="postUsername"><?php echo $result['username'] ?></div>
-                <img class="icon postOptions" src="images/menu.svg" alt="options icon">
-            </div>
-
-            <img class="postImg" src="images/<?php echo $result['url_cropped'] ?>">
-            <p class="postDescription"><?php echo $result['description'] ?></p>
-
-            <div class="postStats">
-            <div>
-            <?php if (Like::userHasLiked($result['id'], $user_id) == true) : ?>
-                <a href="#" data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon"
-                                                                                    src="images/liked.svg"
-                                                                                    alt="like icon"></a>
-            <?php else: ?>
-                    <a href="#" data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon"
-                                                                                        src="images/like.svg"
-                                                                                        alt="like icon"></a>
-                <?php endif ?>
-
-                <p class="postLikes"><?php echo Like::getLikeAmount($result['id']); ?></p>
+                <div class="postTopBar">
+                    <div class="postUsername"><?php echo $result['username'] ?></div>
+                    <img class="icon postOptions" src="images/menu.svg" alt="options icon">
                 </div>
-                <div>
-                    <p class="postComments">0<?php //echo number of comments ?></p>
-                    <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">
-                </div>
+
+                <img class="postImg" src="images/<?php echo $result['url_cropped'] ?>">
+                <p class="postDescription"><?php echo $result['description'] ?></p>
+
+                <div class="postStats">
+                    <div>
+                        <?php if (Like::userHasLiked($result['id'], $user_id) == true) : ?>
+                            <span data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon"
+                                                                                          src="images/liked.svg"
+                                                                                          alt="like icon"></span>
+                        <?php else: ?>
+                            <span data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon"
+                                                                                          src="images/like.svg"
+                                                                                          alt="like icon"></span>
+                        <?php endif ?>
+
+                        <p class="postLikes"><?php echo Like::getLikeAmount($result['id']); ?></p>
+                    </div>
+                    <div>
+                        <p class="postComments">0<?php //echo number of comments ?></p>
+                        <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">
+                    </div>
                 </div>
 
 
@@ -103,21 +103,21 @@ if (!empty($_POST['query'])) {
                     <input class="commentBtn" type="submit" value="Post">
                 </form>
 
-                </div>
+            </div>
 
-                <?php endforeach; ?>
+        <?php endforeach; ?>
 
-                <form action="" method="post">
-                    <input type="text" style="display: none" name="loadMore" value="<?php echo $posts; ?>">
-                    <input type="submit" class="loadMoreBtn grow" value="Load More">
-                </form>
+        <form action="" method="post">
+            <input type="text" style="display: none" name="loadMore" value="<?php echo $posts; ?>">
+            <input type="submit" class="loadMoreBtn grow" value="Load More">
+        </form>
 
-                <!--
-                    //For Ajax feature
-                <a><div class="loadMoreBtn grow">Load More</div></a>
-                -->
+        <!--
+            //For Ajax feature
+        <a><div class="loadMoreBtn grow">Load More</div></a>
+        -->
 
-                <?php } //Closing if
+    <?php } //Closing if
 
     else { //No posts of friends found, show empty state message
         ?>
