@@ -267,7 +267,8 @@ class User
         return $_SESSION['email'];
     }
 
-    public static function doChangePassword($newPassword){
+    public static function doChangePassword($newPassword)
+    {
         $conn = Db::getConnection();
         $sessionEmail = self::getSessionEmail();
         $hashNewPassword = Security::hash($newPassword);
@@ -293,25 +294,145 @@ class User
 
                 # check if newPassword is strong enough and is the same as confirmNewPassword
                 if ((strlen($newPassword) >= 8) && $newPassword == $confirmNewPassword) {
-
-                 return true;
+                    return true;
 
                 } else {
                     # check why the newPassword is not accepted
                     if ((strlen($newPassword) >= 8) == false) {
                         throw new Exception("New password is not strong/long enough");
-
                     } else {
                         throw new Exception("New password does not match the confirmation password");
-
                     }
                 }
-
             } else {
                 throw new Exception("Please fill in a new password");
             }
         } else {
             throw new Exception("Wrong password");
+        }
+    }
+
+
+    public static function doChangeProfile($email, $password)
+    {
+        $sessionEmail = self::getSessionEmail();
+        $userProfile = self::findByEmail($sessionEmail);
+        $conn = Db::getConnection();
+
+        if (password_verify($password, $userProfile['password'])) {
+
+            # check if email has changed
+            if ($email != $userProfile['email']) {
+
+                # check if new email is available and is a valid email address
+                if (User::isEmailAvailable($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+                    # echo !empty($_FILES['image']['size'] == 0) ? 'true' : 'false';
+                    # https://stackoverflow.com/questions/14458553/check-if-specific-input-file-is-empty/14458594#14458594
+                    # check if a new image has been uploaded - size has to be bigger than 0
+                    if ($_FILES['image']['size'] != 0) {
+
+                        # save new Email + image + description
+
+                        $image = $_FILES['image']['name'];
+                        $description = $_POST['description'];
+
+                        # update the database
+                        $updateStatement = $conn->prepare("UPDATE user set description=:newDescription, image=:image, email=:newEmail where email=:sessionEmail");
+                        $updateStatement->bindParam(":newDescription", $description);
+                        $updateStatement->bindParam(":image", $image);
+                        $updateStatement->bindParam(":newEmail", $email);
+                        $updateStatement->bindParam(":sessionEmail", $sessionEmail);
+                        $updateStatement->execute();
+
+                        # change session email value
+                        $_SESSION['email'] = $email;
+
+                        // image file directory
+                        $target = "images/profilePictures/" . $userProfile['id'] . basename($image);
+
+                        // move file
+                        move_uploaded_file($_FILES['image']['tmp_name'], $target);
+
+                        return true;
+
+                    } else {
+                        # no new image
+                        # save new email + description
+
+                        $description = $_POST['description'];
+                        $email = $_POST['email'];
+
+                        $updateStatement = $conn->prepare("UPDATE user set description= :newDescription, email = :newEmail where email = :sessionEmail");
+                        $updateStatement->bindParam(":newEmail", $email);
+                        $updateStatement->bindParam(":newDescription", $description);
+                        $updateStatement->bindParam(":sessionEmail", $sessionEmail);
+                        $updateStatement->execute();
+
+                        # change session email value
+                        $_SESSION['email'] = $email;
+
+                        return true;
+
+
+                    }
+
+                } else {
+                    if (empty($email)) {
+                        throw new Exception("Please fill in an email address");
+
+                    } else if (User::isEmailAvailable($email) == false){
+                        throw new Exception("This email is not available");
+
+                    } else if(filter_var($email, FILTER_VALIDATE_EMAIL) == false){
+                        throw new Exception("Please use a valid email address");
+                    } else {
+                        throw new Exception("Something went wrong");
+                    }
+                }
+
+            } else {
+                # no new email address
+                # check if a new image has been uploaded
+
+                if ($_FILES['image']['size'] != 0) {
+                    # save new image
+                    # save description - no need to check, description can be empty
+
+                    $image = $_FILES['image']['name'];
+                    $description = $_POST['description'];
+                    $updateStatement = $conn->prepare("UPDATE user set description=:newDescription, image=:image where email=:sessionEmail");
+                    $updateStatement->bindParam(":newDescription", $description);
+                    $updateStatement->bindParam(":sessionEmail", $sessionEmail);
+                    $updateStatement->bindParam(":image", $image);
+                    $updateStatement->execute();
+
+                    # sla images lokaal op
+                    // image file directory
+                    $target = "images/profilePictures/" . $userProfile['id'] . basename($image);
+
+                    // move file
+                    move_uploaded_file($_FILES['image']['tmp_name'], $target);
+
+                    return true;
+
+                } else {
+                    # no new image
+                    #save description
+
+                    $description = $_POST['description'];
+                    $updateStatement = $conn->prepare("UPDATE user set description= :newDescription where email = :sessionEmail");
+                    $updateStatement->bindParam(":newDescription", $description);
+                    $updateStatement->bindParam(":sessionEmail", $sessionEmail);
+                    $updateStatement->execute();
+
+                    return true;
+                }
+
+            }
+
+        } else {
+            throw new Exception("Your password is incorrect. Please try again.");
 
         }
     }

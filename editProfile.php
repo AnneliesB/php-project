@@ -3,140 +3,27 @@
 require_once("bootstrap/bootstrap.php");
 
 //Check if user session is active (Is user logged in?)
-if( isset($_SESSION['email']) ){
+if (isset($_SESSION['email'])) {
     //User is logged in, no redirect needed!
-}else{
+} else {
     //User is not logged in, redirect to login.php!
-   header("location: login.php");
+    header("location: login.php");
 }
 
 # connect to load data
-$conn = Db::getConnection();
-$sessionEmail = $_SESSION['email'];
-
-$statement = $conn->prepare("SELECT * from user where email = :sessionEmail");
-$statement->bindParam(":sessionEmail", $sessionEmail);
-$statement->execute();
-$userProfile = $statement->fetch(PDO::FETCH_ASSOC);
-
+$sessionEmail = User::getSessionEmail();
+$userProfile=User::findByEmail($sessionEmail);
 
 if (!empty($_POST)) {
-
-    $email = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['password']);
-
-    if (password_verify($password, $userProfile['password'])) {
-
-        # check if email has changed
-        if ($email != $userProfile['email']) {
-
-            # check if new email is available and is a valid email address
-            if (User::isEmailAvailable($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
-                # echo !empty($_FILES['image']['size'] == 0) ? 'true' : 'false';
-                # https://stackoverflow.com/questions/14458553/check-if-specific-input-file-is-empty/14458594#14458594
-                # check if a new image has been uploaded - size has to be bigger than 0
-                if ($_FILES['image']['size'] != 0) {
-
-                    # save new Email + image + description
-
-                    $image = $_FILES['image']['name'];
-                    $description = htmlspecialchars($_POST['description']);
-
-                    # update the database
-                    $updateStatement = $conn->prepare("UPDATE user set description=:newDescription, image=:image, email=:newEmail where email=:sessionEmail");
-                    $updateStatement->bindParam(":newDescription", $description);
-                    $updateStatement->bindParam(":image", $image);
-                    $updateStatement->bindParam(":newEmail", $email);
-                    $updateStatement->bindParam(":sessionEmail", $sessionEmail);
-                    $updateStatement->execute();
-
-                    # change session email value
-                    $_SESSION['email'] = $email;
-
-                    // image file directory
-                    $target = "images/profilePictures/" . $userProfile['id'] . basename($image);
-
-                    // move file
-                    move_uploaded_file($_FILES['image']['tmp_name'], $target);
-
-                    # go back to profile page to view changes
-                    header("location: profile.php");
-
-                } else {
-                    # no new image
-                    # save new email + description
-
-                    $description = htmlspecialchars($_POST['description']);
-                    $email = htmlspecialchars($_POST['email']);
-
-                    $updateStatement = $conn->prepare("UPDATE user set description= :newDescription, email = :newEmail where email = :sessionEmail");
-                    $updateStatement->bindParam(":newEmail", $email);
-                    $updateStatement->bindParam(":newDescription", $description);
-                    $updateStatement->bindParam(":sessionEmail", $sessionEmail);
-                    $updateStatement->execute();
-
-                    # change session email value
-                    $_SESSION['email'] = $email;
-
-                    # go back to profile page to view changes
-                    header("location: profile.php");
-
-
-                }
-
-            } else {
-                if (User::isEmailAvailable($email) == false) {
-                    $error = "This email is not available";
-                } else {
-                    $error = "Please use a valid email address";
-                }
-            }
-
-        } else {
-            # no new email address
-            # check if a new image has been uploaded
-
-            if ($_FILES['image']['size'] != 0) {
-                # save new image
-                # save description - no need to check, description can be empty
-
-                $image = $_FILES['image']['name'];
-                $description = htmlspecialchars($_POST['description']);
-                $updateStatement = $conn->prepare("UPDATE user set description=:newDescription, image=:image where email=:sessionEmail");
-                $updateStatement->bindParam(":newDescription", $description);
-                $updateStatement->bindParam(":sessionEmail", $sessionEmail);
-                $updateStatement->bindParam(":image", $image);
-                $updateStatement->execute();
-
-                # sla images lokaal op
-                // image file directory
-                $target = "images/profilePictures/" . $userProfile['id'] . basename($image);
-
-                // move file
-                move_uploaded_file($_FILES['image']['tmp_name'], $target);
-
-                # go back to profile page to view changes
-                header("location: profile.php");
-
-            } else {
-                # no new image
-                #save description
-
-                $description = htmlspecialchars($_POST['description']);
-                $updateStatement = $conn->prepare("UPDATE user set description= :newDescription where email = :sessionEmail");
-                $updateStatement->bindParam(":newDescription", $description);
-                $updateStatement->bindParam(":sessionEmail", $sessionEmail);
-                $updateStatement->execute();
-
-                # go back to profile page to view changes
-                header("location: profile.php");
-            }
-
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    try {
+        if (User::doChangeProfile($email, $password) == true) {
+            # go back to profile page to view changes
+            header("location: profile.php");
         }
-
-    } else {
-        $error = "Your password is incorrect. Please try again.";
+    } catch (Throwable $t) {
+        $error = $t->getMessage();
     }
 }
 
