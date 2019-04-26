@@ -336,11 +336,16 @@ class User
 
                         $image = $_FILES['image']['name'];
                         $description = $_POST['description'];
+                        $username = $_POST['username'];
+                        if(empty($username)){
+                            $username = $userProfile['username'];
+                        }
 
                         # update the database
-                        $updateStatement = $conn->prepare("UPDATE user set description=:newDescription, image=:image, email=:newEmail where email=:sessionEmail");
+                        $updateStatement = $conn->prepare("UPDATE user set description=:newDescription,username = :username, image=:image, email=:newEmail where email=:sessionEmail");
                         $updateStatement->bindParam(":newDescription", $description);
                         $updateStatement->bindParam(":image", $image);
+                        $updateStatement->bindParam(":username", $username);
                         $updateStatement->bindParam(":newEmail", $email);
                         $updateStatement->bindParam(":sessionEmail", $sessionEmail);
                         $updateStatement->execute();
@@ -362,10 +367,15 @@ class User
 
                         $description = $_POST['description'];
                         $email = $_POST['email'];
+                        $username = $_POST['username'];
+                        if(empty($username)){
+                            $username = $userProfile['username'];
+                        }
 
-                        $updateStatement = $conn->prepare("UPDATE user set description= :newDescription, email = :newEmail where email = :sessionEmail");
+                        $updateStatement = $conn->prepare("UPDATE user set description= :newDescription, username = :username, email = :newEmail where email = :sessionEmail");
                         $updateStatement->bindParam(":newEmail", $email);
                         $updateStatement->bindParam(":newDescription", $description);
+                        $updateStatement->bindParam(":username", $username);
                         $updateStatement->bindParam(":sessionEmail", $sessionEmail);
                         $updateStatement->execute();
 
@@ -401,9 +411,14 @@ class User
 
                     $image = $_FILES['image']['name'];
                     $description = $_POST['description'];
-                    $updateStatement = $conn->prepare("UPDATE user set description=:newDescription, image=:image where email=:sessionEmail");
+                    $username = $_POST['username'];
+                    if(empty($username)){
+                        $username = $userProfile['username'];
+                    }
+                    $updateStatement = $conn->prepare("UPDATE user set description=:newDescription, username = :username, image=:image where email=:sessionEmail");
                     $updateStatement->bindParam(":newDescription", $description);
                     $updateStatement->bindParam(":sessionEmail", $sessionEmail);
+                    $updateStatement->bindParam(":username", $username);
                     $updateStatement->bindParam(":image", $image);
                     $updateStatement->execute();
 
@@ -421,9 +436,14 @@ class User
                     #save description
 
                     $description = $_POST['description'];
-                    $updateStatement = $conn->prepare("UPDATE user set description= :newDescription where email = :sessionEmail");
+                    $username = $_POST['username'];
+                    if(empty($username)){
+                        $username = $userProfile['username'];
+                    }
+                    $updateStatement = $conn->prepare("UPDATE user set description= :newDescription, username = :username where email = :sessionEmail");
                     $updateStatement->bindParam(":newDescription", $description);
                     $updateStatement->bindParam(":sessionEmail", $sessionEmail);
+                    $updateStatement->bindParam(":username", $username);
                     $updateStatement->execute();
 
                     return true;
