@@ -1,7 +1,7 @@
 <?php
 require_once("bootstrap/bootstrap.php");
 
-class Likes
+class Like
 {
     private $user_id;
     private $post_id;

@@ -79,7 +79,7 @@ if (!empty($_POST['query'])) {
 
             <div class="postStats">
             <div>
-            <?php if (Likes::userHasLiked($result['id'], $user_id) == true) : ?>
+            <?php if (Like::userHasLiked($result['id'], $user_id) == true) : ?>
                 <a href="#" data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon"
                                                                                     src="images/liked.svg"
                                                                                     alt="like icon"></a>
@@ -89,7 +89,7 @@ if (!empty($_POST['query'])) {
                                                                                         alt="like icon"></a>
                 <?php endif ?>
 
-                <p class="postLikes"><?php echo Likes::getLikeAmount($result['id']); ?></p>
+                <p class="postLikes"><?php echo Like::getLikeAmount($result['id']); ?></p>
                 </div>
                 <div>
                     <p class="postComments">0<?php //echo number of comments ?></p>
