@@ -19,6 +19,7 @@
     try{if(User::canChangePassword($oldPassword, $newPassword, $confirmNewPassword) == true){
         User::doChangePassword($newPassword);
         $error="Your password has been successfully updated";
+        header("location: profile.php");
     }
     }catch(Throwable $t){
         $error=$t->getMessage();
