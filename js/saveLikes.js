@@ -11,7 +11,7 @@ knop.addEventListener("click", function(e){
         .then (function (res){
             console.log(res);
             let img = document.querySelector(".postLikeIcon");
-            if (res.data['status'] == "liked") {
+            if (res.data['status'] === "liked") {
                 console.log("we zitten ion de liked");
 
                 let likes = link.nextSibling.innerHTML;
