@@ -352,6 +352,7 @@ class User{
         $statement->execute();
         $user = $statement->fetch(PDO::FETCH_ASSOC);
 
+
         if (password_verify($password, $user['password'])) {
             return true;
         } else {
@@ -363,7 +364,6 @@ class User{
         $_SESSION['email'] = $email;
         header("location: index.php");
     }
-
 
 
 }
