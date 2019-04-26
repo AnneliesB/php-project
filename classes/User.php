@@ -339,6 +339,10 @@ class User
                         $username = $_POST['username'];
                         if(empty($username)){
                             $username = $userProfile['username'];
+                        } else {
+                            if(User::isUsernameAvailable($username) != true){
+                                throw new Exception("Username is not available");
+                            }
                         }
 
                         # update the database
@@ -370,6 +374,10 @@ class User
                         $username = $_POST['username'];
                         if(empty($username)){
                             $username = $userProfile['username'];
+                        } else {
+                            if(User::isUsernameAvailable($username) != true){
+                                throw new Exception("Username is not available");
+                            }
                         }
 
                         $updateStatement = $conn->prepare("UPDATE user set description= :newDescription, username = :username, email = :newEmail where email = :sessionEmail");
@@ -414,6 +422,10 @@ class User
                     $username = $_POST['username'];
                     if(empty($username)){
                         $username = $userProfile['username'];
+                    } else {
+                        if(User::isUsernameAvailable($username) != true){
+                            throw new Exception("Username is not available");
+                        }
                     }
                     $updateStatement = $conn->prepare("UPDATE user set description=:newDescription, username = :username, image=:image where email=:sessionEmail");
                     $updateStatement->bindParam(":newDescription", $description);
@@ -439,6 +451,10 @@ class User
                     $username = $_POST['username'];
                     if(empty($username)){
                         $username = $userProfile['username'];
+                    } else {
+                        if(User::isUsernameAvailable($username) != true){
+                            throw new Exception("Username is not available");
+                        }
                     }
                     $updateStatement = $conn->prepare("UPDATE user set description= :newDescription, username = :username where email = :sessionEmail");
                     $updateStatement->bindParam(":newDescription", $description);
