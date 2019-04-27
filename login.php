@@ -1,22 +1,11 @@
 <?php
 require_once("bootstrap/bootstrap.php");
 if (!empty($_POST)) {
-    $conn = Db::getConnection();
-    /**
-     * htmlspecialchars prevents the abuse of html tags in the input fields
-     * the tags included will be transformed into text instead and will be part of the input
-     */
-    $email = htmlspecialchars($_POST['email']);
-    $password = htmlspecialchars($_POST['password']);
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    $statement = $conn->prepare("select * from user where email = :email");
-    $statement->bindParam(":email", $email); # the email parameter is bound to :email to prevent sql-injection
-    $statement->execute();
-    $user = $statement->fetch(PDO::FETCH_ASSOC);
-
-    if (password_verify($password, $user['password'])) {
-        $_SESSION['email'] = $email;
-        header("location: index.php");
+    if(User::canLogin($email, $password)){
+        User::doLogin($email);
     } else {
         $error = true;
     }

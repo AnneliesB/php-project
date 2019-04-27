@@ -18,7 +18,7 @@
     //Check if Search is used
     if(!empty($_GET['query'])){ 
         $query = $_GET['query'];
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%". $query ."%'"); 
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%". $query ."%' order by id desc LIMIT 2"); 
         $statement->execute();   
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);    
     }
