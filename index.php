@@ -46,6 +46,33 @@ if (!empty($_POST['query'])) {
 
 
 
+    //Open connection
+    $conn = Db::getConnection();
+
+    //Get ID of logged in user so we can later fetch the posts of users he follows.
+    $user_id = User::getUserId();
+
+    //Check if Search is used
+    if(!empty($_GET['query'])){ 
+        $query = $_GET['query'];
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%". $query ."%' order by id desc LIMIT 2"); 
+        $statement->execute();   
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);    
+    }
+
+    else {
+        //No Search
+        //Show 20 posts of friends on startpage
+        
+        //Get posts from DB and put them in $results
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) order by id desc limit 2");
+        $statement->bindParam(":user_id", $user_id);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -58,6 +85,16 @@ if (!empty($_POST['query'])) {
     <title>Feed</title>
 </head>
 <body class="index">
+
+    <header>
+        <form action="" method="GET">
+            <div class="formField">
+                <input type="text" id="query" name="query">
+                <input type="submit" name="submit" value="Search">
+            </div>
+        </form>
+
+    </header>
 
 <div class="feed">
     <?php
@@ -74,7 +111,9 @@ if (!empty($_POST['query'])) {
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
             </div>
 
-            <img class="postImg" src="images/<?php echo $result['url_cropped'] ?>">
+
+            <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg" src="images/<?php echo $result['url_cropped'] ?>"> </a>
+
             <p class="postDescription"><?php echo $result['description'] ?></p>
 
             <div class="postStats">
@@ -103,21 +142,17 @@ if (!empty($_POST['query'])) {
                     <input class="commentBtn" type="submit" value="Post">
                 </form>
 
+
                 </div>
 
-                <?php endforeach; ?>
+      
 
-                <form action="" method="post">
-                    <input type="text" style="display: none" name="loadMore" value="<?php echo $posts; ?>">
-                    <input type="submit" class="loadMoreBtn grow" value="Load More">
-                </form>
+        <?php endforeach; ?>
 
-                <!--
-                    //For Ajax feature
-                <a><div class="loadMoreBtn grow">Load More</div></a>
-                -->
+        <a><div class="loadMoreBtn grow">Load More</div></a>
+        
+    <?php } //Closing if
 
-                <?php } //Closing if
 
     else { //No posts of friends found, show empty state message
         ?>
@@ -129,6 +164,6 @@ if (!empty($_POST['query'])) {
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="js/saveLikes.js"></script>
-
+    <script src="js/loadMore.js"></script>
 </body>
 </html>
