@@ -280,11 +280,13 @@ class User
         $updateStatement->execute();
     }
 
-    public static function checkIfNewUsername($username)
+    public static function checkIfNewUsername($username, $currentUsername)
     {
         if (empty($username)) {
             return false;
-        } else {
+        } else if ($username == $currentUsername){
+            return false;
+        } else{
             if (User::isUsernameAvailable($username) != true) {
                 throw new Exception("Username is not available");
             } else {
@@ -350,7 +352,7 @@ class User
                         $description = $_POST['description'];
                         $username = $_POST['username'];
 
-                        if (self::checkIfNewUsername($username) == false) {
+                        if (self::checkIfNewUsername($username, $userProfile['username']) == false) {
                             $username = $userProfile['username'];
                         }
 
@@ -382,7 +384,7 @@ class User
                         $email = $_POST['email'];
                         $username = $_POST['username'];
 
-                        if (self::checkIfNewUsername($username) == false) {
+                        if (self::checkIfNewUsername($username, $userProfile['username']) == false) {
                             $username = $userProfile['username'];
                         }
 
@@ -427,7 +429,7 @@ class User
                     $description = $_POST['description'];
                     $username = $_POST['username'];
 
-                    if (self::checkIfNewUsername($username) == false) {
+                    if (self::checkIfNewUsername($username, $userProfile['username']) == false) {
                         $username = $userProfile['username'];
                     }
 
@@ -454,7 +456,7 @@ class User
                     $description = $_POST['description'];
                     $username = $_POST['username'];
 
-                    if (self::checkIfNewUsername($username) == false) {
+                    if (self::checkIfNewUsername($username, $userProfile['username']) == false) {
                         $username = $userProfile['username'];
                     }
 
