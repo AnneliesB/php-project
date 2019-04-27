@@ -1,13 +1,13 @@
 $("a.inappropiate").on("click", function (e) {
-    //var postId = $(this).data("id");
-    //var link = $(this);
+    let postId = $(this).data("id");
+    let link = $(this);
 
     console.log('ok');
 
     $.ajax({
         method: "POST",
         url: "ajax/inappropiate.php",
-        data: {  },
+        data: { postId: postId },
         dataType: 'json'
     })
     .done(function (res) {

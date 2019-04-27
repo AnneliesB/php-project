@@ -67,6 +67,8 @@
         //Posts of friends found, display them with a loop
         foreach($results as $result): ?>
 
+        <!-- If inappropriate = 3, hide post -->
+
         <div class="postContainer">
 
             <div class="postTopBar">
