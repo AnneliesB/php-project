@@ -9,8 +9,22 @@
             $photo = $statement->fetch(PDO::FETCH_ASSOC);
             $post_id = $photo['id'] + 1;
 
-            // return current post id
+            // Return current post id
             return $post_id;
+        }
+
+        public static function checkExtention($image){
+            // Check extention of the image           
+            $allowed =  array('png' ,'jpg', 'jpeg');
+            $ext = pathinfo($image, PATHINFO_EXTENSION);
+
+            if(in_array($ext, $allowed)) {
+                return true;
+            }
+
+            else {
+                return false;
+            }
         }
 
         public static function saveImageToDb($image, $croppedImage, $description) {
@@ -22,19 +36,17 @@
             $statement->bindParam(":image", $image);
             $statement->bindParam(":croppedImage", $croppedImage);
             $statement->bindParam(":userId", $user_id);
-            $statement->execute(); 
-
+            $result = $statement->execute();        
         }
 
-        public static function saveImage($imageSaveName){
-            // image file directory
+        public static function saveImage($image, $imageSaveName){
+            // Image file directory
             $target = "images/" . basename($image);
-
             move_uploaded_file($imageSaveName ,$target);
         }
 
         public static function saveCroppedImage($image) {
-            // image file directory
+            // Image file directory
             $target = "images/" . basename($image);
 
             $info = getimagesize($target);
@@ -51,10 +63,6 @@
                     $image_create_func = 'imagecreatefrompng';
                     $image_save_func = 'imagepng';
                     break;
-
-                default:
-                    $error = "Unknown image tye";
-                    return $error;
             }
 
             // GET image                
