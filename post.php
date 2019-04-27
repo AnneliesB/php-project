@@ -17,12 +17,19 @@
             $imageSaveName = $_FILES['image']['tmp_name'];
 
             $croppedImage = Image::getPostId() . "cropped-" .$_FILES['image']['name'];
-            $description = $_POST['description'];  
-
-            Image::saveImageToDb($image, $croppedImage, $description);          
-            Image::saveImage($imageSaveName, $target);
-            Image::saveCroppedImage($image);
-
+            $description = $_POST['description']; 
+            
+            if (Image::checkExtention($image)) {
+                // If extention is png or jpeg
+                Image::saveImageToDb($image, $croppedImage, $description);
+                Image::saveImage($image, $imageSaveName);
+                Image::saveCroppedImage($image);
+                header("location: index.php");
+            } 
+            else {
+                // Else error message
+                $error = "You can only upload png or jpg.";
+            }
         }
     }    
 
