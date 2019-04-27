@@ -255,7 +255,4 @@ class User{
         $user_id = $user_id['id'];
         return $user_id;
     }
-
-
-
 }
