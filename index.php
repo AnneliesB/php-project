@@ -78,17 +78,12 @@ if (!empty($_POST['query'])) {
                 <p class="postDescription"><?php echo $result['description'] ?></p>
 
                 <div class="postStats">
-                    <div>
+<div>
                         <?php if (Like::userHasLiked($result['id'], $user_id) == true) : ?>
-                            <span data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon"
-                                                                                          src="images/liked.svg"
-                                                                                          alt="like icon"></span>
+                            <span data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon" src="images/liked.svg" alt="like icon"></span>
                         <?php else: ?>
-                            <span data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon"
-                                                                                          src="images/like.svg"
-                                                                                          alt="like icon"></span>
+                            <span data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon" src="images/like.svg" alt="like icon"></span>
                         <?php endif ?>
-
                         <p class="postLikes"><?php echo Like::getLikeAmount($result['id']); ?></p>
                     </div>
                     <div>
