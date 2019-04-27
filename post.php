@@ -6,100 +6,24 @@
         //User is logged in, no redirect needed!
     }else{
         //User is not logged in, redirect to login.php!
-    header("location: login.php");
+        header("location: login.php");
     }
 
-    $conn = Db::getConnection();
-
-    // GET username
-    $sessionEmail = $_SESSION['email'];
-
-    $statement = $conn->prepare("select * from user where email = :sessionEmail");
-    $statement->bindParam(":sessionEmail", $sessionEmail);
-    $statement->execute();
-    $userProfile = $statement->fetch(PDO::FETCH_ASSOC);
-
-    $statement = $conn->prepare("select id from photo order by id desc limit 1");
-    $statement->execute();
-    $photo = $statement->fetch(PDO::FETCH_ASSOC);
-
-
-    $currentId = $photo['id'] + 1;
-
-
-    if(!empty($_POST)){    
-        
-        
+    if(!empty($_POST)){  
         // UPLOAD image
         if(isset($_POST['upload'])) {
-            // GET image name / filename
-            $image = $currentId . $_FILES['image']['name'];
-            $croppedImage = $currentId . "cropped-" .$_FILES['image']['name'];
+            // GET image name / filename / description
+            $image = Image::getPostId() . $_FILES['image']['name'];
+            $imageSaveName = $_FILES['image']['tmp_name'];
 
-            // GET description
-            $description = $_POST['description'];            
+            $croppedImage = Image::getPostId() . "cropped-" .$_FILES['image']['name'];
+            $description = $_POST['description'];  
 
-            // ! user_id
-            $statement = $conn->prepare("insert into photo (`description`, `url`, `url_cropped`, `user_id`) VALUES (:description, :image, :croppedImage, :userId)");
+            Image::saveImageToDb($image, $croppedImage, $description);          
+            Image::saveImage($imageSaveName, $target);
+            Image::saveCroppedImage($image);
 
-            $statement->bindParam(":description", $description); 
-            $statement->bindParam(":image", $image);
-            $statement->bindParam(":croppedImage", $croppedImage);
-            $statement->bindParam(":userId", $userProfile['id']);
-
-            $statement->execute(); 
-            
-              
-            
-            // image file directory
-            $target = "images/" . basename($image);
-
-            if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-                
-                $info = getimagesize($target);
-                $mime = $info['mime'];
-
-                
-                switch($mime) {
-                    case 'image/jpeg':
-                        $image_create_func = 'imagecreatefromjpeg';
-                        $image_save_func = 'imagejpeg';
-                        //$new_image_ext = 'jpg';
-                        break;
-                    
-                    case 'image/png':
-                        $image_create_func = 'imagecreatefrompng';
-                        $image_save_func = 'imagepng';
-                        //$new_image_ext = 'png';
-                        break;
-
-                    default:
-                        $error = "Unknown image tye";
-                }
-
-
-                // GET image                
-                $im = $image_create_func($target);
-
-                // CROP image
-                $size = min(imagesx($im), imagesy($im));
-                $im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
-
-                if ($im2 !== FALSE) {
-                    // SAVE cropped image
-                    $image_save_func($im2, "images/" . $currentId . 'cropped-' .  $_FILES['image']['name']);
-                    imagedestroy($im2);
-                }
-
-            }
-                
-            else{
-                $error = "Failed to upload image";
-            }
-
-        }   
-        
-        
+        }
     }    
 
 ?>
