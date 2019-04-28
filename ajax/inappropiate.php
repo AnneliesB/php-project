@@ -9,25 +9,26 @@
         header("location: login.php");
     }
 
-    if (!empty($_POST)) {
-        $postId = $_POST['postId'];
-        $userId = User::getUserId();
+    echo 'ok';
 
-        //var_dump($userId);
+    $postId = $_POST['postId'];
+    $userId = User::getUserId();
 
-        $result = [
-            "status" => "success",
-            "message" => "Inappropiate was saved"
-        ];
+    echo $postId;
+
+    $result = [
+        "status" => "success",
+        "message" => "Inappropiate was saved"
+    ];
 
 
-        // Get amount of inappropiate
+    // Get amount of inappropiate
 
-        // Count amount of inappropiate + 1
+    // Count amount of inappropiate + 1
 
-        // Update amount of inappropiate to db
+    // Update amount of inappropiate to db
         
 
-        echo json_encode($result);
+    echo json_encode($result);
 
-    }
+    

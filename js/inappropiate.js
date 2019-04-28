@@ -1,8 +1,8 @@
 $("a.inappropiate").on("click", function (e) {
     let postId = $(this).data("id");
-    let link = $(this);
+    //let link = $(this);
 
-    console.log('ok');
+    console.log(postId);
 
     $.ajax({
         method: "POST",
@@ -13,6 +13,7 @@ $("a.inappropiate").on("click", function (e) {
     .done(function (res) {
         if(res.status == "success"){
             // Message if it is success
+            console.log("success");
         }
     });
 

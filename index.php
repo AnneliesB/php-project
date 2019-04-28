@@ -74,7 +74,7 @@
             <div class="postTopBar">
                 <div class="postUsername"><?php echo $result['username'] ?></div>
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
-                <a href="#" class="inappropiate">Inappropiate</a>
+                <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropiate">Inappropiate</a>
             </div>
 
             <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg" src="images/<?php echo $result['url_cropped'] ?>"> </a>
