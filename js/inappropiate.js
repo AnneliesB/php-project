@@ -1,6 +1,6 @@
-$("a.inappropiate").on("click", function (e) {
+$("a.inappropriate").on("click", function (e) {
     let postId = $(this).data("id");
-    //let link = $(this);
+    let link = $(this);
 
     console.log(postId);
 
@@ -13,7 +13,9 @@ $("a.inappropiate").on("click", function (e) {
     .done(function (res) {
         if(res.status == "success"){
             // Message if it is success
-            console.log("success");
+            alert(res.message);
+            link.addClass("inappropriatedLink");
+
         }
     });
 
