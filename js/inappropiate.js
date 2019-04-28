@@ -14,7 +14,11 @@ $("a.inappropriate").on("click", function (e) {
         if(res.status == "success"){
             // Message if it is success
             alert(res.message);
-            link.addClass("inappropriatedLink");
+
+            // Add css
+            link.css("pointer-events", "none");
+            link.css("text-decoration", "none");
+            link.css("opacity", "0.5");
 
         }
     });
