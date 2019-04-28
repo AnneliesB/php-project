@@ -50,7 +50,7 @@ if (!empty($_POST['query'])) {
     $conn = Db::getConnection();
 
     //Get ID of logged in user so we can later fetch the posts of users he follows.
-    $user_id = User::getUserId();
+    $userId = User::getUserId();
 
     //Check if Search is used
     if(!empty($_GET['query'])){ 
@@ -63,10 +63,9 @@ if (!empty($_POST['query'])) {
     else {
         //No Search
         //Show 20 posts of friends on startpage
-        
         //Get posts from DB and put them in $results
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) order by id desc limit 2");
-        $statement->bindParam(":user_id", $user_id);
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :userId ) order by id desc limit 2");
+        $statement->bindParam(":userId", $userId);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -104,11 +103,28 @@ if (!empty($_POST['query'])) {
         //Posts of friends found, display them with a loop
         foreach ($results as $result): ?>
 
-            <div class="postContainer">
+        <!-- If inappropriate = 3, hide post -->        
+        <?php if(Image::postHas3Reports($result['id']) == true): ?>
+        <div class="postContainer disabled">
+        <?php else: ?>
+        <div class="postContainer">
+        <?php endif ?>
+
+
 
             <div class="postTopBar">
                 <div class="postUsername"><?php echo $result['username'] ?></div>
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
+
+                <?php if(User::userHasReported($result['id'], $userId) == true): ?>
+                    <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">Inappropiate</a>
+                
+                <?php else: ?>
+                    <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">Inappropiate</a>
+                <?php endif ?>
+
+
+
             </div>
 
 
@@ -162,8 +178,10 @@ if (!empty($_POST['query'])) {
     <?php } //Closing else ?>
 </div>
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="js/saveLikes.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/saveLikes.js"></script>
     <script src="js/loadMore.js"></script>
+    <script src="js/inappropriate.js"></script>
 </body>
 </html>
