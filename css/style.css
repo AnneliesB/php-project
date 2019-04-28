@@ -243,6 +243,10 @@ input[type=text], input[type=password], input[type=file], #description {
     opacity: 0.5;
 }
 
+.disabled {
+    display: none;
+}
+
 
 @media (min-width: 980px) {
     body {
@@ -324,11 +328,5 @@ input[type=text], input[type=password], input[type=file], #description {
         width: 30%;
         margin: 0 auto;
     }
-
-    .postContainer{
-        
-    }
-
-
 }
 

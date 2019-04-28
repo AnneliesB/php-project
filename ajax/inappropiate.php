@@ -34,21 +34,34 @@
         $insertinappropriateStatement->bindParam(":postId", $postId);
         $insertinappropriateStatement->bindParam(":userId", $userId);
         $insertinappropriateStatement->bindParam(":inappropriate", $inappropriate);
-        $insertinappropriateStatement->execute();
+        $insertinappropriateStatement->execute();     
         
+        
+        // Count amount of reports
+        $statement = $conn->prepare("select count(*) as count from inappropriate where post_id = :postId");
+        $statement->bindParam(":postId", $postId);
+        $statement->execute();
+        $Amount = $statement->fetch(PDO::FETCH_ASSOC);        
+        
+        if ($Amount['count'] == 3) {
+            $response = [
+                "status" => "Disable",
+                "message" => "Inappropriate was saved and the post is disbaled!"
+            ]; 
+        } 
 
-        $response = [
-            "status" => "success",
-            "message" => "Inappropiate was saved!"
-        ]; 
+        else {
+            $response = [
+                "status" => "Success",
+                "message" => "Inappropriate was saved!"
+            ]; 
+        } 
     }
 
     else {
         // Nothing happen
     } 
 
- 
-        
     header('Content-Type: application/json');
     echo json_encode($response);
 

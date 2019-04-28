@@ -1,6 +1,7 @@
 $("a.inappropriate").on("click", function (e) {
     let postId = $(this).data("id");
     let link = $(this);
+    let post = $("div.postContainer");
 
     console.log(postId);
 
@@ -11,7 +12,7 @@ $("a.inappropriate").on("click", function (e) {
         dataType: 'json'
     })
     .done(function (res) {
-        if(res.status == "success"){
+        if(res.status == "Success"){
             // Message if it is success
             alert(res.message);
 
@@ -19,8 +20,21 @@ $("a.inappropriate").on("click", function (e) {
             link.css("pointer-events", "none");
             link.css("text-decoration", "none");
             link.css("opacity", "0.5");
-
         }
+        
+        else if (res.status == "Disable" ) {
+            // Message if it is disable
+            alert(res.message);
+
+            // Add css
+            link.css("pointer-events", "none");
+            link.css("text-decoration", "none");
+            link.css("opacity", "0.5");
+
+            // Disable post
+            post.css("display", "none");
+        }
+
     });
 
     e.preventDefault();
