@@ -78,4 +78,8 @@
                 imagedestroy($im2);
             }
         }
+
+        public static function saveMainColors($imageName){
+
+        }
     }
