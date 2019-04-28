@@ -8,6 +8,7 @@
             $statement->execute();
             $photo = $statement->fetch(PDO::FETCH_ASSOC);
             $post_id = $photo['id'] + 1;
+
             // Return current post id
             return $post_id;
         }
@@ -16,9 +17,11 @@
             // Check extention of the image           
             $allowed =  array('png' ,'jpg', 'jpeg');
             $ext = pathinfo($image, PATHINFO_EXTENSION);
+
             if(in_array($ext, $allowed)) {
                 return true;
             }
+
             else {
                 return false;
             }
@@ -27,6 +30,7 @@
         public static function saveImageToDb($image, $croppedImage, $description) {
             $conn = Db::getConnection();
             $user_id = User::getUserId();
+
             $statement = $conn->prepare("insert into photo (`description`, `url`, `url_cropped`, `user_id`) VALUES (:description, :image, :croppedImage, :userId)");
             $statement->bindParam(":description", $description); 
             $statement->bindParam(":image", $image);
@@ -44,8 +48,10 @@
         public static function saveCroppedImage($image) {
             // Image file directory
             $target = "images/" . basename($image);
+
             $info = getimagesize($target);
             $mime = $info['mime'];
+
                 
             switch($mime) {
                 case 'image/jpeg':
@@ -58,11 +64,14 @@
                     $image_save_func = 'imagepng';
                     break;
             }
+
             // GET image                
             $im = $image_create_func($target);
+
             // CROP image
             $size = min(imagesx($im), imagesy($im));
             $im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
+
             if ($im2 !== FALSE) {
                 // SAVE cropped image
                 $image_save_func($im2, "images/" . (Image::getPostId() -1)  . 'cropped-' .  $_FILES['image']['name']);

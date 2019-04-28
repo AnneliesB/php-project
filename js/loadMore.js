@@ -3,13 +3,18 @@
 //inital posts already shown on pageload
 let posts = 2;
 
+//get the value of $_GET['query] when searching so we can pass this to PHP ajax file (needed for checking if search has been done)
+let url_string = window.location.href;
+let url = new URL(url_string);
+let searchQuery = url.searchParams.get("query");
+
 //get feed container, so we can later append elements to this.
 const feed = document.querySelector('.feed');
 
 //Select loadMore btn and listen for a click
 const loadMoreBtn = document.querySelector(".loadMoreBtn");
 loadMoreBtn.addEventListener("click", function(e){
-    console.log('click');
+
     //save current posts shown
     shownPosts = posts;
     
@@ -18,18 +23,15 @@ loadMoreBtn.addEventListener("click", function(e){
 
     //make Ajax call via Axios to loadMore.php
     axios.post('ajax/load_more.php',{
-        shownPosts: shownPosts
+        shownPosts: shownPosts,
+        searchQuery: searchQuery
     })
 
     //response
     .then(function (response) {
 
-        //Check response in console
-        console.log(response.data);
-
         //update UI with posts by looping over them
         response.data.forEach(elem => {
-            console.log(elem);
             
             //create postContainer div and add it's class
             let postContainer = document.createElement("div");
