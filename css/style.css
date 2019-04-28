@@ -233,8 +233,14 @@ input[type=text], input[type=password], input[type=file], #description {
     transform: scale(1.1);
 }
 
+.inappropriate {
+    color: gray;
+}
+
 .inappropriatedLink {
-    color: red;
+    pointer-events: none;
+    text-decoration: none;
+    opacity: 0.5;
 }
 
 
