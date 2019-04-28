@@ -1,34 +1,55 @@
 <?php
-    require_once("../bootstrap.php");
+    require_once("../bootstrap/bootstrap.php");
 
     // check if a session is running with the correct email
     if (isset($_SESSION['email'])) {
         // User is logged in, no redirect needed!
-    } else {
+    } 
+    else {
         // User is not logged in, redirect to login.php!
         header("location: login.php");
     }
 
-    echo 'ok';
-
+    $response = []; 
     $postId = $_POST['postId'];
     $userId = User::getUserId();
-
-    echo $postId;
-
-    $result = [
-        "status" => "success",
-        "message" => "Inappropiate was saved"
-    ];
-
+    $conn = Db::getConnection();
 
     // Get amount of inappropiate
-
+    // Save count(*) as count to get the amount in php
+    $inappropriateStatement = $conn->prepare("select count(*) as count from inappropriate where post_id = :postId AND user_id = :userId");
+    $inappropriateStatement->bindParam(":postId", $postId);
+    $inappropriateStatement->bindParam(":userId", $userId);
+    $inappropriateStatement->execute();
+    $inappropriateAmount = $inappropriateStatement->fetch(PDO::FETCH_ASSOC);
+    
     // Count amount of inappropiate + 1
+    // Get count of rows
+    if ($inappropriateAmount['count'] == 0) {
+        // Set inappropiate 1
+        $inappropriate = 1;
 
-    // Update amount of inappropiate to db
+        // Insert new row in db
+        $insertinappropriateStatement = $conn->prepare("insert into inappropriate (post_id, user_id, inappropriate) values (:postId, :userId, :inappropriate)");
+        $insertinappropriateStatement->bindParam(":postId", $postId);
+        $insertinappropriateStatement->bindParam(":userId", $userId);
+        $insertinappropriateStatement->bindParam(":inappropriate", $inappropriate);
+        $insertinappropriateStatement->execute();
         
 
-    echo json_encode($result);
+        $response = [
+            "status" => "success",
+            "message" => "Inappropiate was saved!"
+        ]; 
+    }
+
+    else {
+        // Nothing happen
+    } 
+
+ 
+        
+    header('Content-Type: application/json');
+    echo json_encode($response);
 
     
