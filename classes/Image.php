@@ -113,4 +113,16 @@ class Image
         $statement->bindParam(":url", $imageBaseName);
         $statement->execute();
     }
+
+    public static function showImagesWithTheSameColor($color){
+        // $id = (int) $_GET['id']; in index aanroepen om hex code te vinden
+        // htmlspecialchars om de hashtags te vinden
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("SELECT * from photo where color1 = :color OR color2 = :color OR color3 = :color OR color4 = :color order by id desc");
+        $statement->bindParam(":color", $color);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+
+    }
 }
