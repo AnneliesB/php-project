@@ -13,7 +13,7 @@
     $conn = Db::getConnection();
 
     //Get ID of logged in user so we can later fetch the posts of users he follows.
-    $user_id = User::getUserId();
+    $userId = User::getUserId();
 
     //Check if Search is used
     if(!empty($_GET['query'])){ 
@@ -74,7 +74,16 @@
             <div class="postTopBar">
                 <div class="postUsername"><?php echo $result['username'] ?></div>
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
-                <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">Inappropiate</a>
+
+                <?php if(User::userHasReported($result['id'], $userId) == true): ?>
+                    <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">Inappropiate</a>
+                
+                <?php else: ?>
+                    <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">Inappropiate</a>
+                <?php endif ?>
+
+
+
             </div>
 
             <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg" src="images/<?php echo $result['url_cropped'] ?>"> </a>
