@@ -1,7 +1,9 @@
 $("a.inappropriate").on("click", function (e) {
     let postId = $(this).data("id");
     let link = $(this);
-    let post = $("div.postContainer");
+    // https://api.jquery.com/parent/
+    let post = $(this).parent().parent();
+
 
     console.log(postId);
 
