@@ -130,6 +130,12 @@ if (!empty($_POST['query'])) {
 
                 <p class="postLikes"><?php echo Like::getLikeAmount($result['id']); ?></p>
                 </div>
+                <div class="colorBlock">
+                    <a href="" style="background-color:<?php echo $result['color1'] ?>;" class="colorBtn"><p><?php echo $result['color1'] ?></p></a>
+                    <a href="" style="background-color:<?php echo $result['color2'] ?>;" class="colorBtn"><p><?php echo $result['color2'] ?></p></a>
+                    <a href="" style="background-color:<?php echo $result['color3'] ?>;" class="colorBtn"><p><?php echo $result['color3'] ?></p></a>
+                    <a href="" style="background-color:<?php echo $result['color4'] ?>;" class="colorBtn"><p><?php echo $result['color4'] ?></p></a>
+                </div>
                 <div>
                     <p class="postComments">0<?php //echo number of comments ?></p>
                     <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">
