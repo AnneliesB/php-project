@@ -26,10 +26,9 @@
     else {
         //No Search
         //Show 20 posts of friends on startpage
-        
         //Get posts from DB and put them in $results
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) order by id desc limit 2");
-        $statement->bindParam(":user_id", $user_id);
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :userId ) order by id desc limit 2");
+        $statement->bindParam(":userId", $userId);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     }
