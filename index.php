@@ -179,7 +179,6 @@ if (!empty($_GET['query'])) {
     <script src="js/saveLikes.js"></script>
     <script src="js/loadMore.js"></script>
     <script src="js/inappropriate.js"></script>
-    <script src="js/comment.js"></script>
 
 </body>
 </html>
