@@ -5,6 +5,7 @@
     //var_dump($id);
     // Connection
     $conn = Db::getConnection();
+    $userId = User::getUserId();
     // GET description and picture
     $statement = $conn->prepare("select * from photo where id = :id");
     $statement->bindParam(":id", $id);
@@ -31,12 +32,48 @@
     </header>
 
     <main>
+        <div class="postContainer">
         <!-- echo picture -->
         <img src="images/<?php echo $post['url']; ?>" alt="Post picture">
 
         <!-- echo description -->
         <p><?php echo $post['description']; ?></p>
+        <div class="postStats">
+            <div>
+                <?php if (Like::userHasLiked($post['id'], $userId) == true) : ?>
+                    <a href="#" data-id="<?php echo $post['id'] ?>" class="like"><img
+                                class="icon postLikeIcon"
+                                src="images/liked.svg"
+                                alt="like icon"></a>
+                <?php else: ?>
+                    <a href="#" data-id="<?php echo $post['id'] ?>" class="like"><img
+                                class="icon postLikeIcon"
+                                src="images/like.svg"
+                                alt="like icon"></a>
+                <?php endif ?>
 
+                <p class="postLikes"><?php echo Like::getLikeAmount($post['id']); ?></p>
+            </div>
+            <div class="colorBlock">
+                <a href="index.php?color=<?php echo ltrim($post['color1'], '#'); ?>"
+                   style="background-color:<?php echo $post['color1'] ?>;" class="colorBtn">
+                    <p><?php echo $post['color1'] ?></p></a>
+                <a href="index.php?color=<?php echo ltrim($post['color2'], '#'); ?>"
+                   style="background-color:<?php echo $post['color2'] ?>;" class="colorBtn">
+                    <p><?php echo $post['color2'] ?></p></a>
+                <a href="index.php?color=<?php echo ltrim($post['color3'], '#'); ?>"
+                   style="background-color:<?php echo $post['color3'] ?>;" class="colorBtn">
+                    <p><?php echo $post['color3'] ?></p></a>
+                <a href="index.php?color=<?php echo ltrim($post['color4'], '#'); ?>"
+                   style="background-color:<?php echo $post['color4'] ?>;" class="colorBtn">
+                    <p><?php echo $post['color4'] ?></p></a>
+            </div>
+            <div>
+                <p class="postComments">0<?php //echo number of comments ?></p>
+                <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">
+            </div>
+        </div>
+<div class="commentContainer">
         <?php if( !empty($comments) ){ ?>        
             <!-- echo comments -->
             <?php foreach($comments as $comment): ?>
@@ -56,12 +93,14 @@
             <input class="commentInput" type="text" name="comment" placeholder="comment...">
             <input class="commentBtn" type="submit" value="Post">
         </form>
+        </div>
 
     </main>
 
     <footer>
     
     </footer>
-    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="js/saveLikes.js"></script>
 </body>
 </html>
