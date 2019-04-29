@@ -29,19 +29,6 @@ if (!empty($_GET['query'])) {
     //No Search
     //Show 20 posts of friends on startpage
 
-    //Check on how many posts should be loaded
-    if (!isset($_POST['loadMore'])) {
-        //initial load, show initial number of posts
-        $posts = 2;
-    } else {
-        //if page reloaded by loadmore button, update current value from btn
-        $posts = $_POST['loadMore'];
-    }
-    if (!empty($_POST['loadMore'])) {
-        //add extra posts to show
-        $posts += 2;
-    }
-
     //Get posts from DB and put them in $results
     $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) order by id desc limit $posts");
     $statement->bindParam(":user_id", $userId);
