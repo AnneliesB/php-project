@@ -118,8 +118,8 @@ class Image
         // $id = (int) $_GET['id']; in index aanroepen om hex code te vinden
         // htmlspecialchars om de hashtags te vinden
         $conn = Db::getConnection();
-        $statement = $conn->prepare("SELECT * from photo where color1 = :color OR color2 = :color OR color3 = :color OR color4 = :color order by id desc");
-        $statement->bindParam(":color", $color);
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.color1 like '%" . $color . "%' OR  photo.color2 like '%" . $color . "%' OR  photo.color3 like '%" . $color . "%' OR  photo.color4 like '%" . $color . "%' order by id desc LIMIT 2");
+       // $statement = $conn->prepare("SELECT * from photo where color1 = :color OR color2 = :color OR color3 = :color OR color4 = :color order by id desc");
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $results;
