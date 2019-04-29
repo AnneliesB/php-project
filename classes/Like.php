@@ -1,5 +1,5 @@
 <?php
-require_once("bootstrap/bootstrap.php");
+require_once("Db.php");
 
 class Like
 {

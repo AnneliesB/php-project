@@ -29,7 +29,7 @@ loadMoreBtn.addEventListener("click", function(e){
 
     //response
     .then(function (response) {
-
+        console.log(response.data);
         //update UI with posts by looping over them
         response.data.forEach(elem => {
             
@@ -37,32 +37,41 @@ loadMoreBtn.addEventListener("click", function(e){
             let postContainer = document.createElement("div");
             postContainer.classList.add("postContainer");
 
+            //Check if liked this post to provide right like icon
+            if( elem['hasLiked'] == true){
+                $likeImage = "liked.svg";
+            }
+            else{
+                $likeImage = "like.svg";
+            }
+
             //create template to put inside the postContainer div
             let postTemplate = `
-                    <div class="postTopBar">
-                        <div class="postUsername">${elem['username']}</div>
-                        <img class="icon postOptions" src="images/menu.svg" alt="options icon">
+                <div class="postTopBar">
+                    <div class="postUsername">${elem['username']}</div>
+                    <a href="#" class="options"><img class="icon postOptions" src="images/menu.svg" alt="options icon"></a>
+                </div>
+
+                <a href="details.php?id=${elem['id']}"><img class="postImg" src="images/${elem['url_cropped']}"></a>
+                <p class="postDescription">${elem['description']}</p>
+
+                <div class="postStats">
+                    <div>
+                        <a href="#" data-id="${elem['id']}" class="like"><img class="icon postLikeIcon"
+                        src="images/${$likeImage}"
+                        alt="like icon"></a>
+                        <p class="postLikes">${elem['likeAmount']}</p>
                     </div>
-
-                    <img class="postImg" src="images/${elem['url_cropped']}"> 
-                    <p class="postDescription">${elem['description']}</p>
-
-                    <div class="postStats">
-                        <div>
-                            <a href=""><img class="icon postLikeIcon" src="images/like.svg" alt="like icon"></a>
-                            <p class="postLikes">0</p>
-                        </div>
-                        <div>
-                            <p class="postComments">0</p>
-                            <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">  
-                        </div>
+                    <div>
+                        <p class="postComments">0</p>
+                        <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">  
                     </div>
-                    
-
-                    <form>
-                        <input class="commentInput" type="text" name="comment" placeholder="comment...">
-                        <input class="commentBtn" type="submit" value="Post">
-                    </form>
+                </div>
+                
+                <form>
+                    <input class="commentInput" type="text" name="comment" placeholder="comment...">
+                    <input class="commentBtn" type="submit" value="Post">
+                </form>
             `;
 
             //put the template inside the postContainer div

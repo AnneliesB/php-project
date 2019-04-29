@@ -18,7 +18,7 @@ $userId = User::getUserId();
 //Check if Search is used
 if (!empty($_GET['query'])) {
     $query = $_GET['query'];
-    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' order by id desc LIMIT 2");
+    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 2");
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -30,7 +30,7 @@ if (!empty($_GET['query'])) {
     //Show 20 posts of friends on startpage
 
     //Get posts from DB and put them in $results
-    $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) order by id desc limit $posts");
+    $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit 2");
     $statement->bindParam(":user_id", $userId);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
