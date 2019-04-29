@@ -23,7 +23,7 @@ class Image
 
     public static function checkExtention($image)
     {
-        // Check extention of the image           
+        // Check extention of the image
         $allowed = array('png', 'jpg', 'jpeg');
         $ext = pathinfo($image, PATHINFO_EXTENSION);
 
@@ -75,7 +75,7 @@ class Image
                 break;
         }
 
-        // GET image                
+        // GET image
         $im = $image_create_func($target);
 
         // CROP image
@@ -134,12 +134,14 @@ class Image
             $statementCheck->bindParam(":postId", $postId);
             $statementCheck->execute();
             $result = $statementCheck->fetch(PDO::FETCH_ASSOC);
-    
+
             if ($result['count'] == 3) {
                 return true;
             } else {
                 return false;
             }
         }
+
+        
 
     }
