@@ -16,10 +16,15 @@ $conn = Db::getConnection();
 $user_id = User::getUserId();
 
 //Check if Search is used
-if (!empty($_POST['query'])) {
-    $query = $_POST['query'];
-    $statement = $conn->prepare("select description, url from photo where description like '%" . $query . "%'");
+if (!empty($_GET['query'])) {
+    $query = $_GET['query'];
+    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' order by id desc LIMIT 2");
     $statement->execute();
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+} else if (!empty($_GET['color'])) {
+    $color = $_GET['color'];
+    $results = Image::showImagesWithTheSameColor($color);
 } else {
     //No Search
     //Show 20 posts of friends on startpage
@@ -44,35 +49,6 @@ if (!empty($_POST['query'])) {
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 
-
-
-    //Open connection
-    $conn = Db::getConnection();
-
-    //Get ID of logged in user so we can later fetch the posts of users he follows.
-    $userId = User::getUserId();
-
-    //Check if Search is used
-    if(!empty($_GET['query'])){ 
-        $query = $_GET['query'];
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%". $query ."%' order by id desc LIMIT 2"); 
-        $statement->execute();   
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);    
-    }
-
-    else {
-        //No Search
-        //Show 20 posts of friends on startpage
-        //Get posts from DB and put them in $results
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :userId ) order by id desc limit 2");
-        $statement->bindParam(":userId", $userId);
-        $statement->execute();
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-
-
-
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,15 +61,15 @@ if (!empty($_POST['query'])) {
 </head>
 <body class="index">
 
-    <header>
-        <form action="" method="GET">
-            <div class="formField">
-                <input type="text" id="query" name="query">
-                <input type="submit" name="submit" value="Search">
-            </div>
-        </form>
+<header>
+    <form action="" method="GET">
+        <div class="formField">
+            <input type="text" id="query" name="query">
+            <input type="submit" name="submit" value="Search">
+        </div>
+    </form>
 
-    </header>
+</header>
 
 <div class="feed">
     <?php
@@ -109,6 +85,7 @@ if (!empty($_POST['query'])) {
         <?php else: ?>
         <div class="postContainer">
         <?php endif ?>
+
 
 
 
@@ -128,28 +105,44 @@ if (!empty($_POST['query'])) {
             </div>
 
 
-            <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg" src="images/<?php echo $result['url_cropped'] ?>"> </a>
+             <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"src="images/<?php echo $result['url_cropped'] ?> </a>
 
-            <p class="postDescription"><?php echo $result['description'] ?></p>
+                <p class="postDescription"><?php echo $result['description'] ?></p>
 
-            <div class="postStats">
-            <div>
-            <?php if (Like::userHasLiked($result['id'], $user_id) == true) : ?>
-                <a href="#" data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon"
-                                                                                    src="images/liked.svg"
-                                                                                    alt="like icon"></a>
-            <?php else: ?>
-                    <a href="#" data-id="<?php echo $result['id'] ?>" class="like"><img class="icon postLikeIcon"
-                                                                                        src="images/like.svg"
-                                                                                        alt="like icon"></a>
-                <?php endif ?>
+                <div class="postStats">
+                    <div>
+                        <?php if (Like::userHasLiked($result['id'], $user_id) == true) : ?>
+                            <a href="#" data-id="<?php echo $result['id'] ?>" class="like"><img
+                                        class="icon postLikeIcon"
+                                        src="images/liked.svg"
+                                        alt="like icon"></a>
+                        <?php else: ?>
+                            <a href="#" data-id="<?php echo $result['id'] ?>" class="like"><img
+                                        class="icon postLikeIcon"
+                                        src="images/like.svg"
+                                        alt="like icon"></a>
+                        <?php endif ?>
 
-                <p class="postLikes"><?php echo Like::getLikeAmount($result['id']); ?></p>
-                </div>
-                <div>
-                    <p class="postComments">0<?php //echo number of comments ?></p>
-                    <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">
-                </div>
+                        <p class="postLikes"><?php echo Like::getLikeAmount($result['id']); ?></p>
+                    </div>
+                    <div class="colorBlock">
+                        <a href="index.php?color=<?php echo ltrim($result['color1'], '#'); ?>"
+                           style="background-color:<?php echo $result['color1'] ?>;" class="colorBtn">
+                            <p><?php echo $result['color1'] ?></p></a>
+                        <a href="index.php?color=<?php echo ltrim($result['color2'], '#'); ?>"
+                           style="background-color:<?php echo $result['color2'] ?>;" class="colorBtn">
+                            <p><?php echo $result['color2'] ?></p></a>
+                        <a href="index.php?color=<?php echo ltrim($result['color3'], '#'); ?>"
+                           style="background-color:<?php echo $result['color3'] ?>;" class="colorBtn">
+                            <p><?php echo $result['color3'] ?></p></a>
+                        <a href="index.php?color=<?php echo ltrim($result['color4'], '#'); ?>"
+                           style="background-color:<?php echo $result['color4'] ?>;" class="colorBtn">
+                            <p><?php echo $result['color4'] ?></p></a>
+                    </div>
+                    <div>
+                        <p class="postComments">0<?php //echo number of comments ?></p>
+                        <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">
+                    </div>
                 </div>
 
 
@@ -159,14 +152,15 @@ if (!empty($_POST['query'])) {
                 </form>
 
 
-                </div>
+            </div>
 
-      
 
         <?php endforeach; ?>
 
-        <a><div class="loadMoreBtn grow">Load More</div></a>
-        
+        <a>
+            <div class="loadMoreBtn grow">Load More</div>
+        </a>
+
     <?php } //Closing if
 
 
@@ -183,5 +177,6 @@ if (!empty($_POST['query'])) {
     <script src="js/saveLikes.js"></script>
     <script src="js/loadMore.js"></script>
     <script src="js/inappropriate.js"></script>
+
 </body>
 </html>

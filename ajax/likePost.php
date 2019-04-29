@@ -77,4 +77,3 @@ if ($recordAmount['count'] == 0) {
 
 header('Content-Type: application/json');
 echo json_encode($response);
-

@@ -1,0 +1,6 @@
+{
+    "require": {
+        "ksubileau/color-thief-php": "^1.4",
+        "league/color-extractor": "0.3.*"
+    }
+}

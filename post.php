@@ -24,6 +24,7 @@
                 Image::saveImageToDb($image, $croppedImage, $description);
                 Image::saveImage($image, $imageSaveName);
                 Image::saveCroppedImage($image);
+                Image::saveMainColors($image);
                 header("location: index.php");
             } 
             else {
