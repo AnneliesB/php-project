@@ -17,7 +17,7 @@ loadMoreBtn.addEventListener("click", function(e){
 
     //save current posts shown
     shownPosts = posts;
-    
+
     //increase posts to retrieve
     posts +=2;
 
@@ -32,7 +32,7 @@ loadMoreBtn.addEventListener("click", function(e){
         console.log(response.data);
         //update UI with posts by looping over them
         response.data.forEach(elem => {
-            
+
             //create postContainer div and add it's class
             let postContainer = document.createElement("div");
             postContainer.classList.add("postContainer");
@@ -78,12 +78,20 @@ loadMoreBtn.addEventListener("click", function(e){
             postContainer.innerHTML = postTemplate;
 
             //get last post in the feed (because lastchild is the button!)
-            let lastPost = feed.lastChild.previousSibling
+            let lastPost = feed.lastChild.previousSibling;
             //append new post after the last post
             lastPost.parentNode.insertBefore(postContainer, lastPost);
-            
-            
+
+
         });
+        function reloadJs(src) {
+            src = $('script[src$="' + src + '"]').attr("src");
+            $('script[src$="' + src + '"]').remove();
+            $('<script/>').attr('src', src).appendTo('body');
+        }
+
+        reloadJs("saveLikes.js");
+    })
 
     })
 
@@ -91,6 +99,5 @@ loadMoreBtn.addEventListener("click", function(e){
     .catch(function (error) {
         console.log(error);
     });
-    
+
     e.preventDefault();
-});
