@@ -1,5 +1,10 @@
-let knop = document.querySelector("span.like");
-knop.addEventListener("click", function(e){
+//Get all like buttons
+let knop = document.querySelectorAll("span.like");
+
+//loop over all like buttons in array and listen for a click
+for (let i = 0; i < knop.length; i++) {
+    knop[i].addEventListener("click", function() {
+      
     let postId = this.dataset.id;
     let link = this;
     let likes = this.nextSibling;
@@ -36,4 +41,6 @@ knop.addEventListener("click", function(e){
 
 
     e.preventDefault();
-});
+
+    });
+}
