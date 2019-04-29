@@ -13,7 +13,7 @@ if (isset($_SESSION['email'])) {
 $conn = Db::getConnection();
 
 //Get ID of logged in user so we can later fetch the posts of users he follows.
-$user_id = User::getUserId();
+$userId = User::getUserId();
 
 //Check if Search is used
 if (!empty($_GET['query'])) {
@@ -44,7 +44,7 @@ if (!empty($_GET['query'])) {
 
     //Get posts from DB and put them in $results
     $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) order by id desc limit $posts");
-    $statement->bindParam(":user_id", $user_id);
+    $statement->bindParam(":user_id", $userId);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -105,13 +105,13 @@ if (!empty($_GET['query'])) {
             </div>
 
 
-             <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"src="images/<?php echo $result['url_cropped'] ?> </a>
+             <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"src="images/<?php echo $result['url_cropped'] ?>" </a>
 
                 <p class="postDescription"><?php echo $result['description'] ?></p>
 
                 <div class="postStats">
                     <div>
-                        <?php if (Like::userHasLiked($result['id'], $user_id) == true) : ?>
+                        <?php if (Like::userHasLiked($result['id'], $userId) == true) : ?>
                             <a href="#" data-id="<?php echo $result['id'] ?>" class="like"><img
                                         class="icon postLikeIcon"
                                         src="images/liked.svg"
