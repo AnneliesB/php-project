@@ -67,16 +67,6 @@ if (!empty($_GET['query'])) {
         //Posts of friends found, display them with a loop
         foreach ($results as $result): ?>
 
-        <!-- If inappropriate = 3, hide post -->
-        <?php if(Image::postHas3Reports($result['id']) == true): ?>
-        <div class="postContainer disabled">
-        <?php else: ?>
-        <div class="postContainer">
-        <?php endif ?>
-
-
-
-
             <div class="postTopBar">
                 <div class="postUsername"><?php echo $result['username'] ?></div>
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
