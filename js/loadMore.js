@@ -84,13 +84,13 @@ loadMoreBtn.addEventListener("click", function(e){
 
 
         });
-        function reloadJs(src) {
+       /* function reloadJs(src) {
             src = $('script[src$="' + src + '"]').attr("src");
             $('script[src$="' + src + '"]').remove();
             $('<script/>').attr('src', src).appendTo('body');
         }
 
-        reloadJs("saveLikes.js");
+        reloadJs("saveLikes.js");*/
     })
 
     })
