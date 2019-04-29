@@ -105,7 +105,7 @@ if (!empty($_GET['query'])) {
             </div>
 
 
-             <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"src="images/<?php echo $result['url_cropped'] ?>" </a>
+             <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"src="images/<?php echo $result['url_cropped'] ?>"> </a>
 
                 <p class="postDescription"><?php echo $result['description'] ?></p>
 
