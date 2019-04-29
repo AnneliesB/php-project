@@ -47,6 +47,7 @@ if (!empty($_GET['query'])) {
     $statement->bindParam(":user_id", $userId);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
 }
 
 ?><!DOCTYPE html>
@@ -79,7 +80,7 @@ if (!empty($_GET['query'])) {
         //Posts of friends found, display them with a loop
         foreach ($results as $result): ?>
 
-        <!-- If inappropriate = 3, hide post -->        
+        <!-- If inappropriate = 3, hide post -->
         <?php if(Image::postHas3Reports($result['id']) == true): ?>
         <div class="postContainer disabled">
         <?php else: ?>
@@ -95,7 +96,7 @@ if (!empty($_GET['query'])) {
 
                 <?php if(User::userHasReported($result['id'], $userId) == true): ?>
                     <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">Inappropiate</a>
-                
+
                 <?php else: ?>
                     <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">Inappropiate</a>
                 <?php endif ?>
@@ -146,10 +147,11 @@ if (!empty($_GET['query'])) {
                 </div>
 
 
-                <form>
+                <form action="" method="POST">
                     <input class="commentInput" type="text" name="comment" placeholder="comment...">
-                    <input class="commentBtn" type="submit" value="Post">
+                    <input class="commentBtn" type="submit" value="Post" data-id="<?php echo $result['id'] ?>">
                 </form>
+
 
 
             </div>
@@ -177,6 +179,7 @@ if (!empty($_GET['query'])) {
     <script src="js/saveLikes.js"></script>
     <script src="js/loadMore.js"></script>
     <script src="js/inappropriate.js"></script>
+    <script src="js/comment.js"></script>
 
 </body>
 </html>
