@@ -87,6 +87,7 @@ class Image
             $image_save_func($im2, "images/" . (Image::getPostId() - 1) . 'cropped-' . $_FILES['image']['name']);
             imagedestroy($im2);
         }
+
     }
 
     public static function saveMainColors($imageName)
@@ -125,4 +126,20 @@ class Image
         return $results;
 
     }
-}
+
+
+        public static function postHas3Reports($postId) {
+            $conn = Db::getConnection();
+            $statementCheck = $conn->prepare("select count(*) as count from inappropriate where post_id = :postId");
+            $statementCheck->bindParam(":postId", $postId);
+            $statementCheck->execute();
+            $result = $statementCheck->fetch(PDO::FETCH_ASSOC);
+    
+            if ($result['count'] == 3) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    }

@@ -351,6 +351,22 @@ class User
         return $user_id;
     }
 
+
+    public static function userHasReported($postId, $userId) {
+        $conn = Db::getConnection();
+        $statementCheck = $conn->prepare("select count(*) as count from inappropriate where post_id = :postId AND user_id = :userId AND inappropriate = '1'");
+        $statementCheck->bindParam(":postId", $postId);
+        $statementCheck->bindParam(":userId", $userId);
+        $statementCheck->execute();
+        $result = $statementCheck->fetch(PDO::FETCH_ASSOC);
+
+        if ($result['count'] == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public static function getSessionEmail()
     {
         return $_SESSION['email'];
@@ -584,6 +600,7 @@ class User
         $_SESSION['email'] = $email;
         header("location: index.php");
     }
+
 
 
 }
