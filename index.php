@@ -70,7 +70,7 @@ if (!empty($_GET['query'])) {
         <div class="postContainer">
 
             <div class="postTopBar">
-                <div class="postUsername"><?php echo $result['username'] ?></div>
+                <a href="userProfile.php?username=<?php echo $result['username']; ?>"><div class="postUsername"><?php echo $result['username'] ?></div></a>
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
 
                 <?php if(User::userHasReported($result['id'], $userId) == true): ?>
