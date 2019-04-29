@@ -44,10 +44,16 @@
         $Amount = $statement->fetch(PDO::FETCH_ASSOC);        
         
         if ($Amount['count'] == 3) {
+
+            $updateInappropriateStatement = $conn->prepare("update photo set inappropriate = '1' where id = :postId ");
+            $updateInappropriateStatement->bindParam(":postId", $postId);
+            $updateInappropriateStatement->execute();
+            
             $response = [
                 "status" => "Disable",
                 "message" => "Inappropriate was saved and the post is disbaled!"
-            ]; 
+            ];
+
         } 
 
         else {
