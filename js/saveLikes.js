@@ -12,11 +12,9 @@ for (let i = 0; i < knop.length; i++) {
     console.log(image);
     console.log("test");
 
-    $.ajax({
-        method: "POST",
-        url: "ajax/likePost.php",
-        data: {postId: postId},
-        dataType: 'json'
+    axios.post('ajax/likePost.php',{
+        postId : postId
+
     })
         .then (function (res){
             console.log(res.data);
@@ -37,7 +35,11 @@ for (let i = 0; i < knop.length; i++) {
                 counter--;
                 likes.innerHTML=counter;
             }
+        })
+        .catch(function (error) {
+            console.log(error);
         });
+
 
     e.preventDefault();
 
