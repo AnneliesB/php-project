@@ -16,10 +16,15 @@ $conn = Db::getConnection();
 $user_id = User::getUserId();
 
 //Check if Search is used
-if (!empty($_POST['query'])) {
-    $query = $_POST['query'];
-    $statement = $conn->prepare("select description, url from photo where description like '%" . $query . "%'");
+if (!empty($_GET['query'])) {
+    $query = $_GET['query'];
+    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' order by id desc LIMIT 2");
     $statement->execute();
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+} else if (!empty($_GET['color'])) {
+    $color = $_GET['color'];
+    $results = Image::showImagesWithTheSameColor($color);
 } else {
     //No Search
     //Show 20 posts of friends on startpage
@@ -43,34 +48,6 @@ if (!empty($_POST['query'])) {
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 }
-
-
-
-//Open connection
-$conn = Db::getConnection();
-
-//Get ID of logged in user so we can later fetch the posts of users he follows.
-$user_id = User::getUserId();
-
-//Check if Search is used
-if (!empty($_GET['query'])) {
-    $query = $_GET['query'];
-    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' order by id desc LIMIT 2");
-    $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-} else {
-    //No Search
-    //Show 20 posts of friends on startpage
-
-    //Get posts from DB and put them in $results
-    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) order by id desc limit 2");
-    $statement->bindParam(":user_id", $user_id);
-    $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-}
-
-
-
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -133,16 +110,16 @@ if (!empty($_GET['query'])) {
                         <p class="postLikes"><?php echo Like::getLikeAmount($result['id']); ?></p>
                     </div>
                     <div class="colorBlock">
-                        <a href="index.php?color=<?php echo htmlspecialchars($result['color1']); ?>"
+                        <a href="index.php?color=<?php echo ltrim($result['color1'], '#'); ?>"
                            style="background-color:<?php echo $result['color1'] ?>;" class="colorBtn">
                             <p><?php echo $result['color1'] ?></p></a>
-                        <a href="index.php?color=<?php echo htmlspecialchars($result['color2']); ?>"
+                        <a href="index.php?color=<?php echo ltrim($result['color2'], '#'); ?>"
                            style="background-color:<?php echo $result['color2'] ?>;" class="colorBtn">
                             <p><?php echo $result['color2'] ?></p></a>
-                        <a href="index.php?color=<?php echo htmlspecialchars($result['color3']); ?>"
+                        <a href="index.php?color=<?php echo ltrim($result['color3'], '#'); ?>"
                            style="background-color:<?php echo $result['color3'] ?>;" class="colorBtn">
                             <p><?php echo $result['color3'] ?></p></a>
-                        <a href="index.php?color=<?php echo htmlspecialchars($result['color4']); ?>"
+                        <a href="index.php?color=<?php echo ltrim($result['color4'], '#'); ?>"
                            style="background-color:<?php echo $result['color4'] ?>;" class="colorBtn">
                             <p><?php echo $result['color4'] ?></p></a>
                     </div>
