@@ -15,9 +15,8 @@ if (isset($_SESSION['email'])) {
 $conn = Db::getConnection();
 
 # get clicked post info from database
-$data = json_decode(file_get_contents("php://input"), true);
-//get start point of new posts to load
-$postId = $data['postId'];
+$postId = $_POST['postId'];
+
 # create empty response array
 $response = [];
 
@@ -78,4 +77,3 @@ if ($recordAmount['count'] == 0) {
 
 header('Content-Type: application/json');
 echo json_encode($response);
-
