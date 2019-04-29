@@ -67,6 +67,8 @@ if (!empty($_GET['query'])) {
         //Posts of friends found, display them with a loop
         foreach ($results as $result): ?>
 
+        <div class="postContainer">
+
             <div class="postTopBar">
                 <div class="postUsername"><?php echo $result['username'] ?></div>
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
