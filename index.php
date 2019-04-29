@@ -1,6 +1,5 @@
 <?php
 require_once("bootstrap/bootstrap.php");
-
 //Check if user session is active (Is user logged in?)
 if (isset($_SESSION['email'])) {
     //User is logged in, no redirect needed!
@@ -8,35 +7,28 @@ if (isset($_SESSION['email'])) {
     //User is not logged in, redirect to login.php!
     header("location: login.php");
 }
-
 //Open connection
 $conn = Db::getConnection();
-
 //Get ID of logged in user so we can later fetch the posts of users he follows.
 $userId = User::getUserId();
-
 //Check if Search is used
 if (!empty($_GET['query'])) {
     $query = $_GET['query'];
     $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 2");
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
 } else if (!empty($_GET['color'])) {
     $color = $_GET['color'];
     $results = Image::showImagesWithTheSameColor($color);
 } else {
     //No Search
     //Show 20 posts of friends on startpage
-
     //Get posts from DB and put them in $results
     $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit 2");
     $statement->bindParam(":user_id", $userId);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
 }
-
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,7 +55,6 @@ if (!empty($_GET['query'])) {
     <?php
     //Check if no post results (no friends or posts of friends found)
     if (!empty($results)) {
-
         //Posts of friends found, display them with a loop
         foreach ($results as $result): ?>
 
@@ -143,8 +134,6 @@ if (!empty($_GET['query'])) {
         </a>
 
     <?php } //Closing if
-
-
     else { //No posts of friends found, show empty state message
         ?>
 

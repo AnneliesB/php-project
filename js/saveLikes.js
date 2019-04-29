@@ -1,6 +1,15 @@
-$("a.like").on("click", function (e) {
-    let postId = $(this).data("id");
-    let link = $(this);
+//Get all like buttons
+let knop = document.querySelectorAll("span.like");
+
+//loop over all like buttons in array and listen for a click
+for (let i = 0; i < knop.length; i++) {
+    knop[i].addEventListener("click", function(e) {
+      
+    let postId = this.dataset.id;
+    let link = this;
+    let likes = this.nextElementSibling;
+    let image = this.firstChild;
+    console.log(image);
     console.log("test");
 
     $.ajax({
@@ -9,19 +18,28 @@ $("a.like").on("click", function (e) {
         data: {postId: postId},
         dataType: 'json'
     })
-        .done(function (res) {
-            if (res.status == "liked") {
-                let likes = link.next().html();
-                link.children().attr("src", "images/liked.svg");
-                likes++;
-                link.next().html(likes);
+        .then (function (res){
+            console.log(res.data);
+            let img = document.querySelector(".postLikeIcon");
+            if (res.data['status'] === "liked") {
+                console.log("we zitten in de liked");
+
+                let counter = likes.innerHTML;
+                console.log(counter + " de likes");
+                image.src = "images/liked.svg";
+                counter++;
+                likes.innerHTML=counter;
             } else {
-                let likes = link.next().html();
-                link.children().attr("src", "images/like.svg");
-                likes--;
-                link.next().html(likes);
+                console.log("we zitten in de niet liked");
+                let counter = likes.innerHTML;
+                console.log(counter + " de likes");
+                image.src = "images/like.svg";
+                counter--;
+                likes.innerHTML=counter;
             }
         });
 
     e.preventDefault();
-});
+
+    });
+}

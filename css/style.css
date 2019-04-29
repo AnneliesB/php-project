@@ -151,6 +151,10 @@ input[type=text], input[type=password], input[type=file], #description {
     padding: 2em 0em;
 }
 
+span.like{
+    cursor: pointer;
+}
+
 .postImg{
     width: 100%;
     height: auto;
