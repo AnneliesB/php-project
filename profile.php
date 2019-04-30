@@ -36,9 +36,11 @@ $profile = $statement->fetch(PDO::FETCH_ASSOC);
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/normalize.css">
     <title>IMSTAGRAM - profile</title>
 </head>
 <body>
+<?php include_once("nav.incl.php"); ?>
 <!-- SHOW data from DB -->
 <div class="profile">
     <h2>Profile</h2>

@@ -23,9 +23,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/normalize.css">
     <title>IMDSTAGRAM - detail page</title>
 </head>
 <body class="index">
+<?php include_once("nav.incl.php"); ?>
 
     <header>
 
