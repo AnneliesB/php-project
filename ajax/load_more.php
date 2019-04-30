@@ -45,6 +45,16 @@
         //loop over all posts in results and add extra info we need into the results array for the js post template
         for($i = 0; $i < sizeof($results); $i++){
 
+            //escape special chars for XSS scripting before passing it back to JSON
+            $username = $results[$i]['username'];
+            $username = htmlspecialchars($username);
+            $results[$i]['username'] = $username;
+            
+            //escape special chars for XSS scripting before passing it back to JSON
+            $description = $results[$i]['description'];
+            $description = htmlspecialchars($description);
+            $results[$i]['description'] = $description;
+
             //get the amount of likes for each post and update the results array
             $likeAmount = Like::getLikeAmount($results[$i]['id']);
             $results[$i]["likeAmount"] = $likeAmount;
