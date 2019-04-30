@@ -28,6 +28,7 @@
         <title><?php echo $username; ?></title>
     </head>
     <body>
+    <?php include_once("nav.incl.php"); ?>
 
         <div class="profile">
             <h2><?php echo $profile['username']; ?></h2>
