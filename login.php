@@ -24,7 +24,7 @@ if (!empty($_POST)) {
     <title>IMDSTAGRAM - login</title>
 </head>
 <body>
-<?php include_once("nav.incl.php"); ?>
+
 <div class="login">
     <div class="form formLogin">
         <form action="" method="post">
