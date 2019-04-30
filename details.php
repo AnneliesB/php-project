@@ -37,7 +37,7 @@
         <img src="images/<?php echo $post['url']; ?>" alt="Post picture">
 
         <!-- echo description -->
-        <p><?php echo $post['description']; ?></p>
+        <p><?php echo htmlspecialchars($post['description']); ?></p>
         <div class="postStats">
             <div>
                 <?php if (Like::userHasLiked($post['id'], $userId) == true) : ?>
@@ -79,7 +79,7 @@
             <?php foreach($comments as $comment): ?>
                 <div class="comments">
                     <!-- echo timestamp, username and comment -->
-                    <p> <?php echo $comment['date'] . " " . $comment['username'] . " " . $comment['comment'] ?> </p>
+                    <p> <?php echo htmlspecialchars($comment['date']) . " " . htmlspecialchars($comment['username']) . " " . htmlspecialchars($comment['comment']) ?> </p>
                 </div>
             <?php endforeach;?>
             
