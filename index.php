@@ -87,7 +87,7 @@ if (!empty($_GET['query'])) {
 
              <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"src="images/<?php echo $result['url_cropped'] ?>"> </a>
 
-                <p class="postDescription"><?php echo $result['description'] ?></p>
+                <p class="postDescription"><?php echo htmlspecialchars($result['description']) ?></p>
 
                 <div class="postStats">
                     <div>
