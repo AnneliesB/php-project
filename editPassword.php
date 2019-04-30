@@ -42,6 +42,7 @@ if (!empty($_POST)) {
 </head>
 <body>
 <form action="" method="POST" class="editPassword">
+    <h2 class="profileHeading">Edit password</h2>
     <?php if (isset($error)): ?>
         <div class="formError">
             <p>
@@ -50,9 +51,9 @@ if (!empty($_POST)) {
         </div>
     <?php endif; ?>
 
-    <fieldset>
 
-        <legend>Change password</legend>
+
+
 
         <div class="formField">
             <label for="password">Enter old password</label>
@@ -69,7 +70,7 @@ if (!empty($_POST)) {
             <input type="password" id="confirmNewPassword" name="confirmNewPassword">
         </div>
 
-    </fieldset>
+
 
     <input type="submit" value="Update Password" name="upload" class="btn btnPrimary">
 
