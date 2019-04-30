@@ -85,7 +85,6 @@ loadMoreBtn.addEventListener("click", function(e){
 
         });
 
-        getLikeButtons();
     })
 
     //catch error
