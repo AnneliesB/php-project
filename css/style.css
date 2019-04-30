@@ -157,6 +157,14 @@ input[type=text], input[type=password], input[type=file], #description {
     text-decoration: underline;
 }
 
+.userPosts{
+    padding-top: 2em;
+}
+
+.userPosts img{
+    width: 25%;
+}
+
 /*--------------------------------------
             Index page
 --------------------------------------*/
@@ -376,6 +384,10 @@ span.like{
     .formError {
         width: 90%;
 
+    }
+
+    .userPosts{
+        padding-top: 4em;
     }
 
     /*--------------------------------------

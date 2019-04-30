@@ -48,7 +48,7 @@ loadMoreBtn.addEventListener("click", function(e){
             //create template to put inside the postContainer div
             let postTemplate = `
                 <div class="postTopBar">
-                    <div class="postUsername">${elem['username']}</div>
+                <a href="userProfile.php?username=${elem['username']}"><div class="postUsername">${elem['username']}</div></a>
                     <a href="#" class="options"><img class="icon postOptions" src="images/menu.svg" alt="options icon"></a>
                 </div>
 
