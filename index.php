@@ -65,7 +65,7 @@ if (!empty($_GET['query'])) {
             <div class="postTopBar">
                 <div class="postUsername"><?php echo htmlspecialchars($result['username']) ?></div>
 
-                <p><?php echo Image::time_elapsed_string($result['time']); ?></p>
+                <p><?php echo Image::timeAgo($result['time']); ?></p>
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
 
                 

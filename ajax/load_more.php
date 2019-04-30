@@ -62,6 +62,10 @@
             //get the likedstatus for this user on each post and update the results array
             $hasliked = Like::userHasLiked($results[$i]['id'], $user_id);
             $results[$i]["hasLiked"] = $hasliked;
+
+            // get time ago for each post
+            $ago = Image::timeAgo($results[$i]['time']);
+            $results[$i]['ago'] = $ago;
         }
 
     }
