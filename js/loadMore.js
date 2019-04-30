@@ -63,6 +63,20 @@ loadMoreBtn.addEventListener("click", function(e){
                         alt="like icon"></a>
                         <p class="postLikes">${elem['likeAmount']}</p>
                     </div>
+                    <div class="colorBlock">
+                        <a href="index.php?color=${elem['color1']}"
+                           style="background-color:`+'#'+`${elem['color1']}" class="colorBtn">
+                            <p>${elem['color1']}</p></a>
+                        <a href="index.php?color=${elem['color2']}"
+                           style="background-color:`+'#'+`${elem['color2']}" class="colorBtn">
+                            <p>${elem['color2']}</p></a>
+                        <a href="index.php?color=${elem['color3']}"
+                           style="background-color:`+'#'+`${elem['color3']}" class="colorBtn">
+                            <p>${elem['color3']}</p></a>
+                        <a href="index.php?color=${elem['color4']}"
+                           style="background-color:`+'#'+`${elem['color4']}" class="colorBtn">
+                            <p>${elem['color4']}</p></a>
+                    </div>
                     <div>
                         <p class="postComments">0</p>
                         <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">  

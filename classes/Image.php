@@ -106,10 +106,10 @@ class Image
         // it defines an extract method which return the most “representative” colors
         $colors = $extractor->extract(4);
         #print_r($colors);
-        $color1 = Color::fromIntToHex($colors[0]);
-        $color2 = Color::fromIntToHex($colors[1]);
-        $color3 = Color::fromIntToHex($colors[2]);
-        $color4 = Color::fromIntToHex($colors[3]);
+        $color1 = ltrim(Color::fromIntToHex($colors[0]), '#');
+        $color2 = ltrim(Color::fromIntToHex($colors[1]), '#');
+        $color3 = ltrim(Color::fromIntToHex($colors[2]), '#');
+        $color4 = ltrim(Color::fromIntToHex($colors[3]), '#');
 
         $statement = $conn->prepare("UPDATE photo set color1 = :color1, color2 = :color2, color3 = :color3, color4 = :color4 where url = :url");
         $statement->bindParam(":color1", $color1);
