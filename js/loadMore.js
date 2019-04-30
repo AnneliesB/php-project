@@ -49,6 +49,7 @@ loadMoreBtn.addEventListener("click", function(e){
             let postTemplate = `
                 <div class="postTopBar">
                     <div class="postUsername">${elem['username']}</div>
+                    <p> ${elem['ago']} </p>
                     <a href="#" class="options"><img class="icon postOptions" src="images/menu.svg" alt="options icon"></a>
                 </div>
 

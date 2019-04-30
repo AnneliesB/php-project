@@ -1,6 +1,11 @@
 <?php
-require_once("bootstrap/bootstrap.php");
-require 'vendor/autoload.php';
+require_once("Db.php");
+//require "vendor/autoload.php";
+//require_once __DIR__ . 'vendor/autoload.php';
+
+$path = $_SERVER['DOCUMENT_ROOT'];
+$path .= "/vendor/autoload.php";
+include_once($path);
 
 use League\ColorExtractor\Color;
 use League\ColorExtractor\ColorExtractor;
@@ -128,18 +133,61 @@ class Image
     }
 
 
-        public static function postHas3Reports($postId) {
-            $conn = Db::getConnection();
-            $statementCheck = $conn->prepare("select count(*) as count from inappropriate where post_id = :postId");
-            $statementCheck->bindParam(":postId", $postId);
-            $statementCheck->execute();
-            $result = $statementCheck->fetch(PDO::FETCH_ASSOC);
+    public static function postHas3Reports($postId) {
+        $conn = Db::getConnection();
+        $statementCheck = $conn->prepare("select count(*) as count from inappropriate where post_id = :postId");
+        $statementCheck->bindParam(":postId", $postId);
+        $statementCheck->execute();
+        $result = $statementCheck->fetch(PDO::FETCH_ASSOC);
 
-            if ($result['count'] == 3) {
-                return true;
-            } else {
-                return false;
+        if ($result['count'] == 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public static function timeAgo($datetime, $full = false) {
+        // get current time
+        $now = new DateTime;
+
+        // get posted from db
+        $ago = new DateTime($datetime);
+
+        // calculate difference between current time and time from db
+        $diff = $now->diff($ago);
+        
+        $diff->w = floor($diff->d / 7);
+        $diff->d -= $diff->w * 7;
+        
+        $string = array(
+            'y' => 'year',
+            'm' => 'month',
+            'w' => 'week',
+            'd' => 'day',
+            'h' => 'hour',
+            'i' => 'minute',
+            's' => 'second',
+        );
+
+        foreach ($string as $key => &$value) {
+            if ($diff->$key) {
+                $value = $diff->$key . ' ' . $value . ($diff->$key > 1 ? 's' : '');
+            } 
+            else 
+            {
+                unset($string[$key]);
             }
+        }
+        
+            // if you want full notation of difference in time
+            if(!$full) {
+                $string = array_slice($string, 0, 1);
+            } 
+
+            // return difference
+            return $string ? implode(', ', $string) . ' ago' : 'just now';
         }
 
         
