@@ -48,7 +48,7 @@ loadMoreBtn.addEventListener("click", function(e){
             //create template to put inside the postContainer div
             let postTemplate = `
                 <div class="postTopBar">
-                <a href="userProfile.php?username=${elem['username']}"><div class="postUsername">${elem['username']}</div></a>
+                    <div class="postUsername">${elem['username']}</div>
                     <a href="#" class="options"><img class="icon postOptions" src="images/menu.svg" alt="options icon"></a>
                 </div>
 
@@ -64,16 +64,16 @@ loadMoreBtn.addEventListener("click", function(e){
                     </div>
                     <div class="colorBlock">
                         <a href="index.php?color=${elem['color1']}"
-                           style="background-color:${elem['color1']}" class="colorBtn">
+                           style="background-color:`+'#'+`${elem['color1']}" class="colorBtn">
                             <p>${elem['color1']}</p></a>
                         <a href="index.php?color=${elem['color2']}"
-                           style="background-color: ${elem['color2']}" class="colorBtn">
+                           style="background-color:`+'#'+`${elem['color2']}" class="colorBtn">
                             <p>${elem['color2']}</p></a>
                         <a href="index.php?color=${elem['color3']}"
-                           style="background-color:${elem['color3']}" class="colorBtn">
+                           style="background-color:`+'#'+`${elem['color3']}" class="colorBtn">
                             <p>${elem['color3']}</p></a>
                         <a href="index.php?color=${elem['color4']}"
-                           style="background-color:${elem['color4']}" class="colorBtn">
+                           style="background-color:`+'#'+`${elem['color4']}" class="colorBtn">
                             <p>${elem['color4']}</p></a>
                     </div>
                     <div>
