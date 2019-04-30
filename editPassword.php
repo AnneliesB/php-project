@@ -38,9 +38,11 @@ if (!empty($_POST)) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/normalize.css">
     <title>IMSTAGRAM - edit profile</title>
 </head>
 <body>
+<?php include_once("nav.incl.php"); ?>
 <form action="" method="POST" class="editPassword">
     <h2 class="profileHeading">Edit password</h2>
     <?php if (isset($error)): ?>

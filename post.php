@@ -45,10 +45,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/normalize.css">
     <title>IMSTAGRAM - add post</title>
 </head>
 
 <body class="post">
+<?php include_once("nav.incl.php"); ?>
     <form action="" method="POST" enctype="multipart/form-data">
         <?php if (isset($error)): ?>
             <div class="formError">

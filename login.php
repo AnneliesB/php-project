@@ -20,10 +20,11 @@ if (!empty($_POST)) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/normalize.css">
     <title>IMDSTAGRAM - login</title>
 </head>
 <body>
-
+<?php include_once("nav.incl.php"); ?>
 <div class="login">
     <div class="form formLogin">
         <form action="" method="post">

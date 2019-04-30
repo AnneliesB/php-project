@@ -8,7 +8,24 @@ body {
     color: #90a0ae;
 }
 
+.navbar{
+    padding: 1em 25%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: space-evenly;
+    margin-bottom: 2em;
+    background-color: #97DCFB;
 
+}
+
+.navbar a{
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    padding: 0 2em;
+}
 
 .formTitle {
     padding-top: 2em;
