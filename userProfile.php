@@ -14,9 +14,7 @@
     $follows = Follow::isFollowing($user_id, $profile['id']);
 
     //Get all posts for this user profile
-    //$userPosts = User::getUserPosts();
-
-
+    $userPosts = User::getUserPosts($profile['id']);
 
     ?>
     <!DOCTYPE html>
@@ -48,7 +46,9 @@
             <a href="#" id="followBtn" class="btnProfile" data-id="<?php echo $profile['id'] ?>"><?php echo $follows ?></a>
 
             <div class="userPosts">
-
+                <?php foreach($userPosts as $u): ?>
+                <a href="details.php?id=<?php echo $u['id']; ?>"><img src="images/<?php echo $u['url_cropped'] ?>"></a>
+                <?php endforeach; ?>
             </div>
 
 

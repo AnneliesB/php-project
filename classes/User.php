@@ -610,7 +610,7 @@ class User
         $statement = $conn->prepare("select * from photo where user_id = :user_id");
         $statement->bindParam(":user_id", $user_id);
         $statement->execute();
-        $results = $statement->fetch(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         return $results;
     }

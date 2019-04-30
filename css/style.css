@@ -131,6 +131,14 @@ input[type=text], input[type=password], input[type=file], #description {
     text-decoration: underline;
 }
 
+.userPosts{
+    padding-top: 2em;
+}
+
+.userPosts img{
+    width: 25%;
+}
+
 /*--------------------------------------
             Index page
 --------------------------------------*/
@@ -338,6 +346,10 @@ input[type=text], input[type=password], input[type=file], #description {
     .editProfile, .editPassword{
         padding: 2em;
         margin-top: 5em;
+    }
+
+    .userPosts{
+        padding-top: 4em;
     }
 
     /*--------------------------------------
