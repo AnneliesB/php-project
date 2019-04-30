@@ -99,17 +99,17 @@ if (!empty($_GET['query'])) {
                         <p class="postLikes"><?php echo Like::getLikeAmount($result['id']); ?></p>
                     </div>
                     <div class="colorBlock">
-                        <a href="index.php?color=<?php echo ltrim($result['color1'], '#'); ?>"
-                           style="background-color:<?php echo $result['color1'] ?>;" class="colorBtn">
+                        <a href="index.php?color=<?php echo $result['color1']; ?>"
+                           style="background-color:<?php echo "#" . $result['color1'] ?>;" class="colorBtn">
                             <p><?php echo $result['color1'] ?></p></a>
-                        <a href="index.php?color=<?php echo ltrim($result['color2'], '#'); ?>"
-                           style="background-color:<?php echo $result['color2'] ?>;" class="colorBtn">
+                        <a href="index.php?color=<?php echo $result['color2']; ?>"
+                           style="background-color:<?php echo "#" . $result['color2'] ?>;" class="colorBtn">
                             <p><?php echo $result['color2'] ?></p></a>
-                        <a href="index.php?color=<?php echo ltrim($result['color3'], '#'); ?>"
-                           style="background-color:<?php echo $result['color3'] ?>;" class="colorBtn">
+                        <a href="index.php?color=<?php echo $result['color3']; ?>"
+                           style="background-color:<?php echo "#" . $result['color3'] ?>;" class="colorBtn">
                             <p><?php echo $result['color3'] ?></p></a>
-                        <a href="index.php?color=<?php echo ltrim($result['color4'], '#'); ?>"
-                           style="background-color:<?php echo $result['color4'] ?>;" class="colorBtn">
+                        <a href="index.php?color=<?php echo $result['color4']; ?>"
+                           style="background-color:<?php echo "#" . $result['color4'] ?>;" class="colorBtn">
                             <p><?php echo $result['color4'] ?></p></a>
                     </div>
                     <div>
