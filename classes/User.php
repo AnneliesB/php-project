@@ -601,6 +601,20 @@ class User
         header("location: index.php");
     }
 
+    /*
+    * Get all posts of a specific user by his user_id
+    */
+    public static function getUserPosts($user_id)
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select * from photo where user_id = :user_id");
+        $statement->bindParam(":user_id", $user_id);
+        $statement->execute();
+        $results = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $results;
+    }
+
 
 
 }

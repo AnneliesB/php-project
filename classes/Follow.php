@@ -31,6 +31,20 @@ class Follow {
     /*
     * Check if following record exists for a given user
     */
+    public static function getUserProfile($username)
+    {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select * from user where username = :username");
+        $statement->bindParam(":username", $username);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    /*
+    * Check if following record exists for a given user
+    */
     public static function isFollowing($user_id, $following_id)
     {
         $conn = Db::getConnection();
@@ -40,7 +54,16 @@ class Follow {
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-        //check if result is not empty and then return true else return false
+        if($result === false){
+            //we are not following this user
+            $followBtn = "Follow";
+        }
+        else{
+            //we are following this user
+            $followBtn = "Unfollow";
+        }
+        return $followBtn;
+        
     }
 
 }

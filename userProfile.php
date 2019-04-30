@@ -4,20 +4,17 @@
     // Get username from username paramater in URL
     $username = $_GET['username'];
 
-    //setup DB connection
-    //$conn = DB::getConnection();
+    //get user_id of the loggedin user
+    $user_id = User::getUserId();
 
     //retrieve all information for this user from the DB via User class
-    //$profile = User::getUserProfile($username);
+    $profile = Follow::getUserProfile($username);
 
     //check if following this user
     $follows = Follow::isFollowing($user_id, $profile['id']);
-    if($follows == true){
-        $followBtn = "Follow";
-    }
-    else{
-        $followBtn = "Unfollow";
-    }
+
+    //Get all posts for this user profile
+    //$userPosts = User::getUserPosts();
 
 
 
@@ -47,6 +44,8 @@
                 <p class="profileLabel">Description</p>
                 <p><?php echo $profile['description']; ?></p>
             </div>
+
+            <a class="btnPrimary"><?php echo $follows ?></a>
 
 
 
