@@ -37,30 +37,12 @@ postfeed.addEventListener('click', function (e) {
                 .catch(function (error) {
                     console.log(error);
                 });
-<<<<<<< HEAD
         
         
             
                 e.preventDefault();
-||||||| merged common ancestors
-        
-        
-            
-        
-=======
-
-
-        e.preventDefault();
-
->>>>>>> 212433650c8f7e03b0a83e1682b0c3bc806b33a9
             }
         
-<<<<<<< HEAD
             
-||||||| merged common ancestors
-            e.preventDefault();
-=======
-
->>>>>>> 212433650c8f7e03b0a83e1682b0c3bc806b33a9
 
 });
