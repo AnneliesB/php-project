@@ -37,12 +37,12 @@ postfeed.addEventListener('click', function (e) {
                 .catch(function (error) {
                     console.log(error);
                 });
-        
-        
-            
-        
+
+
+        e.preventDefault();
+
             }
         
-            e.preventDefault();
+
 
 });
