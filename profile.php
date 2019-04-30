@@ -53,18 +53,18 @@ $profile = $statement->fetch(PDO::FETCH_ASSOC);
     <?php endif ?>
 
     <!-- echo username -->
-    <h3><?php echo $profile['username']; ?></h3>
+    <h3><?php echo htmlspecialchars($profile['username']); ?></h3>
 
     <!-- echo email -->
     <div class="profileContainer">
         <p class="profileLabel">Email</p>
-        <p><?php echo $profile['email']; ?></p>
+        <p><?php echo htmlspecialchars($profile['email']); ?></p>
     </div>
 
     <!-- echo description -->
     <div class="profileContainer lastItem">
         <p class="profileLabel">Description</p>
-        <p><?php echo $profile['description']; ?></p>
+        <p><?php echo htmlspecialchars($profile['description']); ?></p>
     </div>
 
 
