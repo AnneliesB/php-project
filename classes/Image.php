@@ -5,6 +5,7 @@ require_once("Db.php");
 
 $path = $_SERVER['DOCUMENT_ROOT'];
 $path .= "/vendor/autoload.php";
+// voor annelies waarbij het soms ni werkt dit pad --> $path .= "/php-project/vendor/autoload.php";
 include_once($path);
 
 use League\ColorExtractor\Color;

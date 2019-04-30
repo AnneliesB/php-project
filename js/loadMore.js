@@ -7,6 +7,7 @@ let posts = 2;
 let url_string = window.location.href;
 let url = new URL(url_string);
 let searchQuery = url.searchParams.get("query");
+let colorSearch = url.searchParams.get("color");
 
 //get feed container, so we can later append elements to this.
 const feed = document.querySelector('.feed');
@@ -24,7 +25,8 @@ loadMoreBtn.addEventListener("click", function(e){
     //make Ajax call via Axios to loadMore.php
     axios.post('ajax/load_more.php',{
         shownPosts: shownPosts,
-        searchQuery: searchQuery
+        searchQuery: searchQuery,
+        colorSearch: colorSearch
     })
 
     //response
