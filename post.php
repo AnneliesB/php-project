@@ -48,7 +48,7 @@
     <title>IMSTAGRAM - add post</title>
 </head>
 
-<body>
+<body class="post">
     <form action="" method="POST" enctype="multipart/form-data">
         <?php if (isset($error)): ?>
             <div class="formError">

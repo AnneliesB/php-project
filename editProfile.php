@@ -37,6 +37,7 @@ if (!empty($_POST)) {
 </head>
 <body>
 <form action="" method="POST" enctype="multipart/form-data" class="editProfile">
+    <h2 class="profileHeading">Edit profile</h2>
     <?php if (isset($error)): ?>
         <div class="formError">
             <p>
@@ -45,9 +46,9 @@ if (!empty($_POST)) {
         </div>
     <?php endif; ?>
 
-    <fieldset>
 
-        <legend>Personal information</legend>
+
+
 
         <div class="formField">
             <label for="image">Select image to upload:</label>
@@ -75,7 +76,7 @@ if (!empty($_POST)) {
             <input type="password" id="password" name="password">
         </div>
 
-    </fieldset>
+
 
     <input type="submit" value="Update profile" name="upload" class="btn btnPrimary">
 

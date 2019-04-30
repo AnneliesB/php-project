@@ -5,8 +5,10 @@
 body {
     text-align: center;
     font-family: 'Roboto', sans-serif;
-    color: #50a2a7;
+    color: #90a0ae;
 }
+
+
 
 .formTitle {
     padding-top: 2em;
@@ -23,6 +25,7 @@ body {
     margin-right: auto;
     padding: 0.1em 0.2em;
     border-radius: 5px;
+    margin-bottom: 2em;
 }
 
 .formInput {
@@ -46,10 +49,10 @@ body {
 input[type=text], input[type=password], input[type=file], #description {
     width: 100%;
     height: 2em;
-    background-color: #AFCFD2;
-    border: 1px solid #50a2a7;
+    background-color: #e8f9ff;
+    border: 1px solid #e8f9ff;
     border-radius: 5px;
-    color: white;
+    color: #293241;
     padding-left: 0.5em;
     font-size: 1em;
 }
@@ -68,23 +71,23 @@ input[type=text], input[type=password], input[type=file], #description {
 }
 
 .btnPrimary {
-    width: 100%;
-    border: 1px solid #50a2a7;
+    width: 50%;
+    border: 1px solid #82deff;
     background-color: white;
     border-radius: 5px;
-    margin-top: 5em;
+    margin-top: 2em;
     height: 2.5em;
     font-weight: bold;
     font-size: 1em;
-    color: #50a2a7;
+    color: #82deff;
     text-transform: uppercase;
     cursor: pointer;
-    max-width: 526px;
+
 }
 
 .btnPrimary:hover {
     color: white;
-    background-color: #50a2a7;
+    background-color: #82deff;
     transition: 0.5s;
 }
 
@@ -95,19 +98,19 @@ input[type=text], input[type=password], input[type=file], #description {
     text-decoration: none;
     padding: 0.5em;
     width: 60%;
-    border: 1px solid #50a2a7;
+    border: 1px solid #82deff;
     background-color: white;
     border-radius: 5px;
     text-transform: uppercase;
     cursor: pointer;
-    color: #50a2a7;
+    color: #82deff;
     margin-top: 1em;
     margin-bottom: 1em;
 }
 
 .btnProfile:hover{
     color: white;
-    background-color: #50a2a7;
+    background-color: #82deff;
     transition: 0.5s;
 }
 
@@ -121,12 +124,12 @@ input[type=text], input[type=password], input[type=file], #description {
 }
 
 .redirectLink {
-    color: #797979;
+    color: #b7c1cb;
 }
 
 .redirectLink a {
     text-decoration: none;
-    color: #797979;
+    color: #b7c1cb;
     font-weight: bold;
     text-decoration: underline;
 }
@@ -136,6 +139,7 @@ input[type=text], input[type=password], input[type=file], #description {
 --------------------------------------*/
 .index{
     text-align: left;
+    color: #333;
 }
 
 .feed{
@@ -212,8 +216,8 @@ input[type=text], input[type=password], input[type=file], #description {
 }
 
 .commentBtn{
-    border: 1px solid #50a2a7;
-    background-color: #50A2A7;
+    border: 1px solid #82deff;
+    background-color: #82deff;
     border-radius: 0px 5px 5px 0px;
     height: 2em;
     font-weight: bold;
@@ -227,21 +231,21 @@ input[type=text], input[type=password], input[type=file], #description {
 .loadMoreBtn{
     width: 50%;
     margin: 2em auto 4em auto;
-    border: 1px solid #50a2a7;
+    border: 1px solid #82deff;
     background-color: white;
     border-radius: 5px;
     padding: 0.5em 0em;
     font-weight: bold;
     font-size: 1em;
-    color: #50a2a7;
+    color: #82deff;
     text-transform: uppercase;
     cursor: pointer;
     text-align: center;
 }
 
 .loadMoreBtn:hover{
-    border: 1px solid #50a2A7;
-    background-color: #50A2A7;
+    border: 1px solid #82deff;
+    background-color: #82deff;
     color: #fff;
 }
 
@@ -269,7 +273,7 @@ input[type=text], input[type=password], input[type=file], #description {
 
 @media (min-width: 980px) {
     body {
-        background-image: url(../images/background.jpeg);
+        background-color: #FAFAFA;
     }
 
     .index{
@@ -277,12 +281,13 @@ input[type=text], input[type=password], input[type=file], #description {
     }
 
     .login, .profile, .editProfile, .editPassword {
-        width: 50%;
+        width: 30%;
         margin-left: auto;
         margin-right: auto;
         background-color: white;
         padding-bottom: 2em;
-        margin-top: 7em;
+        margin-top: 4em;
+        border: 1px solid #e9e9e9;
     }
 
     .flexbox {
@@ -300,6 +305,7 @@ input[type=text], input[type=password], input[type=file], #description {
         text-align: center;
         padding-top: 2em;
         padding-bottom: 3em;
+        color: #333;
     }
 
     .profileContainer {
@@ -319,19 +325,19 @@ input[type=text], input[type=password], input[type=file], #description {
         text-decoration: none;
         padding: 0.5em;
         width: 30%;
-        border: 1px solid #50a2a7;
+        border: 1px solid #82deff;
         background-color: white;
         border-radius: 5px;
         text-transform: uppercase;
         cursor: pointer;
-        color: #50a2a7;
+        color: #82deff;
         margin-top: 1em;
         margin-bottom: 1em;
     }
 
     .btnProfile:hover {
         color: white;
-        background-color: #50a2a7;
+        background-color: #82deff;
         transition: 0.5s;
     }
 
@@ -340,10 +346,20 @@ input[type=text], input[type=password], input[type=file], #description {
         margin-top: 5em;
     }
 
+    .formError {
+        width: 90%;
+
+    }
+
     /*--------------------------------------
             Index page
     --------------------------------------*/
     .feed{
+        width: 30%;
+        margin: 0 auto;
+    }
+
+    header{
         width: 30%;
         margin: 0 auto;
     }
