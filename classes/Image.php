@@ -106,11 +106,20 @@ class Image
         $color3 = ltrim(Color::fromIntToHex($colors[2]), '#');
         $color4 = ltrim(Color::fromIntToHex($colors[3]), '#');
 
-        $statement = $conn->prepare("UPDATE photo set color1 = :color1, color2 = :color2, color3 = :color3, color4 = :color4 where url = :url");
+        $hex1 = Color::fromIntToHex($colors[0]);
+        $hex2 = Color::fromIntToHex($colors[1]);
+        $hex3 = Color::fromIntToHex($colors[2]);
+        $hex4 = Color::fromIntToHex($colors[3]);
+
+        $statement = $conn->prepare("UPDATE photo set color1 = :color1, color2 = :color2, color3 = :color3, color4 = :color4, hex1 =:hex1, hex2 = :hex2, hex3 = :hex3, hex4 = :hex4 where url = :url");
         $statement->bindParam(":color1", $color1);
         $statement->bindParam(":color2", $color2);
         $statement->bindParam(":color3", $color3);
         $statement->bindParam(":color4", $color4);
+        $statement->bindParam(":hex1", $hex1);
+        $statement->bindParam(":hex2", $hex2);
+        $statement->bindParam(":hex3", $hex3);
+        $statement->bindParam(":hex4", $hex4);
         $statement->bindParam(":url", $imageBaseName);
         $statement->execute();
     }
