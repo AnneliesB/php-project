@@ -45,12 +45,17 @@
                 <p><?php echo $profile['description']; ?></p>
             </div>
 
-            <a class="btnPrimary"><?php echo $follows ?></a>
+            <a href="#" id="followBtn" class="btnProfile" data-id="<?php echo $profile['id'] ?>"><?php echo $follows ?></a>
+
+            <div class="userPosts">
+
+            </div>
 
 
 
 
         </div>
-
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="js/follow.js"></script>
     </body>
     </html>
