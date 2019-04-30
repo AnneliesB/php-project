@@ -64,7 +64,11 @@ if (!empty($_GET['query'])) {
 
             <div class="postTopBar">
                 <div class="postUsername"><?php echo htmlspecialchars($result['username']) ?></div>
+
+                <p><?php echo Image::time_elapsed_string($result['time']); ?></p>
                 <img class="icon postOptions" src="images/menu.svg" alt="options icon">
+
+                
 
                 <?php if(User::userHasReported($result['id'], $userId) == true): ?>
                     <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">Inappropiate</a>
