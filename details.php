@@ -91,8 +91,12 @@
                 <p class="postContainer">Be the first to comment!</p>
         <?php } //Closing else ?>
 
-        <form>
+        <form id="<?php echo $id; ?>">
             <input class="commentInput" type="text" name="comment" placeholder="comment...">
+            <!--
+                Change to button and don't post the form
+                onClick="() => sendpostmethod(<\?php echo $id; ?>)"
+            -->
             <input class="commentBtn" type="submit" value="Post">
         </form>
         </div>
