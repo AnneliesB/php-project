@@ -66,4 +66,20 @@ class Follow {
         
     }
 
+    /*
+    * Check if user is on his own profile, so we can't follow ourselves!
+    */
+    public static function notTryingToFollowMyself($user_id, $profile_id)
+    {
+        if($user_id !== $profile_id){
+            //the logged in user is NOT the same as the profile he's looking at, return true
+            return true;
+        }else{
+            //the logged in user is looking at his own profile, return false
+            return false;
+        }
+
+    }
+    
+
 }

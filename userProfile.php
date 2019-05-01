@@ -45,7 +45,9 @@
                 <p><?php echo $profile['description']; ?></p>
             </div>
 
-            <a href="#" id="followBtn" class="btnProfile" data-id="<?php echo $profile['id'] ?>"><?php echo $follows ?></a>
+            <?php if( Follow::NotTryingToFollowMyself($user_id, $profile['id']) ): ?>
+                <a href="#" id="followBtn" class="btnProfile" data-id="<?php echo $profile['id'] ?>"><?php echo $follows ?></a>
+            <?php endif; ?>
 
             <div class="userPosts">
                 <?php foreach($userPosts as $u): ?>
