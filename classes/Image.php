@@ -3,9 +3,8 @@ require_once("Db.php");
 //require "vendor/autoload.php";
 //require_once __DIR__ . 'vendor/autoload.php';
 
-$path = $_SERVER['DOCUMENT_ROOT'];
 $pathConfig = parse_ini_file("path.ini");
-$path .= $pathConfig['mypath'] . "/vendor/autoload.php";
+$path = $_SERVER['DOCUMENT_ROOT']. $pathConfig['mypath'] . "/vendor/autoload.php";
 // voor annelies waarbij het soms ni werkt dit pad --> $path .= "/php-project/vendor/autoload.php";
 include_once($path);
 
