@@ -14,7 +14,7 @@
     //key value user id vergelijken met session ID
     
     // GET comments
-    $commentStatement = $conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId");
+    $commentStatement = $conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId AND enable=0");
     $commentStatement->bindParam(":postId", $id);
     $commentStatement->execute();
     $comments = $commentStatement->fetchAll();
@@ -41,8 +41,7 @@
         <?php
         //var_dump($post);
         if($post["user_id"]===$_SESSION["id"]){
-            echo'<a href="editPost.php">edit post</a>';
-            
+            echo "<a href=\"editPost.php?id=$id\">edit post</a>";
         }
         ?>
         <!-- echo picture -->
