@@ -12,10 +12,7 @@
     $statement->execute();
     $post = $statement->fetch(PDO::FETCH_ASSOC);
     //key value user id vergelijken met session ID
-    if($post["userid"]===$_SESSION["id"]) {
-
-        
-    }
+    
     // GET comments
     $commentStatement = $conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId");
     $commentStatement->bindParam(":postId", $id);
@@ -40,6 +37,14 @@
 
     <main>
         <div class="postContainer">
+        <!-- echo edit button -->
+        <?php
+        //var_dump($post);
+        if($post["user_id"]===$_SESSION["id"]){
+            echo'<a href="editPost.php">edit post</a>';
+            
+        }
+        ?>
         <!-- echo picture -->
         <img src="images/<?php echo $post['url']; ?>" alt="Post picture">
 
