@@ -25,6 +25,10 @@ else if (!empty($_GET['color'])) {
 else if(!empty($_GET['tag'])) {
     $tag = $_GET['tag'];
     $results = Image::getPostsByTag($tag);
+
+    if(isset($_POST['follow'])){
+        echo 'geklikt';
+    }
 }
 
 else {
@@ -60,15 +64,21 @@ else {
 <div class="feed">
     <?php
     //Check if no post results (no friends or posts of friends found)
-    if (!empty($results)) {
+    if (!empty($results)) { 
         //Posts of friends found, display them with a loop
+
+        // If you search hashtags
+        if (isset($_GET['tag'])): ?>
+            <a id="followHashtagBtn" data-tag="<?php echo '#' . $_GET['tag'] ?>" href="">follow <?php echo '#' . $_GET['tag'] ?></a>
+        <!-- Close if -->
+        <?php endif;
+        
+
         foreach ($results as $result): ?>
 
         <div class="postContainer">
 
             <div class="postTopBar">
-
-               
 
                 <a href="userProfile.php?username=<?php echo htmlspecialchars($result['username']); ?>"><div class="postUsername"><?php echo htmlspecialchars($result['username']); ?></div></a>
                 
@@ -161,6 +171,7 @@ else {
     <script src="js/saveLikes.js"></script>
     <script src="js/loadMore.js"></script>
     <script src="js/inappropriate.js"></script>
+    <script src="js/followHashtag.js"></script>
 
 </body>
 </html>
