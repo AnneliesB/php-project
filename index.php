@@ -14,20 +14,24 @@ $userId = User::getUserId();
 //Check if Search is used
 if (!empty($_GET['query'])) {
     $query = $_GET['query'];
-    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 2");
-    $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-} else if (!empty($_GET['color'])) {
+    $results = Image::searchPosts($query);
+} 
+
+else if (!empty($_GET['color'])) {
     $color = $_GET['color'];
     $results = Image::showImagesWithTheSameColor($color);
-} else {
+}
+
+else if(!empty($_GET['tag'])) {
+    $tag = $_GET['tag'];
+    $results = Image::getPostsByTag($tag);
+}
+
+else {
     //No Search
     //Show 20 posts of friends on startpage
     //Get posts from DB and put them in $results
-    $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit 2");
-    $statement->bindParam(":user_id", $userId);
-    $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $results = Image::getAllPosts($userId);
 }
 ?><!DOCTYPE html>
 <html lang="en">
@@ -88,7 +92,7 @@ if (!empty($_GET['query'])) {
 
              <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"src="images/<?php echo $result['url_cropped'] ?>"> </a>
 
-                <p class="postDescription"><?php echo htmlspecialchars($result['description']) ?></p>
+                <p class="postDescription"><?php echo preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1">#$1</a> ', htmlspecialchars($result['description']));?></p>                
 
                 <div class="postStats">
                     <div>
