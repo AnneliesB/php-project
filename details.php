@@ -36,6 +36,9 @@
     <main>
         <div class="postContainer">
         <!-- echo picture -->
+        <p class="postLocation"><?php echo $post['city'] ?></p>
+
+        <!-- echo picture -->
         <img src="images/<?php echo $post['url']; ?>" alt="Post picture">
 
         <!-- echo description -->
