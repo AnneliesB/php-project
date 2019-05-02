@@ -17,11 +17,12 @@
             $imageSaveName = $_FILES['image']['tmp_name'];
 
             $croppedImage = Image::getPostId() . "cropped-" .$_FILES['image']['name'];
-            $description = $_POST['description']; 
+            $description = $_POST['description'];
+            $city = $_POST['city'];
             
             if (Image::checkExtention($image)) {
                 // If extention is png or jpeg
-                Image::saveImageToDb($image, $croppedImage, $description);
+                Image::saveImageToDb($image, $croppedImage, $description, $city);
                 Image::saveImage($image, $imageSaveName);
                 Image::saveCroppedImage($image);
                 Image::saveMainColors($image);
