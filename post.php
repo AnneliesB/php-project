@@ -72,12 +72,18 @@
                 
                 <textarea id="description" name="description" rows="10" > </textarea>
             </div>
+
+            <div class="hidden">
+                <label for="city">City</label>
+                <input type="text" name="city" id="city">
+            </div>
         </div>
 
         <div class="formField">
             <input type="submit" value="Post" name="upload" class="btn btnPrimary">
         </div>
     </form>
+    <script src="js/postLocation.js"></script>
 </body>
 
 </html>
