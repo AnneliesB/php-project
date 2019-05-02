@@ -54,11 +54,8 @@
                 <a href="details.php?id=<?php echo $u['id']; ?>"><img src="images/<?php echo $u['url_cropped'] ?>"></a>
                 <?php endforeach; ?>
             </div>
-
-
-
-
         </div>
+        
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="js/follow.js"></script>
     </body>
