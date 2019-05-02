@@ -66,6 +66,25 @@ class Follow {
         
     }
 
+    public static function isFollowingHashTag($userId, $hashtag) {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select * from followers where user_id = :user_id and hashtag = :hashtag ");
+        $statement->bindParam(":user_id", $userId);
+        $statement->bindParam(":hashtag", $hashtag);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if($result === false){
+            //we are not following this user
+            $followBtn = "Follow";
+        }
+        else{
+            //we are following this user
+            $followBtn = "Unfollow";
+        }
+        return $followBtn;
+    }
+
     /*
     * Check if user is on his own profile, so we can't follow ourselves!
     */
