@@ -24,10 +24,11 @@ if (!empty($_GET['query'])) {
     //No Search
     //Show 20 posts of friends on startpage
     //Get posts from DB and put them in $results
-    $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit 2");
+    /*$statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit 2");
     $statement->bindParam(":user_id", $userId);
     $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);*/
+    $results = Post::getAllEnabledPostsForUser(11);
 }
 ?><!DOCTYPE html>
 <html lang="en">
