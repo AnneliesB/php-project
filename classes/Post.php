@@ -21,4 +21,16 @@ class Post {
             return false;
         }
     }
+
+    public static function getCommentsByPostId(int $post){
+        try {
+            $commentStatement = self::$conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId");
+            $commentStatement->bindParam(":postId", $post);
+            $commentStatement->execute();
+            $comments = $commentStatement->fetchAll();
+            return $comments;
+        }catch (\PDOException $e){
+            return false;
+        }
+    }
 }

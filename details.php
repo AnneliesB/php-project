@@ -5,6 +5,7 @@
     $uid = User::getUserId();
     $id = $_GET['id'];
     $post = Post::getPostById($id);
+    $comments = Post::getCommentsByPostId($post["id"]);
     //var_dump($id);
     // Connection
     $conn = Db::getConnection();
@@ -17,10 +18,10 @@
     //key value user id vergelijken met session ID
     
     // GET comments
-    $commentStatement = $conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId AND enable=0");
+    /*$commentStatement = $conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId AND enable=0");
     $commentStatement->bindParam(":postId", $id);
     $commentStatement->execute();
-    $comments = $commentStatement->fetchAll();
+    $comments = $commentStatement->fetchAll();*/
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
