@@ -43,21 +43,15 @@ try {
     }
     if(isset($_POST["delete"])){
         echo "delete";
-        // $updateStatement = $conn->prepare("UPDATE photo SET enable=1 WHERE id=:id AND user_id=:uid");
-        // $updateStatement->bindParam(":enable", $enable);
-        // $updateStatement->bindParam(":sessionEmail", $sessionEmail);
-        // $updateStatement->execute();
+        $removeStatement = $conn->prepare("UPDATE photo SET `enable`=1 WHERE id=:id AND user_id=:uid");
+        $removeStatement->bindParam(":id", $id);
+        $removeStatement->bindParam(":uid", $uid);
+        $removeStatement->execute();
     }
 } catch (\PDOException $e){
     // Log to error file
     die();
 }
-/*if(isset($_POST["delete"])){
-    $updateStatement = $conn->prepare("UPDATE photo SET enable=1 WHERE id=:id AND user_id=:uid";)
-    $updateStatement->bindParam(":enable", $enable);
-    $updateStatement->bindParam(":sessionEmail", $sessionEmail);
-    $updateStatement->execute();
-}*/
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
