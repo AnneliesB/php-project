@@ -1,47 +1,63 @@
 <?php
-
 require_once("bootstrap/bootstrap.php");
 
-//Check if user session is active (Is user logged in?)
-if (isset($_SESSION['id'])) {
-    //User is logged in, no redirect needed!
-    try{
-
-        //try catch moet korter!
+if(isset($_SESSION["email"])) {
+    $uid = User::getUserId();
+    try {
         $conn = Db::getConnection();
         $id = $_GET['id'];
+        // Checks if the current user owns the post
         $statement = $conn->prepare("select * from photo where id = :id AND user_id = :uid");
         $statement->bindParam(":id", $id);
-        $statement->bindParam(":uid", $_SESSION["id"]);
+        $statement->bindParam(":uid", $uid);
         $statement->execute();
         $post = $statement->fetch(PDO::FETCH_ASSOC);
         if(!$post){
             header("Location: /");
         }
-    }catch(\PDOException $e){
-        // Log error to file
+    } catch (\PDOException $e) {
+        // Log to error file
     }
-} else {
-    //User is not logged in, redirect to login.php
-    header("location: /login.php");
+}else{
+    // User is not loged in
+    header("Location: /login.php");
 }
 
-if(isset($_POST["edit"])){
-    var_dump($_POST);
-    //AANPASSEN
-    $updateStatement = $conn->prepare("UPDATE photo SET description=:description WHERE id=:id AND user_id=:uid";)
-    $updateStatement->bindParam(":newDescription", $description);
-    $updateStatement->execute();
-    // Redirect to the details of the post
-    // Location: /details.php?id=$id
-    header("location: /details.php?id=$id");
+try {
+    if(isset($_POST["edit"])){
+        $description = htmlspecialchars($_POST["description"]);
+        if((!isset($description) || trim($description) === '')){
+
+        }else{
+            var_dump($conn);
+            $updateStatement = $conn->prepare("SELECT * FROM photo");
+            // Check why this is not working
+            $updateStatement = $conn->prepare("UPDATE photo SET description=:description WHERE id=:id AND user_id=:uid");
+            $updateStatement->bindParam(":description", $description);
+            $updateStatement->bindParam(":id", $id);
+            $updateStatement->bindParam(":uid", $uid);
+            $updateStatement->execute();
+            
+            header("location: /details.php?id=$id");
+        }
+    }
+    if(isset($_POST["delete"])){
+        echo "delete";
+        // $updateStatement = $conn->prepare("UPDATE photo SET enable=1 WHERE id=:id AND user_id=:uid");
+        // $updateStatement->bindParam(":enable", $enable);
+        // $updateStatement->bindParam(":sessionEmail", $sessionEmail);
+        // $updateStatement->execute();
+    }
+} catch (\PDOException $e){
+    // Log to error file
+    die();
 }
-if(isset($_POST["delete"])){
+/*if(isset($_POST["delete"])){
     $updateStatement = $conn->prepare("UPDATE photo SET enable=1 WHERE id=:id AND user_id=:uid";)
     $updateStatement->bindParam(":enable", $enable);
     $updateStatement->bindParam(":sessionEmail", $sessionEmail);
     $updateStatement->execute();
-}
+}*/
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
