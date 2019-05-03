@@ -6,6 +6,8 @@ require_once("bootstrap/bootstrap.php");
 if (isset($_SESSION['id'])) {
     //User is logged in, no redirect needed!
     try{
+
+        //try catch moet korter!
         $conn = Db::getConnection();
         $id = $_GET['id'];
         $statement = $conn->prepare("select * from photo where id = :id AND user_id = :uid");
@@ -20,19 +22,25 @@ if (isset($_SESSION['id'])) {
         // Log error to file
     }
 } else {
-    //User is not logged in, redirect to login.php!
+    //User is not logged in, redirect to login.php
     header("location: /login.php");
 }
 
 if(isset($_POST["edit"])){
     var_dump($_POST);
-    // UPDATE photo SET description=:description WHERE id=:id AND user_id=:uid
-
+    //AANPASSEN
+    $updateStatement = $conn->prepare("UPDATE photo SET description=:description WHERE id=:id AND user_id=:uid";)
+    $updateStatement->bindParam(":newDescription", $description);
+    $updateStatement->execute();
     // Redirect to the details of the post
     // Location: /details.php?id=$id
+    header("location: /details.php?id=$id");
 }
 if(isset($_POST["delete"])){
-    // UPDATE photo SET enable=1 WHERE id=:id AND user_id=:uid
+    $updateStatement = $conn->prepare("UPDATE photo SET enable=1 WHERE id=:id AND user_id=:uid";)
+    $updateStatement->bindParam(":enable", $enable);
+    $updateStatement->bindParam(":sessionEmail", $sessionEmail);
+    $updateStatement->execute();
 }
 ?><!DOCTYPE html>
 <html lang="en">

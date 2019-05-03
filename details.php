@@ -1,5 +1,6 @@
 <?php 
     require_once("bootstrap/bootstrap.php");
+    
     // GET id of post
     $id = $_GET['id'];
     //var_dump($id);
@@ -40,7 +41,7 @@
         <!-- echo edit button -->
         <?php
         //var_dump($post);
-        if($post["user_id"]===$_SESSION["id"]){
+        if($post["user_id"]===$_GET["id"]){
             echo "<a href=\"editPost.php?id=$id\">edit post</a>";
         }
         ?>
