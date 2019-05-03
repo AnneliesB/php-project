@@ -151,6 +151,8 @@ class Image
 
 
     public static function timeAgo($datetime, $full = false) {
+        date_default_timezone_set('Europe/Brussels');
+
         // get current time
         $now = new DateTime;
 
