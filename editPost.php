@@ -38,15 +38,15 @@ try {
             $updateStatement->bindParam(":uid", $uid);
             $updateStatement->execute();
             
-            header("location: /details.php?id=$id");
+            header("Location: /details.php?id=$id");
         }
     }
     if(isset($_POST["delete"])){
-        echo "delete";
         $removeStatement = $conn->prepare("UPDATE photo SET `enable`=1 WHERE id=:id AND user_id=:uid");
         $removeStatement->bindParam(":id", $id);
         $removeStatement->bindParam(":uid", $uid);
         $removeStatement->execute();
+        header("Location: /");
     }
 } catch (\PDOException $e){
     // Log to error file

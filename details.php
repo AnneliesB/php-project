@@ -2,16 +2,18 @@
     require_once("bootstrap/bootstrap.php");
     
     // GET id of post
+    $uid = User::getUserId();
     $id = $_GET['id'];
+    $post = Post::getPostById($id);
     //var_dump($id);
     // Connection
     $conn = Db::getConnection();
     $userId = User::getUserId();
     // GET description and picture
-    $statement = $conn->prepare("select * from photo where id = :id");
+    /*$statement = $conn->prepare("select * from photo where id = :id");
     $statement->bindParam(":id", $id);
     $statement->execute();
-    $post = $statement->fetch(PDO::FETCH_ASSOC);
+    $post = $statement->fetch(PDO::FETCH_ASSOC);*/
     //key value user id vergelijken met session ID
     
     // GET comments
@@ -40,8 +42,7 @@
         <div class="postContainer">
         <!-- echo edit button -->
         <?php
-        //var_dump($post);
-        if($post["user_id"]===$_GET["id"]){
+        if($uid === $post["user_id"]){
             echo "<a href=\"editPost.php?id=$id\">edit post</a>";
         }
         ?>
