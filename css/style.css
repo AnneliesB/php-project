@@ -83,7 +83,7 @@ body {
     text-align: left;
 }
 
-input[type=text], input[type=password], #description {
+input[type=text], input[type=password], input[type="file"], #description {
     width: 100%;
     height: 2em;
     background-color: #e8f9ff;
@@ -95,18 +95,17 @@ input[type=text], input[type=password], #description {
 
 }
 
-.uploadFileWrapper{
+/*.uploadFileWrapper{
     width: 100%;
     background-color: #e8f9ff;
     border-radius: 5px;
     color: #293241;
     font-size: 1em;
     padding: 0.3em 0em 0.3em 0.5em;
-}
+}*/
 
 input[type="file"] {
-    margin-left: -7.5em;
-    text-align: left;
+    padding-top: 0.2em;
 }
 
 /* Amount of rows in HTML */
