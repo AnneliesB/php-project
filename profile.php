@@ -74,7 +74,7 @@ $profile = $statement->fetch(PDO::FETCH_ASSOC);
     <a href="editPassword.php" class="btnProfile"> Edit Password</a>
     <a href="logout.php" class="btnProfile">Logout</a>
 </div>
-
+<script src="js/navigation.js"></script>
 
 </body>
 </html>

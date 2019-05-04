@@ -60,33 +60,34 @@ if (!empty($_GET['query'])) {
         //Posts of friends found, display them with a loop
         foreach ($results as $result): ?>
 
-        <div class="postContainer">
+            <div class="postContainer">
 
-            <div class="postTopBar">
-
-               
-
-                <a href="userProfile.php?username=<?php echo htmlspecialchars($result['username']); ?>"><div class="postUsername"><?php echo htmlspecialchars($result['username']); ?></div></a>
-                
-                <p><?php echo Image::timeAgo($result['time']); ?></p>
-                
-                <img class="icon postOptions" src="images/menu.svg" alt="options icon">
-
-                
-
-                <?php if(User::userHasReported($result['id'], $userId) == true): ?>
-                    <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">Inappropiate</a>
-
-                <?php else: ?>
-                    <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">Inappropiate</a>
-                <?php endif ?>
+                <div class="postTopBar">
 
 
+                    <a href="userProfile.php?username=<?php echo htmlspecialchars($result['username']); ?>">
+                        <div class="postUsername"><?php echo htmlspecialchars($result['username']); ?></div>
+                    </a>
 
-            </div>
+                    <p><?php echo Image::timeAgo($result['time']); ?></p>
+
+                    <img class="icon postOptions" src="images/menu.svg" alt="options icon">
 
 
-             <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"src="images/<?php echo $result['url_cropped'] ?>"> </a>
+                    <?php if (User::userHasReported($result['id'], $userId) == true): ?>
+                        <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">Inappropiate</a>
+
+                    <?php else: ?>
+                        <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">Inappropiate</a>
+                    <?php endif ?>
+
+
+                </div>
+
+
+                <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"
+                                                                           src="images/<?php echo $result['url_cropped'] ?>">
+                </a>
 
                 <p class="postDescription"><?php echo htmlspecialchars($result['description']) ?></p>
 
@@ -133,7 +134,6 @@ if (!empty($_GET['query'])) {
                 </form>
 
 
-
             </div>
 
 
@@ -152,11 +152,13 @@ if (!empty($_GET['query'])) {
     <?php } //Closing else ?>
 </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="js/saveLikes.js"></script>
-    <script src="js/loadMore.js"></script>
-    <script src="js/inappropriate.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/saveLikes.js"></script>
+<script src="js/loadMore.js"></script>
+<script src="js/inappropriate.js"></script>
+<script src="js/navigation.js"></script>
 
 </body>
 </html>
