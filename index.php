@@ -45,7 +45,7 @@ if (!empty($_GET['query'])) {
 
 <header>
     <form action="" method="GET">
-        <div class="formField">
+        <div class="formField searchBar" id="search">
             <input type="text" id="query" name="query">
             <input type="submit" name="submit" value="Search">
         </div>
