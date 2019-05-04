@@ -2,7 +2,7 @@
     <a href="index.php" class="logo">IMDSTAGRAM</a>
     <a href="index.php">Home</a>
     <a href="profile.php">Profile</a>
-    <a href="post.php">New Post +</a>
+    <a href="post.php">New Post <img src="images/rounded-add-button.svg" alt="add button" class="navIcon"></a>
     <a href="logout.php" class="navbar__logout">Logout</a>
 </nav>
 
@@ -12,7 +12,7 @@
         <a href="index.php" class="logo">IMDSTAGRAM</a>
         <a href="index.php">Home</a>
         <a href="profile.php">Profile</a>
-        <a href="post.php">New Post +</a>
+        <a href="post.php">New Post</a>
         <a href="logout.php" class="navbar__logout">Logout</a>
     </div>
 </nav>
