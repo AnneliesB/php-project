@@ -45,7 +45,7 @@ if (!empty($_GET['query'])) {
 
 <header>
     <form action="" method="GET">
-        <div class="formField searchBar" id="search">
+        <div class="searchBar" id="search">
             <input type="text" id="query" name="query">
             <input type="submit" name="submit" value="Search">
         </div>
@@ -139,9 +139,11 @@ if (!empty($_GET['query'])) {
 
         <?php endforeach; ?>
 
-        <a>
-            <div class="loadMoreBtn grow">Load More</div>
-        </a>
+        <div class="loadMoreContainer">
+            <a>
+                <div class="loadMoreBtn grow">Load More</div>
+            </a>
+        </div>
 
     <?php } //Closing if
     else { //No posts of friends found, show empty state message
