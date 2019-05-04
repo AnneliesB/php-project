@@ -106,7 +106,8 @@ input[type=text], input[type=password], input[type="file"], #description {
 
 input[type="file"] {
     padding-top: 0.2em;
-    padding-bottom: 0.2em;
+    padding-bottom: 1.7em;
+
 }
 
 /* Amount of rows in HTML */
