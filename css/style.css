@@ -83,7 +83,7 @@ body {
     text-align: left;
 }
 
-input[type=text], input[type=password], input[type=file], #description {
+input[type=text], input[type=password], #description {
     width: 100%;
     height: 2em;
     background-color: #e8f9ff;
@@ -92,11 +92,27 @@ input[type=text], input[type=password], input[type=file], #description {
     color: #293241;
     padding-left: 0.5em;
     font-size: 1em;
+
+}
+
+.uploadFileWrapper{
+    width: 100%;
+    background-color: #e8f9ff;
+    border-radius: 5px;
+    color: #293241;
+    font-size: 1em;
+    padding: 0.3em 0em 0.3em 0.5em;
+}
+
+input[type="file"] {
+    margin-left: -7.5em;
+    text-align: left;
 }
 
 /* Amount of rows in HTML */
 #description {
     height: auto;
+    resize: none;
 }
 
 .colorBlock{
@@ -215,6 +231,8 @@ input[type=text], input[type=password], input[type=file], #description {
     background-color: white;
     padding: 2em 2.5%;
 }
+
+
 
 .icon{
     width: 2em;
