@@ -9,11 +9,23 @@ body {
     background-color: #FAFAFA;
 }
 
+.hamburgerLink{
+    display: block;
+    text-align: right;
+    padding:1em 2em 1em 1em;
+    background-color: #97DCFB;
+
+}
+
+.hamburger{
+    width: 40px;
+
+}
+
 .navbar{
+    display: none;
     padding: 1em 25%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+
     text-align: center;
     justify-content: space-evenly;
     margin-bottom: 2em;
@@ -23,14 +35,34 @@ body {
 
 .navbar a{
     text-decoration: none;
+    display: block;
     color: white;
     text-transform: uppercase;
-    padding: 0 2em;
+    padding: 0.5em 2em;
+    font-weight: bold;
+}
+
+
+
+
+.desktop{
+    display:none;
+}
+
+
+.register .formTitle{
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.loginPage, .registerPage{
+    background-color: white;
 }
 
 #search{
     display: flex;
     width: 95%;
+    margin-top: 1em;
     margin-left: auto;
     margin-right: auto;
     justify-content: space-between;
@@ -354,6 +386,12 @@ span.like{
 }
 
 @media (min-width: 585px) {
+    #search{
+        width: 70%;
+        max-width: 800px;
+
+    }
+
     .feed{
         width: 70%;
         margin: 0 auto;
@@ -370,6 +408,29 @@ span.like{
 @media (min-width: 1083px) {
     body {
         background-color: #FAFAFA;
+    }
+
+    .navbar{
+        padding: 1em 15%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        text-align: center;
+        justify-content: space-evenly;
+        margin-bottom: 2em;
+        background-color: #97DCFB;
+
+    }
+
+    .navbar a{
+        text-decoration: none;
+        color: white;
+        text-transform: uppercase;
+        padding: 0 2em;
+    }
+
+    .mobile{
+        display: none;
     }
 
     .index{
@@ -546,5 +607,13 @@ span.like{
         font-size: 0.6em;
         margin: 0em 0.6em;
         border-radius: 0.3em;
+    }
+
+
+}
+
+@media (min-width: 1375px) {
+    .navbar {
+        padding: 1em 25%;
     }
 }
