@@ -23,7 +23,7 @@ if (!empty($_POST)) {
     <link rel="stylesheet" href="css/normalize.css">
     <title>IMDSTAGRAM - login</title>
 </head>
-<body>
+<body class="loginPage">
 
 <div class="login">
     <div class="form formLogin">

@@ -88,6 +88,7 @@ if (!empty($_POST)) {
     </div>
 </form>
 <script src="js/postLocation.js"></script>
+<script src="js/navigation.js"></script>
 </body>
 
 </html>
