@@ -9,28 +9,25 @@ body {
     background-color: #FAFAFA;
 }
 
+/* navigation - mobile */
 .hamburgerLink{
     display: block;
     text-align: right;
     padding:1em 2em 1em 1em;
     background-color: #97DCFB;
-
 }
 
 .hamburger{
     width: 40px;
-
 }
 
 .navbar{
     display: none;
     padding: 1em 25%;
-
     text-align: center;
     justify-content: space-evenly;
     margin-bottom: 2em;
     background-color: #97DCFB;
-
 }
 
 .navbar a{
@@ -42,14 +39,11 @@ body {
     font-weight: bold;
 }
 
-
-
-
 .desktop{
     display:none;
 }
 
-
+/* login/registration - mobile */
 .register .formTitle{
     padding-top: 1em;
     padding-bottom: 1em;
@@ -59,6 +53,7 @@ body {
     background-color: white;
 }
 
+/* searchbar - mobile */
 header{
     background-color: rgba(255,255,255, 0.8);
     margin: 0.5em auto 0.5em auto;
@@ -88,8 +83,6 @@ header{
     margin-left: auto;
     margin-right: auto;
     justify-content: space-between;
-
-
 }
 
 #query{
@@ -107,6 +100,7 @@ header{
 
 }
 
+/* form layout - mobile */
 .formTitle {
     padding-top: 2em;
     padding-bottom: 1.5em;
@@ -152,7 +146,6 @@ input[type=text], input[type=password], #description {
     color: #293241;
     padding-left: 0.5em;
     font-size: 1em;
-
 }
 
 .uploadFileWrapper{
@@ -167,16 +160,13 @@ input[type=text], input[type=password], #description {
     justify-content: flex-start;
 }
 
-input[type="file"] {
-
-}
-
 /* Amount of rows in HTML */
 #description {
     height: auto;
     resize: none;
 }
 
+/* Feed color extractor buttons - mobile */
 .colorBlock{
     margin-top: 1em;
 }
@@ -187,6 +177,7 @@ input[type="file"] {
     margin: 0em 0.6em;
     border-radius: 0.3em;
 }
+
 .colorBtn p{
     text-decoration: none;
     display: inline-block;
@@ -201,10 +192,7 @@ input[type="file"] {
     display: none;
 }
 
-.formField .btnPrimary{
-
-}
-
+/* all white buttons with blue border - mobile */
 .btnPrimary {
     width: 60%;
     margin-left: 20%;
@@ -219,7 +207,6 @@ input[type="file"] {
     color: #82deff;
     text-transform: uppercase;
     cursor: pointer;
-
 }
 
 .btnPrimary:hover {
@@ -248,15 +235,18 @@ input[type="file"] {
     transition: 0.5s;
 }
 
+/* for extra padding at the bottom - mobile */
 .lastItem{
     margin-bottom: 4em;
 }
 
+/* profile - mobile */
 .profilePicture{
     width: 40%;
     max-width: 200px;
 }
 
+/* grey links - mobile */
 .redirectLink {
     color: #b7c1cb;
 }
@@ -268,6 +258,7 @@ input[type="file"] {
     text-decoration: underline;
 }
 
+/* profile post overview - mobile */
 .userPosts{
     padding-top: 2em;
 }
@@ -293,8 +284,6 @@ input[type="file"] {
     background-color: white;
     padding: 2em 2.5%;
 }
-
-
 
 .icon{
     width: 2em;
@@ -345,8 +334,6 @@ span.like{
     display: inline-block;
     font-size: 1.5em;
 }
-
-
 
 .postComments{
     display: inline-block;
@@ -423,7 +410,6 @@ span.like{
     #search{
         width: 97%;
         max-width: 800px;
-
     }
 
     .feed{
@@ -458,7 +444,6 @@ span.like{
         justify-content: space-evenly;
         margin-bottom: 1em;
         background-color: #97DCFB;
-
     }
 
     .navbar a{
@@ -476,7 +461,6 @@ span.like{
 
     header{
         margin-top: 0.5em;
-
     }
 
     .index{
@@ -490,7 +474,6 @@ span.like{
         background-color: white;
         padding-bottom: 2em;
         margin-top: 4em;
-
         -webkit-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
         -moz-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
         box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
@@ -503,7 +486,6 @@ span.like{
     .formRegister .formTitle {
         padding-top: 1.5em;
         padding-bottom: 1em;
-
     }
 
     .register{
@@ -558,19 +540,12 @@ span.like{
         color: #fff;
     }
 
-    /*.flexbox .formField {
-        width: 40%;
-
-    }*/
-
     .colorBlock{
         margin-top: 1em;
         z-index: 25;
         margin-left: 0.5em;
         margin-right: 0.5em;
     }
-
-
 
     #search{
         width:97%;
@@ -594,7 +569,6 @@ span.like{
         font-weight: bold;
         font-size: 1.1em;
     }
-
 
     .btnProfile{
         display: block;
@@ -623,7 +597,6 @@ span.like{
 
     .formError {
         width: 90%;
-
     }
 
     .userPosts{
@@ -645,7 +618,6 @@ span.like{
     header{
         width: 30%;
         margin: 0.5em auto 1em auto;
-
     }
 }
 @media (min-width: 1320px){
@@ -655,8 +627,6 @@ span.like{
         margin: 0em 0.6em;
         border-radius: 0.3em;
     }
-
-
 }
 
 @media (min-width: 1375px) {
