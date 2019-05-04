@@ -65,9 +65,9 @@ if (!empty($_POST)) {
 
         <div class="formField">
             <label for="image">Picture</label>
-
+            <div class="uploadFileWrapper">
                 <input type="file" id="image" name="image">
-
+            </div>
 
         </div>
         <div class="formField">
