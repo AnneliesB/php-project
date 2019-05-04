@@ -34,6 +34,9 @@ body {
     margin-left: auto;
     margin-right: auto;
     justify-content: space-between;
+    -webkit-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.15);
+    box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.15);
 }
 
 #search input[type=submit]{
@@ -80,7 +83,7 @@ body {
     text-align: left;
 }
 
-input[type=text], input[type=password], input[type=file], #description {
+input[type=text], input[type=password], #description {
     width: 100%;
     height: 2em;
     background-color: #e8f9ff;
@@ -89,11 +92,27 @@ input[type=text], input[type=password], input[type=file], #description {
     color: #293241;
     padding-left: 0.5em;
     font-size: 1em;
+
+}
+
+.uploadFileWrapper{
+    width: 100%;
+    background-color: #e8f9ff;
+    border-radius: 5px;
+    color: #293241;
+    font-size: 1em;
+    padding: 0.3em 0em 0.3em 0.5em;
+}
+
+input[type="file"] {
+    margin-left: -7.5em;
+    text-align: left;
 }
 
 /* Amount of rows in HTML */
 #description {
     height: auto;
+    resize: none;
 }
 
 .colorBlock{
@@ -149,8 +168,7 @@ input[type=text], input[type=password], input[type=file], #description {
 
 .btnProfile{
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 1em auto;
     text-decoration: none;
     padding: 0.5em;
     width: 60%;
@@ -160,8 +178,6 @@ input[type=text], input[type=password], input[type=file], #description {
     text-transform: uppercase;
     cursor: pointer;
     color: #82deff;
-    margin-top: 1em;
-    margin-bottom: 1em;
 }
 
 .btnProfile:hover{
@@ -211,6 +227,13 @@ input[type=text], input[type=password], input[type=file], #description {
     margin: 0 auto;
 }
 
+.postPage{
+    background-color: white;
+    padding: 2em 2.5%;
+}
+
+
+
 .icon{
     width: 2em;
 }
@@ -220,6 +243,9 @@ input[type=text], input[type=password], input[type=file], #description {
     background-color: white;
     border-radius: 2px;
     margin-bottom: 2em;
+    -webkit-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
+    -moz-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
+    box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
 }
 
 span.like{
@@ -287,7 +313,7 @@ span.like{
     width: 50%;
     margin: 2em auto 4em auto;
     border: 1px solid #82deff;
-    background-color: white;
+    background-color: rgba(256, 256, 256, 0.9);
     border-radius: 5px;
     padding: 0.5em 0em;
     font-weight: bold;
@@ -348,15 +374,41 @@ span.like{
         background-image: none;
     }
 
-    .login, .profile, .editProfile, .editPassword {
+    .login, .profile, .editProfile, .editPassword, .register {
         width: 30%;
         margin-left: auto;
         margin-right: auto;
         background-color: white;
         padding-bottom: 2em;
         margin-top: 4em;
-        border: 1px solid #e9e9e9;
+
+        -webkit-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
+        -moz-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
+        box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
     }
+
+    .login, .register{
+        margin-bottom: 4em;
+    }
+
+    .formRegister .formTitle {
+        padding-top: 1.5em;
+        padding-bottom: 1em;
+
+    }
+
+    .register{
+        margin-top: 2.5em;
+    }
+
+    .register .formField{
+        padding-bottom: 1.4em;
+    }
+
+    .register .formField .btnPrimary{
+        margin-top: 1.5em;
+    }
+
 
     .colorBtn{
         padding: 1em 0.5em;
@@ -366,15 +418,42 @@ span.like{
     }
 
     .flexbox {
-        display: flex;
-        width: 100%;
-        justify-content: space-around;
+        width: 30%;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        padding: 1em 2em 1em 2em;
+        -webkit-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
+        -moz-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
+        box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
+        margin-top: 4em;
     }
 
-    .flexbox .formField {
+    .btnPost{
+        width: 100%;
+        margin: 2em auto 1em auto;
+        border: 1px solid #82deff;
+        background-color: white;
+        border-radius: 5px;
+        padding: 0.5em 0em;
+        font-weight: bold;
+        font-size: 1em;
+        color: #82deff;
+        text-transform: uppercase;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .btnPost:hover{
+        border: 1px solid #82deff;
+        background-color: #82deff;
+        color: #fff;
+    }
+
+    /*.flexbox .formField {
         width: 40%;
 
-    }
+    }*/
 
     .colorBlock{
         margin-top: 1em;
@@ -394,6 +473,8 @@ span.like{
         padding-top: 2em;
         padding-bottom: 3em;
         color: #333;
+        margin-top: 3.5em;
+        margin-bottom: 3.5em;
     }
 
     .profileContainer {
@@ -408,8 +489,7 @@ span.like{
 
     .btnProfile{
         display: block;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 1em auto;
         text-decoration: none;
         padding: 0.5em;
         width: 30%;
@@ -419,11 +499,9 @@ span.like{
         text-transform: uppercase;
         cursor: pointer;
         color: #82deff;
-        margin-top: 1em;
-        margin-bottom: 1em;
     }
 
-    .btnProfile:hover {
+    .btnProfile:hover{
         color: white;
         background-color: #82deff;
         transition: 0.5s;

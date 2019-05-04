@@ -44,7 +44,7 @@
 </head>
 <body>
 
-<div class="login">
+<div class="register">
     <div class="form formLogin formRegister">
         <form action="" method="post">
             <h2 class="formTitle">Signup</h2>
