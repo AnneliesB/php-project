@@ -38,6 +38,7 @@ if (!empty($_GET['query'])) {
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/cssgram.css">
     <title>Feed</title>
 </head>
 <body class="index">
@@ -85,9 +86,15 @@ if (!empty($_GET['query'])) {
                 </div>
 
 
-                <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"
-                                                                           src="images/<?php echo $result['url_cropped'] ?>">
-                </a>
+                    <a href="details.php?id=<?php echo $result['id']; ?>">
+                        <div class="indexFilter">
+                            <div class="<?php echo $result['filter']; ?>">
+                                <img class="postImg" src="images/<?php echo $result['url_cropped'] ?>">
+                            </div>
+                        </div>
+                    </a>
+
+
 
                 <p class="postDescription"><?php echo htmlspecialchars($result['description']) ?></p>
 
