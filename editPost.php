@@ -1,6 +1,6 @@
 <?php
 require_once("bootstrap/bootstrap.php");
-
+//TODO:function getpostbyidanduserid   (ints!)
 if(isset($_SESSION["email"])) {
     $uid = User::getUserId();
     try {
@@ -22,14 +22,14 @@ if(isset($_SESSION["email"])) {
     // User is not loged in
     header("Location: /login.php");
 }
-
+// TODO: function editPostById
 try {
     if(isset($_POST["edit"])){
         $description = htmlspecialchars($_POST["description"]);
         if((!isset($description) || trim($description) === '')){
 
         }else{
-            var_dump($conn);
+            //var_dump($conn);
             $updateStatement = $conn->prepare("SELECT * FROM photo");
             // Check why this is not working
             $updateStatement = $conn->prepare("UPDATE photo SET description=:description WHERE id=:id AND user_id=:uid");
@@ -41,6 +41,7 @@ try {
             header("Location: /details.php?id=$id");
         }
     }
+    //TODO:function softDeletePostById
     if(isset($_POST["delete"])){
         $removeStatement = $conn->prepare("UPDATE photo SET `enable`=1 WHERE id=:id AND user_id=:uid");
         $removeStatement->bindParam(":id", $id);
