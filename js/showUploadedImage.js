@@ -1,7 +1,9 @@
 var loadFile = function(event) {
     // select all hidden elements and show them as soon as an image is selected
     var elements = document.querySelector(".filters");
+    var imageWrapper = document.querySelector(".imageWrapper");
     elements.style.display="block";
+    imageWrapper.style.display="block";
     var image = document.getElementById('output');
 
     var F_nofilter = document.querySelector(".F_nofilter");
