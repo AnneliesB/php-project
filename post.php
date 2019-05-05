@@ -66,9 +66,13 @@ if (!empty($_POST)) {
         <div class="formField">
             <label for="image">Picture</label>
             <div class="uploadFileWrapper">
-                <input type="file" id="image" name="image">
+                <input type="file" id="image" name="image" onchange="loadFile(event)">
             </div>
 
+        </div>
+
+        <div>
+            <img id="output" class="uploadedImage"/>
         </div>
         <div class="formField">
             <label for="description">Description</label>
@@ -89,6 +93,6 @@ if (!empty($_POST)) {
 </form>
 <script src="js/postLocation.js"></script>
 <script src="js/navigation.js"></script>
+<script src="js/showUploadedImage.js"></script>
 </body>
-
 </html>
