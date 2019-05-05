@@ -240,10 +240,6 @@ input[type=text], input[type=password], #description {
     max-height: 100%;
 }
 
-.details main{
-    background-color: white;
-}
-
 .details main .postContainer{
     width: 95%;
     margin-left: auto;
