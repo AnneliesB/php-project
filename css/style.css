@@ -163,6 +163,9 @@ input[type=text], input[type=password], #description {
 .uploadedImage{
     width: 100%;
     max-width: 500px;
+}
+
+.imageWrapper{
     margin-bottom: 1.5em;
 }
 

@@ -46,6 +46,7 @@ if (!empty($_POST)) {
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/cssgram.css">
     <title>IMSTAGRAM - add post</title>
 </head>
 
@@ -71,8 +72,10 @@ if (!empty($_POST)) {
 
         </div>
 
-        <div>
-            <img id="output" class="uploadedImage"/>
+        <div class="imageWrapper">
+            <figure>
+                <img id="output" class="uploadedImage" visibility="hidden"/>
+            </figure>
         </div>
         <div class="formField">
             <label for="description">Description</label>
