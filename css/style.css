@@ -232,6 +232,14 @@ input[type=text], input[type=password], #description {
     max-height: 98.5%;
 }
 
+.detailsFilter div::after{
+      max-height: 100%;
+}
+
+.detailsFilter div::before{
+    max-height: 100%;
+}
+
 .details main{
     background-color: white;
 }

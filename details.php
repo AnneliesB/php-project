@@ -40,7 +40,7 @@ $comments = $commentStatement->fetchAll();
         <p class="postLocation"><?php echo $post['city'] ?></p>
 
         <!-- echo picture -->
-        <div class="indexFilter">
+        <div class="detailsFilter">
             <div class="<?php echo $post['filter']; ?>">
                 <img src="images/<?php echo $post['url']; ?>" alt="Post picture">
             </div>
