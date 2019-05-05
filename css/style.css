@@ -505,7 +505,7 @@ span.like{
     display: none;
 }
 
-@media (min-width: 585px) {
+@media (min-width: 598px) {
     header{
         width: 70%;
         max-width: 800px;
