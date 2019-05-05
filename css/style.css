@@ -225,19 +225,19 @@ input[type=text], input[type=password], #description {
 }
 
 .imageWrapper figure::after{
-    max-height: 98.5%;
+    max-height: 98%;
 }
 
 .imageWrapper figure::before{
-    max-height: 98.5%;
+    max-height: 98%;
 }
 
 .detailsFilter div::after{
-      max-height: 100%;
+      max-height: calc(100% - 4px);
 }
 
 .detailsFilter div::before{
-    max-height: 100%;
+    max-height: calc(100% - 4px);
 }
 
 .details main .postContainer{
