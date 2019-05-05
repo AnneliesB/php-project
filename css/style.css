@@ -8,6 +8,10 @@ body {
     color: #90a0ae;
 }
 
+.defaultAlign{
+    text-align: left;
+}
+
 .navbar{
     padding: 1em 25%;
     display: flex;
@@ -163,6 +167,10 @@ input[type=text], input[type=password], input[type=file], #description {
 
 .userPosts img{
     width: 25%;
+}
+
+.map{
+    height: 100vh;
 }
 
 /*--------------------------------------
