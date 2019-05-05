@@ -169,6 +169,62 @@ input[type=text], input[type=password], #description {
     margin-bottom: 1.5em;
 }
 
+.filters{
+    display: none;
+    width:100%;
+    max-width: 500px;
+}
+
+.filterContainer{
+
+    display: grid;
+    grid-gap: calc(20px / 2);
+    grid-template-columns: repeat(13, calc(50% - 20px  * 2));
+    grid-template-rows: minmax(150px, 1fr);
+
+    overflow-x: scroll;
+    scroll-snap-type: x proximity;
+    padding-bottom: calc(.75 * 20px );
+    margin-bottom: calc(-.25 * 20px );
+}
+    /*display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 2em auto;*/
+
+
+
+
+.caption{
+    width: 100%;
+    margin: 0% auto 0% auto;
+}
+
+.filterButtons{
+    margin-bottom: 2%;
+}
+
+.caption p{
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 0.2em;
+    font-size: 0.8em;
+}
+
+
+
+.filterButtons div::after{
+    max-height: 97%;
+}
+
+.filterButtons div::before{
+    max-height: 97%;
+}
+
+
+
+
+
 /* Amount of rows in HTML */
 #description {
     height: auto;
