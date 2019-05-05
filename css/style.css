@@ -384,7 +384,10 @@ span.like{
     text-align: center;
     font-size: 1.2em;
     color: grey;
-
+}
+.loadMoreBtn:hover{
+    font-size: 1.21em;
+    cursor: pointer;
 }
 
 .grow{
