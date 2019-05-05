@@ -160,6 +160,12 @@ input[type=text], input[type=password], #description {
     justify-content: flex-start;
 }
 
+.uploadedImage{
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 1.5em;
+}
+
 /* Amount of rows in HTML */
 #description {
     height: auto;
@@ -283,6 +289,9 @@ input[type=text], input[type=password], #description {
 .postPage{
     background-color: white;
     padding: 2em 2.5%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .icon{
@@ -527,7 +536,7 @@ span.like{
         -webkit-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
         -moz-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
         box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
-        margin-top: 4em;
+        margin-top: 0em;
     }
 
     .btnPost{
