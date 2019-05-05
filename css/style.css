@@ -55,7 +55,7 @@ body {
 
 /* searchbar - mobile */
 header{
-    background-color: rgba(255,255,255, 0.8);
+    background-color: white;
     margin: 1em auto 1em auto;
     width: 95%;
     -webkit-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.15);
@@ -86,14 +86,15 @@ header{
 }
 
 #query{
-    border: 1px solid rgba(130, 222, 255, 0.2);
+    background-color: rgba(187, 187, 187, 0.15);
+    border: none;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
 }
 
 #search input[type=submit]{
     color: white;
-    background-color: #82deff;
+    background-color: rgba(187, 187, 187, 0.4);
     border:none;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
