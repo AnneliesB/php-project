@@ -222,7 +222,21 @@ input[type=text], input[type=password], #description {
     max-height: 97%;
 }
 
+.indexFilter div::after{
+    max-height: 99%;
+}
 
+.indexFilter div::before{
+    max-height: 99%;
+}
+
+.imageWrapper figure::after{
+    max-height: 98.5%;
+}
+
+.imageWrapper figure::before{
+    max-height: 98.5%;
+}
 
 
 
