@@ -19,10 +19,11 @@ if (!empty($_POST)) {
         $croppedImage = Image::getPostId() . "cropped-" . $_FILES['image']['name'];
         $description = $_POST['description'];
         $city = $_POST['city'];
+        $filter = $_POST['filterDb'];
 
         if (Image::checkExtention($image)) {
             // If extention is png or jpeg
-            Image::saveImageToDb($image, $croppedImage, $description, $city);
+            Image::saveImageToDb($image, $croppedImage, $description, $city, $filter);
             Image::saveImage($image, $imageSaveName);
             Image::saveCroppedImage($image);
             Image::saveMainColors($image);
@@ -300,6 +301,11 @@ if (!empty($_POST)) {
         <div class="hidden">
             <label for="city">City</label>
             <input type="text" name="city" id="city">
+        </div>
+
+        <div class="hidden">
+            <label for="filterDb">Filter</label>
+            <input type="text" name="filterDb" id="filterDb">
         </div>
 
 

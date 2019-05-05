@@ -9,7 +9,10 @@ filterOption.addEventListener('click', function (e){
 
     if (e.target.matches(".filterOptions")) {
         filter = e.target.parentElement.className;
-        console.log(filter);
         image.parentElement.className=filter;
+
+        // insert filtername into hidden input field to save in database when posted
+        let inputFilter = document.querySelector('#filterDb');
+        inputFilter.value = filter;
     }
 });
