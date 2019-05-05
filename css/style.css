@@ -163,8 +163,93 @@ input[type=text], input[type=password], #description {
 .uploadedImage{
     width: 100%;
     max-width: 500px;
+}
+
+.imageWrapper{
+    display: none;
     margin-bottom: 1.5em;
 }
+
+.filters{
+    display: none;
+    width:100%;
+    max-width: 500px;
+}
+
+.filterContainer{
+    display: grid;
+    grid-gap: calc(20px / 2);
+    grid-template-columns: repeat(26, calc(50% - 20px  * 2));
+    grid-template-rows: minmax(150px, 1fr);
+
+    overflow-x: scroll;
+    scroll-snap-type: x proximity;
+    padding-bottom: calc(.75 * 20px );
+    margin-bottom: calc(-.25 * 20px );
+}
+    /*display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 2em auto;*/
+
+.caption{
+    width: 100%;
+    margin: 0% auto 0% auto;
+}
+
+.filterButtons{
+    margin-bottom: 2%;
+}
+
+.caption p{
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 0.2em;
+    font-size: 0.8em;
+}
+
+.filterButtons div::after{
+    max-height: 97%;
+}
+
+.filterButtons div::before{
+    max-height: 97%;
+}
+
+.indexFilter div::after{
+    max-height: 99%;
+}
+
+.indexFilter div::before{
+    max-height: 99%;
+}
+
+.imageWrapper figure::after{
+    max-height: 98%;
+}
+
+.imageWrapper figure::before{
+    max-height: 98%;
+}
+
+.detailsFilter div::after{
+      max-height: calc(100% - 4px);
+}
+
+.detailsFilter div::before{
+    max-height: calc(100% - 4px);
+}
+
+.details main .postContainer{
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.details main .postContainer img{
+    max-width: 100%;
+}
+
 
 /* Amount of rows in HTML */
 #description {
@@ -420,7 +505,7 @@ span.like{
     display: none;
 }
 
-@media (min-width: 585px) {
+@media (min-width: 598px) {
     header{
         width: 70%;
         max-width: 800px;
@@ -436,6 +521,12 @@ span.like{
         width: 70%;
         margin: 0 auto;
         max-width: 800px;
+    }
+
+    .details main {
+        width: 70%;
+        margin: 0 auto;
+        max-width: 700px;
     }
     .colorBtn{
         padding: 1em 0.5em;
