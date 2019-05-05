@@ -68,7 +68,7 @@ class Follow {
 
     public static function isFollowingHashTag($userId, $hashtag) {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("select * from followers where user_id = :userId and hashtag = :hashtag ");
+        $statement = $conn->prepare("select * from hashtag where user_id = :userId and hashtag = :hashtag ");
         $statement->bindParam(":userId", $userId);
         $statement->bindParam(":hashtag", $hashtag);
         $statement->execute();

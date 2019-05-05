@@ -33,7 +33,7 @@
 
         //we can unfollow this user (following already!)
         // delete hashtag tahat user follows
-        $statement = $conn->prepare("delete from followers where user_id = :user_id and hashtag = :hashtag");
+        $statement = $conn->prepare("delete from hashtag where user_id = :user_id and hashtag = :hashtag");
         $statement->bindParam(":user_id", $userId);
         $statement->bindParam(":hashtag", $hashtag);
         $statement->execute();
