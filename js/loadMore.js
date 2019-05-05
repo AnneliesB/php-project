@@ -55,7 +55,13 @@ loadMoreBtn.addEventListener("click", function(e){
                     <a href="#" class="options"><img class="icon postOptions" src="images/menu.svg" alt="options icon"></a>
                 </div>
 
-                <a href="details.php?id=${elem['id']}"><img class="postImg" src="images/${elem['url_cropped']}"></a>
+                <a href="details.php?id=${elem['id']}">
+                    <div class="indexFilter">
+                        <div class="${elem['filter']}">
+                            <img class="postImg" src="images/${elem['url_cropped']}"
+                        </div>
+                    </div>
+                </a>
                 <p class="postDescription">${elem['description']}</p>
 
                 <div class="postStats">
