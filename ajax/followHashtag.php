@@ -26,17 +26,21 @@
         
         $response['status'] = 'following';
 
+        
+
     }
     else{
 
         //we can unfollow this user (following already!)
-        //delete record for current user following this profile
-        $statement = $conn->prepare("delete from followers where user_id = :user_id and following_id = :hashtag");
+        // delete hashtag tahat user follows
+        $statement = $conn->prepare("delete from followers where user_id = :user_id and hashtag = :hashtag");
         $statement->bindParam(":user_id", $userId);
         $statement->bindParam(":hashtag", $hashtag);
         $statement->execute();
         
         $response['status'] = 'unfollowing';
+
+        
     }
 
 echo json_encode($response);

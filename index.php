@@ -25,10 +25,8 @@ else if (!empty($_GET['color'])) {
 else if(!empty($_GET['tag'])) {
     $tag = $_GET['tag'];
     $results = Image::getPostsByTag($tag);
+    $follows = Follow::isFollowingHashTag($userId, $tag);
 
-    if(isset($_POST['follow'])){
-        echo 'geklikt';
-    }
 }
 
 else {
@@ -36,6 +34,7 @@ else {
     //Show 20 posts of friends on startpage
     //Get posts from DB and put them in $results
     $results = Image::getAllPosts($userId);
+    
 }
 ?><!DOCTYPE html>
 <html lang="en">
@@ -69,7 +68,7 @@ else {
 
         // If you search hashtags
         if (isset($_GET['tag'])): ?>
-            <a id="followHashtagBtn" data-tag="<?php echo '#' . $_GET['tag'] ?>" href="">follow <?php echo '#' . $_GET['tag'] ?></a>
+            <a id="followHashtagBtn" data-tag="<?php echo '#' . $_GET['tag'] ?>" href=""><?php echo $follows . ' #' . $_GET['tag'] ?></a>
         <!-- Close if -->
         <?php endif;
         

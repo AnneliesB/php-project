@@ -15,10 +15,10 @@ followHashtagBtn.addEventListener('click', function(e){
     .then(function (response) {
         if(response.data['status'] == 'following'){
             //we are now following this user, update text button to 'unfollow'
-            followHashtagBtn.innerHTML = "unfollow " + hashtag;
+            followHashtagBtn.innerHTML = "Unfollow " + hashtag;
         }else{
             //we just unfollowed this user, update text button to 'follow'
-            followHashtagBtn.innerHTML = "follow " + hashtag;
+            followHashtagBtn.innerHTML = "Follow " + hashtag;
         }
     })
 
