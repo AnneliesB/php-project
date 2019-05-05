@@ -179,7 +179,7 @@ input[type=text], input[type=password], #description {
 
     display: grid;
     grid-gap: calc(20px / 2);
-    grid-template-columns: repeat(13, calc(50% - 20px  * 2));
+    grid-template-columns: repeat(26, calc(50% - 20px  * 2));
     grid-template-rows: minmax(150px, 1fr);
 
     overflow-x: scroll;
