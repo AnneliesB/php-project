@@ -173,6 +173,19 @@ input[type=text], input[type=password], input[type=file], #description {
     height: 100vh;
 }
 
+.marker{
+    display: block;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 /*--------------------------------------
             Index page
 --------------------------------------*/
