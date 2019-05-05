@@ -142,24 +142,11 @@ class Image
 
     public static function getAllPosts($userId) {
         $conn = Db::getConnection();
-        //$statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit 2");
-        //$statement->bindParam(":user_id", $userId);
-        //$statement->execute();
-        //$results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        // foreach following hashtags where $result['id'] != $hashtag['id']
-        //$hashtagStatement = $conn->prepare("SELECT * FROM user INNER JOIN photo ON user.id = photo.user_id INNER JOIN followers on photo.user_id = followers.user_id");
-        $hashtagStatement = $conn->prepare("select * from followers where user_id = '24' and following_id = '0'");
-        $hashtagStatement->bindParam(":user_id", $userId);
-        $hashtagStatement->execute();
-        $hashtagResults = $hashtagStatement->fetchAll(PDO::FETCH_ASSOC);
-
-        var_dump($hashtagResults);
-
-        // Select posts where description like hashtag
-        $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $hashtagResults ["hashtag"] .  "%'");
+        $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit 2");
+        $statement->bindParam(":user_id", $userId);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
 
         return $results;
     }

@@ -19,7 +19,7 @@
 
         //we can follow this user (not following yet!)
         //insert new record for current user following this profile
-        $statement = $conn->prepare("insert into followers (user_id, hashtag) values (:user_id, :hashtag)");
+        $statement = $conn->prepare("insert into hashtag (user_id, hashtag) values (:user_id, :hashtag)");
         $statement->bindParam(":user_id", $userId);
         $statement->bindParam(":hashtag", $hashtag);
         $statement->execute();
