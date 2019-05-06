@@ -5,7 +5,7 @@ const post = (postId) => {
     document.getElementById(postId).children.comment.value = "";
 }
 
-const postComment = (comment, postId) => {
+const postComment = async (comment, postId) => {
     data = {
         postid: postId,
         comment, comment,
@@ -13,8 +13,12 @@ const postComment = (comment, postId) => {
     };
 
     const toGetParams = `postid=${data.postid}&comment=${data.comment}&date=${data.date}`;
-
-    axios.post("ajax/postcomment.php?" + toGetParams)
+    try{
+        const { data } = await axios.post("ajax/postcomment.php?" + toGetParams)
+    } catch (e){
+        console.log(e);
+    }
+    
 }
 
 function sleep(delay) {
@@ -26,11 +30,13 @@ function sleep(delay) {
 // Works only in Details
 //WORK ON FIX!! 
 const changePosts = async (postId) => {
-    const box = document.getElementById("comment-box");
+    debugger;
+    const box = document.getElementById("commentContainer");
     sleep(50);
 
     const { data } = await axios.get("ajax/getComments.php?id=" + postId);
     if(data.length > box.children.length){
+        console.log(data);
         const children = box.children.length;
         let countFrom = 0;
         if(box.children.length > 0) countFrom = children;
@@ -43,6 +49,7 @@ const changePosts = async (postId) => {
             box.appendChild(main);
         }
     }
+
 
     changePosts(postId);
 }

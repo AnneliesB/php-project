@@ -1,7 +1,7 @@
 <?php
 require_once("../bootstrap/bootstrap.php");
 
-$uid = $_SESSION["id"];
+$uid = User::getUserId();
 $pid = htmlspecialchars($_GET["postid"]);
 $comment = htmlspecialchars($_GET["comment"]);
 $time = htmlspecialchars($_GET["date"]);

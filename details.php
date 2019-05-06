@@ -76,6 +76,7 @@
             </div>
         </div>
 <div class="commentContainer">
+<div id="commentContainer">
         <?php if( !empty($comments) ){ ?>        
             <!-- echo comments -->
             <?php foreach($comments as $comment): ?>
@@ -90,14 +91,16 @@
             else{ //No comments ?>
                 <p class="postContainer">Be the first to comment!</p>
         <?php } //Closing else ?>
-
+        </div>        
         <form id="<?php echo $id; ?>">
             <input class="commentInput" type="text" name="comment" placeholder="comment...">
             <!--
                 Change to button and don't post the form
                 onClick="() => sendpostmethod(<\?php echo $id; ?>)"
             -->
-            <input class="commentBtn" type="submit" value="Post">
+          <!--  <input class="commentBtn" type="submit" value="Post">  -->
+          <button class="commentBtn" type="button" onClick=post(<?php echo $id; ?>)>send</button>
+          
         </form>
         </div>
 
@@ -108,5 +111,10 @@
     </footer>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="js/saveLikes.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/post.js"></script>
+    <script>
+    changePosts(<?php echo($id); ?>);
+    </script>
 </body>
 </html>

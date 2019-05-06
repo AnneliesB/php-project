@@ -12,7 +12,7 @@
     $post = $statement->fetch(PDO::FETCH_ASSOC);
     // GET comments
 
-    //QUERIES NIET HIER!!! 
+  
     $commentStatement = $conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId");
     $commentStatement->bindParam(":postId", $id);
     $commentStatement->execute();
