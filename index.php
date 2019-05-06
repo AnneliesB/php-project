@@ -13,8 +13,9 @@ $conn = Db::getConnection();
 $userId = User::getUserId();
 //Check if Search is used
 if (!empty($_GET['query'])) {
-    $query = $_GET['query'];
-    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 2");
+    $query = "%" . $_GET['query'] . "%";
+    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like ? and photo.inappropriate = 0 order by id desc LIMIT 2");
+    $statement->bindParam("1", $query);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 } else if (!empty($_GET['color'])) {
@@ -38,6 +39,7 @@ if (!empty($_GET['query'])) {
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/cssgram.css">
     <title>Feed</title>
 </head>
 <body class="index">
@@ -85,9 +87,15 @@ if (!empty($_GET['query'])) {
                 </div>
 
 
-                <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"
-                                                                           src="images/<?php echo $result['url_cropped'] ?>">
-                </a>
+                    <a href="details.php?id=<?php echo $result['id']; ?>">
+                        <div class="indexFilter">
+                            <div class="<?php echo $result['filter']; ?>">
+                                <img class="postImg" src="images/<?php echo $result['url_cropped'] ?>">
+                            </div>
+                        </div>
+                    </a>
+
+
 
                 <p class="postDescription"><?php echo htmlspecialchars($result['description']) ?></p>
 

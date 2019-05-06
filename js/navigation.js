@@ -2,7 +2,7 @@ let clicked = false;
 let hamburger = document.querySelector(".hamburgerLink");
 let nav = document.querySelector(".mobileNav");
 
-hamburger.addEventListener("click", function () {
+hamburger.firstChild.addEventListener("click", function () {
     if (clicked == false) {
         nav.style.display = "block";
         clicked = true;

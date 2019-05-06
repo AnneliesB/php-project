@@ -3,3 +3,21 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php [NC,L]
+
+
+##Denying access to files via url browsing
+# Disable directory browsing 
+Options -Indexes
+# Hide files of type .ini from listing
+IndexIgnore *.ini
+# Deny access to .htaccess
+<Files .htaccess>
+Order allow,deny
+Deny from all
+</Files>
+# Deny access to files with extensions .ini
+<FilesMatch "\.ini">
+Order allow,deny
+Deny from all
+
+</FilesMatch>
