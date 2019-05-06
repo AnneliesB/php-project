@@ -13,8 +13,9 @@ $conn = Db::getConnection();
 $userId = User::getUserId();
 //Check if Search is used
 if (!empty($_GET['query'])) {
-    $query = $_GET['query'];
-    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 2");
+    $query = "%" . $_GET['query'] . "%";
+    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like ? and photo.inappropriate = 0 order by id desc LIMIT 2");
+    $statement->bindParam("1", $query);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 } else if (!empty($_GET['color'])) {
