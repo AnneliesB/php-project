@@ -30,28 +30,7 @@ $userPosts = User::getUserPosts($user_id);
 <?php include_once("nav.incl.php"); ?>
 <!-- SHOW data from DB -->
 <div class="profile">
-    <div class="iconContainer">
-        <div class="profileLeft">
-            <h2>Profile</h2>
-        </div>
-
-        <div class="profileRight">
-            <div class="iconPadding">
-                <img src="images/settings-work-tool.svg" alt="" class="profileIcon">
-            </div>
-        </div>
-    </div>
-
-    <div class="settingMenu">
-        <div class="alignMenuRight">
-            <a href="editProfile.php" class="editButtons"> Edit Profile</a>
-            <a href="editPassword.php" class="editButtons"> Edit Password</a>
-            <a href="logout.php" class="editButtons">Logout</a>
-        </div>
-    </div>
-
-
-
+    <h2>Profile</h2>
 
     <!-- echo profile picture -->
     <?php if ($profile['image'] != "filler.png"): ?>
@@ -61,7 +40,10 @@ $userPosts = User::getUserPosts($user_id);
         <img src="images/profilePictures/filler.png" alt="Profile Picture"
              class="profilePicture">
     <?php endif ?>
-
+    <div class="smallBtnContainer">
+        <a href="editProfile.php" class="smallProfileButton"> Edit Profile</a>
+        <a href="editPassword.php" class="smallProfileButton"> Edit Password</a>
+    </div>
     <!-- echo username -->
     <h3><?php echo htmlspecialchars($profile['username']); ?></h3>
 
@@ -91,7 +73,6 @@ $userPosts = User::getUserPosts($user_id);
     <a href="logout.php" class="btnProfile">Logout</a> -->
 </div>
 <script src="js/navigation.js"></script>
-<script src="js/profileMenu.js"></script>
 
 </body>
 </html>
