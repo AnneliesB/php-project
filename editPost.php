@@ -29,7 +29,7 @@ try {
         if((!isset($description) || trim($description) === '')){
 
         }else{
-            var_dump($conn);
+            //var_dump($conn);
             $updateStatement = $conn->prepare("SELECT * FROM photo");
             // Check why this is not working
             $updateStatement = $conn->prepare("UPDATE photo SET description=:description WHERE id=:id AND user_id=:uid");
