@@ -5,7 +5,7 @@
     $conn = Db::getConnection();
 
     //Select lat, lng and url_cropped from all photos
-    $statement = $conn->prepare("select lat, lng, url_cropped from photo");
+    $statement = $conn->prepare("select id, lat, lng, url_cropped from photo");
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 

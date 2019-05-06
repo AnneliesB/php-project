@@ -50,9 +50,10 @@ function addMarkers(postsJSON){
     postsJSON.forEach(function(marker) {
         
         //Create a DOM element for the marker
-        let el = document.createElement('div');
+        let el = document.createElement('a');
         el.className = 'marker';
         el.style.backgroundImage = 'url(images/' + marker.url_cropped + ')';
+        el.href = "details.php?id=" + marker.id;
          
         //Add marker to map
         singleMarker = new mapboxgl.Marker(el)

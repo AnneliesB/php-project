@@ -10,7 +10,7 @@
     $conn = Db::getConnection();
 
     //Select lat, lng and url_cropped from all photos WHERE 'query' is present in description
-    $statement = $conn->prepare("select lat, lng, url_cropped from photo where description like ? ");
+    $statement = $conn->prepare("select id lat, lng, url_cropped from photo where description like ? ");
     $statement->bindParam("1", $query);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
