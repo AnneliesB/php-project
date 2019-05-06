@@ -1,4 +1,5 @@
 //Access token
+
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXJuaWk1IiwiYSI6ImNqdmJnN3RsMDB1cHQzenFta21vNmRldDgifQ.Kfk5NHGXQX4uMOSH5abrDg';
 
 // Create fullscreen imageMap
@@ -21,7 +22,7 @@ var map = new mapboxgl.Map({
 
 
 //Get posts location data (lat/lng) and image from DB via AJAX call
-axios.post('ajax/imageMap.php',{
+axios.get('ajax/imageMap.php',{
     
 })
 
