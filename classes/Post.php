@@ -51,4 +51,8 @@ class Post {
             return false;
         }
     }
+
+   // public static function getPostByIdAndUserId(){
+
+   // }
 }

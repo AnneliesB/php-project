@@ -191,6 +191,8 @@ class Image
             return $string ? implode(', ', $string) . ' ago' : 'just now';
         }
 
+    
+
         
 
     }
