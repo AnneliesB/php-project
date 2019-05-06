@@ -74,9 +74,18 @@
                 <textarea id="description" name="description" rows="10" > </textarea>
             </div>
 
+            <!-- hidden fields to store lat, lng and city on upload-->
             <div class="hidden">
                 <label for="city">City</label>
                 <input type="text" name="city" id="city">
+            </div>
+            <div class="hidden">
+                <label for="lat">City</label>
+                <input type="text" name="lat" id="lat">
+            </div>
+            <div class="hidden">
+                <label for="lng">City</label>
+                <input type="text" name="lng" id="lng">
             </div>
         </div>
 
