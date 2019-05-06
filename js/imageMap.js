@@ -117,6 +117,26 @@ function updateMarkers(query){
         currentMarkers = [];
     }
     
+
+    //get all posts back that contain the query in the description
+    axios.post('ajax/imageMapSearch.php',{
+        query: query
+    })
     
+    //Response
+    .then(function (response) {
+    
+        //Put data from response into a variable and then call addmarkers function
+        console.log(response);
+        let postsJSON = response.data;
+        console.log(postsJSON);
+        addMarkers(postsJSON);
+    
+    })
+    
+    //Catch error
+    .catch(function (error) {
+        console.log(error);
+    });
 
 }
