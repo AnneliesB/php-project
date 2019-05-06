@@ -20,6 +20,8 @@ if (!empty($_POST)) {
         $description = $_POST['description'];
         $city = $_POST['city'];
         $filter = $_POST['filterDb'];
+        $lat = $_POST['lat'];
+        $lng = $_POST['lng'];
 
         if (Image::checkExtention($image)) {
             // If extention is png or jpeg
