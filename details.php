@@ -4,8 +4,8 @@
     // GET id of post
     $uid = User::getUserId();
     $id = $_GET['id'];
-    $post = Post::getPostById($id);
-    $comments = Post::getCommentsByPostId($post["id"]);
+    $post = Image::getPostById($id);
+    $comments = Image::getCommentsByPostId($post["id"]);
     //var_dump($id);
     // Connection
     $conn = Db::getConnection();

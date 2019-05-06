@@ -28,7 +28,7 @@ if (!empty($_GET['query'])) {
     $statement->bindParam(":user_id", $userId);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);*/
-    $results = Post::getAllEnabledPostsForUser($userId);
+    $results = Image::getAllEnabledPostsForUser($userId);
 }
 ?><!DOCTYPE html>
 <html lang="en">
