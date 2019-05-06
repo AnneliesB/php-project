@@ -4,15 +4,15 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYXJuaWk1IiwiYSI6ImNqdmNjMW5lZTFnenQ0NG15YThkN
 
 // Create fullscreen imageMap
 //set height of the map to the available height of the viewport minus the navbar
-var mapContainer = document.querySelector("#map");
-var navbar = document.querySelector(".navbar");
+const mapContainer = document.querySelector("#map");
+const navbar = document.querySelector(".navbar");
 navbar.style.marginBottom = "0px";
-var navHeight = navbar.offsetHeight;
+let navHeight = navbar.offsetHeight;
 mapContainer.style.height = 'calc( 100vh - ' + navHeight + 'px)';
 
 
 //Init map
-var map = new mapboxgl.Map({
+let map = new mapboxgl.Map({
     container: 'map',
     center: [3.26792783, 50.8546051], //NOTE: LNG and then LAT -> inverted of what we are used to!
     zoom: 9,
@@ -47,7 +47,7 @@ function addMarkers(postsJSON){
     postsJSON.forEach(function(marker) {
         
         //Create a DOM element for the marker
-        var el = document.createElement('div');
+        let el = document.createElement('div');
         el.className = 'marker';
         el.style.backgroundImage = 'url(images/' + marker.url_cropped + ')';
          
@@ -59,3 +59,6 @@ function addMarkers(postsJSON){
     });
 
 }
+
+
+
