@@ -20,6 +20,9 @@ let map = new mapboxgl.Map({
     
   });
 
+  //create a global currentMarkers variable that will store all added markers
+  let currentMarkers = [];
+
 
 //Get posts location data (lat/lng) and image from DB via AJAX call
 axios.get('ajax/imageMap.php',{
@@ -52,9 +55,10 @@ function addMarkers(postsJSON){
         el.style.backgroundImage = 'url(images/' + marker.url_cropped + ')';
          
         //Add marker to map
-        new mapboxgl.Marker(el)
+        singleMarker = new mapboxgl.Marker(el)
         .setLngLat([marker.lng , marker.lat])
         .addTo(map);
+        currentMarkers.push(singleMarker);
 
     });
 
@@ -75,6 +79,9 @@ searchInput.addEventListener("keypress", function(e){
         let query = searchInput.value;
         console.log(query);
 
+        //update all markers
+        updateMarkers(query);
+
 
         //Prevent default action to happen on entering
         e.preventDefault();
@@ -88,6 +95,28 @@ searchBtn.addEventListener("click", function(e){
     let query = searchInput.value;
     console.log(query);
 
+    //update all markers
+    updateMarkers(query);
+
     //Prevent default action to happen on clicking button
     e.preventDefault();
 });
+
+
+//update all markers on the map
+function updateMarkers(query){
+
+    //delete all current markers, if there are any
+    if (currentMarkers !== null) {
+        for (let i = 0; i < currentMarkers.length; i++) {
+
+            //remove marker
+            currentMarkers[i].remove();
+        }
+        //reset currentMarkers array after removing the markers on the map
+        currentMarkers = [];
+    }
+    
+    
+
+}
