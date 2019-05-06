@@ -20,7 +20,7 @@
     
     <div class="map" id="map"></div>
 
-    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/imageMap.js"></script>
 </body>
 </html>

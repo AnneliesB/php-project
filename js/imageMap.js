@@ -1,7 +1,7 @@
-//access token
+//Access token
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXJuaWk1IiwiYSI6ImNqdmJnN3RsMDB1cHQzenFta21vNmRldDgifQ.Kfk5NHGXQX4uMOSH5abrDg';
 
-//init map
+//Init map
 var map = new mapboxgl.Map({
     container: 'map',
     center: [3.26792783, 50.8546051], //NOTE: LNG and then LAT -> inverted of what we are used to!
@@ -11,34 +11,41 @@ var map = new mapboxgl.Map({
   });
 
 
-//JSON array of images
-var postsJSON = {
+//Get posts location data (lat/lng) and image from DB via AJAX call
+axios.post('ajax/imageMap.php',{
+    
+})
 
-    "posts": [
-        {
-            "lat": 50.924695711685304,
-            "lng": 3.624462890625
-        },
-        {
-            "lat": 50.97189158092897,
-            "lng": 3.0158203125
-        },
-        {
-            "lat": 50.85151823530889,
-            "lng": 3.29223632812499
-        }
-    ]
-};
+//Response
+.then(function (response) {
 
-// add markers to map
-postsJSON.posts.forEach(function(marker) { //replace the postsJSON.posts with the acutal posts array
-    // create a DOM element for the marker
-    var el = document.createElement('div');
-    el.className = 'marker';
-    el.style.backgroundImage = 'url(images/0flipper.jpg)';
-     
-    // add marker to map
-    new mapboxgl.Marker(el)
-    .setLngLat([marker.lng , marker.lat])
-    .addTo(map);
+    //Put data from response into a variable and then call addmarkers function
+    let postsJSON = response.data;
+    addMarkers(postsJSON);
+
+})
+
+//Catch error
+.catch(function (error) {
+    console.log(error);
+});
+
+
+//Add markers to map
+function addMarkers(postsJSON){
+
+    postsJSON.forEach(function(marker) {
+        console.log(marker);
+        //Create a DOM element for the marker
+        var el = document.createElement('div');
+        el.className = 'marker';
+        el.style.backgroundImage = 'url(images/' + marker.url_cropped + ')';
+         
+        //Add marker to map
+        new mapboxgl.Marker(el)
+        .setLngLat([marker.lng , marker.lat])
+        .addTo(map);
+
     });
+
+}
