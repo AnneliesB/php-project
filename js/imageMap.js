@@ -1,6 +1,15 @@
 //Access token
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXJuaWk1IiwiYSI6ImNqdmJnN3RsMDB1cHQzenFta21vNmRldDgifQ.Kfk5NHGXQX4uMOSH5abrDg';
 
+// Create fullscreen imageMap
+//set height of the map to the available height of the viewport minus the navbar
+var mapContainer = document.querySelector("#map");
+var navbar = document.querySelector(".navbar");
+navbar.style.marginBottom = "0px";
+var navHeight = navbar.offsetHeight;
+mapContainer.style.height = 'calc( 100vh - ' + navHeight + 'px)';
+
+
 //Init map
 var map = new mapboxgl.Map({
     container: 'map',
@@ -35,7 +44,7 @@ axios.post('ajax/imageMap.php',{
 function addMarkers(postsJSON){
 
     postsJSON.forEach(function(marker) {
-        console.log(marker);
+        
         //Create a DOM element for the marker
         var el = document.createElement('div');
         el.className = 'marker';

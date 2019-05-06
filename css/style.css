@@ -169,10 +169,6 @@ input[type=text], input[type=password], input[type=file], #description {
     width: 25%;
 }
 
-.map{
-    height: 100vh;
-}
-
 .marker{
     display: block;
     border: none;
