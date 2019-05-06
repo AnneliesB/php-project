@@ -584,6 +584,24 @@ span.like {
     display: none;
 }
 
+.searchMap{
+    z-index: 5;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 1em;
+}
+
+#searchMapInput{
+    border-radius: 5px 0px 0px 5px;
+    background-color: #b5b5b57a;
+    border: 1px solid #b5b5b57a;
+}
+
+#searchMapBtn{
+    background-color: rgba(151, 220, 251, 0.7) !important;
+}
+
 @media (min-width: 598px) {
     header {
         width: 70%;

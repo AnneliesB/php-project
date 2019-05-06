@@ -61,4 +61,33 @@ function addMarkers(postsJSON){
 }
 
 
+//listen to search field enter or click
+let searchInput = document.querySelector("#searchMapInput");
+let searchBtn = document.querySelector("#searchMapBtn");
 
+searchInput.addEventListener("keypress", function(e){
+    //check for enter key
+    let key = e.which || e.keyCode;
+    if (key === 13){
+
+        //enter key has been pressed
+        //get value from input field
+        let query = searchInput.value;
+        console.log(query);
+
+
+        //Prevent default action to happen on entering
+        e.preventDefault();
+    }
+    
+});
+
+searchBtn.addEventListener("click", function(e){
+    //search btn has been clicked
+    //get value from input field
+    let query = searchInput.value;
+    console.log(query);
+
+    //Prevent default action to happen on clicking button
+    e.preventDefault();
+});

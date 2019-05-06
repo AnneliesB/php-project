@@ -17,6 +17,13 @@
 </head>
 <body class="defaultAlign">
     <?php include_once("nav.incl.php"); ?>
+
+    <form class="searchMap" action="" method="GET">
+        <div class="searchBar" id="search">
+            <input type="text" id="searchMapInput" name="query">
+            <input type="submit" id="searchMapBtn" name="submit" value="Search">
+        </div>
+    </form>
     
     <div class="map" id="map"></div>
 
