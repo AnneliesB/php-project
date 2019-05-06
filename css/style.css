@@ -9,6 +9,10 @@ body {
     background-color: #FAFAFA;
 }
 
+.defaultAlign{
+    text-align: left;
+}
+
 /* navigation - mobile */
 .hamburgerLink {
     display: block;
@@ -416,6 +420,19 @@ margin: 2em auto;*/
 
 .userPosts img {
     width: 25%;
+}
+
+.marker{
+    display: block;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 /*--------------------------------------

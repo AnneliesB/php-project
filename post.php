@@ -23,7 +23,7 @@ if (!empty($_POST)) {
 
         if (Image::checkExtention($image)) {
             // If extention is png or jpeg
-            Image::saveImageToDb($image, $croppedImage, $description, $city, $filter);
+            Image::saveImageToDb($image, $croppedImage, $description, $city, $lat, $lng, $filter);
             Image::saveImage($image, $imageSaveName);
             Image::saveCroppedImage($image);
             Image::saveMainColors($image);
@@ -291,6 +291,7 @@ if (!empty($_POST)) {
                     </div>
                 </div>
             </div>
+            
         </div>
 
         <div class="formField">
@@ -301,6 +302,14 @@ if (!empty($_POST)) {
         <div class="hidden">
             <label for="city">City</label>
             <input type="text" name="city" id="city">
+        </div>
+        <div class="hidden">
+            <label for="lat">City</label>
+            <input type="text" name="lat" id="lat">
+        </div>
+        <div class="hidden">
+            <label for="lng">City</label>
+            <input type="text" name="lng" id="lng">
         </div>
 
         <div class="hidden">

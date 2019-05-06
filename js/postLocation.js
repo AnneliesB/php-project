@@ -8,6 +8,10 @@ function getMyLocation(){
         //save lat and lng
         let lat = position.coords.latitude;
         let lng = position.coords.longitude;
+
+        //fill in lat and lng in the hidden form fields
+        document.querySelector("#lat").value = lat;
+        document.querySelector("#lng").value = lng;
         
         //turn lat and lng into a city address
         getCity(lat, lng);
@@ -33,6 +37,8 @@ function getCity(lat, lng){
     .then(json => {
         //retrieve city from JSON response
         let city = json.address.town;
+
+        //fill in city in the hidden form field
         const inputCity = document.querySelector('#city');
         inputCity.value = city;
     });
