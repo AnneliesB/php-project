@@ -1,6 +1,6 @@
 //Access token
-
-mapboxgl.accessToken = 'pk.eyJ1IjoiYXJuaWk1IiwiYSI6ImNqdmJnN3RsMDB1cHQzenFta21vNmRldDgifQ.Kfk5NHGXQX4uMOSH5abrDg';
+//Restricted in MapBox account by URL
+mapboxgl.accessToken = 'pk.eyJ1IjoiYXJuaWk1IiwiYSI6ImNqdmNjMW5lZTFnenQ0NG15YThkNnB6aXoifQ.6YSNEi0JUyLhDkYg2CQLgQ';
 
 // Create fullscreen imageMap
 //set height of the map to the available height of the viewport minus the navbar
@@ -15,7 +15,7 @@ mapContainer.style.height = 'calc( 100vh - ' + navHeight + 'px)';
 var map = new mapboxgl.Map({
     container: 'map',
     center: [3.26792783, 50.8546051], //NOTE: LNG and then LAT -> inverted of what we are used to!
-    zoom: 8,
+    zoom: 9,
     style: "mapbox://styles/mapbox/light-v9"
     
   });
