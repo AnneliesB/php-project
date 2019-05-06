@@ -30,7 +30,7 @@ class Image
     public static function checkExtention($image)
     {
         // Check extention of the image
-        $allowed = array('png', 'jpg', 'jpeg');
+        $allowed = array('png', 'jpg', 'jpeg', 'JPG', 'PNG', 'JPEG');
         $ext = pathinfo($image, PATHINFO_EXTENSION);
 
         if (in_array($ext, $allowed)) {
