@@ -29,9 +29,29 @@ $userPosts = User::getUserPosts($user_id);
 <body>
 <?php include_once("nav.incl.php"); ?>
 <!-- SHOW data from DB -->
-<img src="images/menu.svg" alt="menu for edit profile and edit password options" class="icon profileEdit">
 <div class="profile">
-    <h2>Profile</h2>
+    <div class="iconContainer">
+        <div class="profileLeft">
+            <h2>Profile</h2>
+        </div>
+
+        <div class="profileRight">
+            <div class="iconPadding">
+                <img src="images/settings-work-tool.svg" alt="" class="profileIcon">
+            </div>
+        </div>
+    </div>
+
+    <div class="settingMenu">
+        <div class="alignMenuRight">
+            <a href="editProfile.php" class="editButtons"> Edit Profile</a>
+            <a href="editPassword.php" class="editButtons"> Edit Password</a>
+            <a href="logout.php" class="editButtons">Logout</a>
+        </div>
+    </div>
+
+
+
 
     <!-- echo profile picture -->
     <?php if ($profile['image'] != "filler.png"): ?>
@@ -44,6 +64,7 @@ $userPosts = User::getUserPosts($user_id);
 
     <!-- echo username -->
     <h3><?php echo htmlspecialchars($profile['username']); ?></h3>
+
 
     <!-- echo email -->
     <div class="profileContainer">
@@ -65,11 +86,12 @@ $userPosts = User::getUserPosts($user_id);
     </div>
 
 
-    <a href="editProfile.php" class="btnProfile"> Edit Profile</a>
+    <!-- <a href="editProfile.php" class="btnProfile"> Edit Profile</a>
     <a href="editPassword.php" class="btnProfile"> Edit Password</a>
-    <a href="logout.php" class="btnProfile">Logout</a>
+    <a href="logout.php" class="btnProfile">Logout</a> -->
 </div>
 <script src="js/navigation.js"></script>
+<script src="js/profileMenu.js"></script>
 
 </body>
 </html>

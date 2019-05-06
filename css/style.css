@@ -307,6 +307,52 @@ input[type=text], input[type=password], #description {
     transition: 0.5s;
 }
 
+.iconContainer{
+    display: flex;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.profileLeft{
+    width: 40%;
+    margin-left: 30%;
+}
+
+.profileRight{
+    width: 30%;
+
+}
+
+.profileIcon{
+    width: 30px;
+}
+
+.iconPadding{
+    padding: 1em;
+}
+
+.settingMenu{
+    display: none;
+    position: absolute;
+    z-index: 3;
+    text-align: center;
+    margin: 0em 10% 1em 40%;
+    border-radius: 0.3em;
+    width: 50%;
+}
+
+.editButtons{
+    display: block;
+    text-decoration: none;
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+    color: white;
+    width:100%;
+    border: 1px solid white;
+    border-radius: 0.3em;
+    background-color: #82deff;
+}
+
 .btnProfile{
     display: block;
     margin: 1em auto;
@@ -353,6 +399,10 @@ input[type=text], input[type=password], #description {
 /* profile post overview - mobile */
 .userPosts{
     padding-top: 2em;
+}
+
+.profile .userPosts{
+    padding-bottom: 3em;
 }
 
 .userPosts img{
@@ -535,6 +585,18 @@ span.like{
         margin: 0em 0.6em;
         border-radius: 0.3em;
     }
+
+    .settingMenu{
+        width: 40%;
+        margin-left: 50%;
+        margin-right: 10%;
+    }
+
+    .editButtons{
+       max-width: 246px;
+        margin-left: calc(100% - 246px);
+    }
+
 }
 
 @media (min-width: 1083px) {
@@ -590,6 +652,7 @@ span.like{
         -moz-box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
         box-shadow: 0px 0px 300px -61px rgba(0,0,0,0.11);
     }
+
 
     .login, .register{
         margin-bottom: 4em;
@@ -673,14 +736,25 @@ span.like{
         margin-bottom: 3.5em;
     }
 
-    .profileContainer {
-        text-align: center;
-    }
-
     .profileLabel {
         font-weight: bold;
         font-size: 1.1em;
     }
+
+    .settingMenu{
+        z-index: 30;
+        width: 70%;
+        margin-left: 20%;
+        margin-right: 10%;
+
+        position: relative;
+    }
+
+    .editButtons{
+        width: 100%;
+
+    }
+
 
     .btnProfile{
         display: block;
@@ -713,10 +787,15 @@ span.like{
 
     .userPosts{
         padding-top: 4em;
+
     }
 
     .userPosts img{
         width: 25%;
+    }
+
+    .profile .userPosts{
+        padding-bottom: 2em;
     }
 
     /*--------------------------------------
