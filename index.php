@@ -129,7 +129,8 @@ if (!empty($_GET['query'])) {
 
                 <form action="" method="POST">
                     <input class="commentInput" type="text" name="comment" placeholder="comment...">
-                    <input class="commentBtn" type="submit" value="Post" data-id="<?php echo $result['id'] ?>">
+                    <!--<input class="commentBtn" type="submit" value="Post" data-id="<?php echo $result['id'] ?>">  -->
+                    <input class="commentBtn" type="button" value="Post" data-id="<?php echo $result['id'] ?>">
                 </form>
 
 
