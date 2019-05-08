@@ -1,4 +1,5 @@
 <?php
+
 require_once("bootstrap/bootstrap.php");
 //Check if user session is active (Is user logged in?)
 if (isset($_SESSION['email'])) {
@@ -14,7 +15,18 @@ $userId = User::getUserId();
 //Check if Search is used
 if (!empty($_GET['query'])) {
     $query = "%" . $_GET['query'] . "%";
-    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like ? and photo.inappropriate = 0 order by id desc LIMIT 2");
+
+    $firstchar = $query[1];
+    switch ($firstchar){
+        case "!": 
+            $sql="select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.city like ? and photo.inappropriate = 0 order by id desc LIMIT 2";
+            $query = str_replace("!", "", $query);
+            break;
+        default: 
+            $sql="select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like ? and photo.inappropriate = 0 order by id desc LIMIT 2";
+    }
+    //die($query);
+    $statement = $conn->prepare($sql);
     $statement->bindParam("1", $query);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
