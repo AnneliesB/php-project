@@ -18,6 +18,11 @@ $user_id = User::getUserId();
 //retrieve all information for this user from the DB via User class
 $profile = Follow::getUserProfile($username);
 
+//if user is visiting his own profile, we should redirect to his full user profile with edit buttons
+if($user_id = $profile['id']){
+    header("location: profile.php");
+}
+
 //check if following this user
 $follows = Follow::isFollowing($user_id, $profile['id']);
 
