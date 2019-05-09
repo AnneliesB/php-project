@@ -616,5 +616,25 @@ class User
     }
 
 
+    public static function getFollowinghashtags($user_id) {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select hashtag from hashtag where user_id = :user_id");
+        $statement->bindParam(":user_id", $user_id);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $sqlHashtag = "";
+
+        foreach($results as $result) {
+            $sqlHashtag .= $result['hashtag'] . "|" ;
+        }
+
+        $sqlHashtag = rtrim($sqlHashtag, '|');
+
+
+        return $sqlHashtag;
+    }
+
+
 
 }
