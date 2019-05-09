@@ -82,24 +82,27 @@ else {
                 <div class="postTopBar">
 
 
-
+                    <div class="topBar--flex">
                     <a href="userProfile.php?username=<?php echo htmlspecialchars($result['username']); ?>">
                         <div class="postUsername"><?php echo htmlspecialchars($result['username']); ?></div>
                     </a>
 
 
-                    <p><?php echo Image::timeAgo($result['time']); ?></p>
+                    <p class="timeAgo"><?php echo Image::timeAgo($result['time']); ?></p>
+                    </div>
 
-                    <img class="icon postOptions" src="images/menu.svg" alt="options icon">
-
-
+                    <div class="topBar--flex topBar--report">
                     <?php if (User::userHasReported($result['id'], $userId) == true): ?>
-                        <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">Inappropiate</a>
+                        <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">
+                            <img src="images/report--red.svg" alt="grey button" class="inappropriateIcon">
+                        </a>
 
                     <?php else: ?>
-                        <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">Inappropiate</a>
+                        <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">
+                            <img src="images/report--red.svg" alt="red button" class="inappropriateIcon">
+                        </a>
                     <?php endif ?>
-
+                    </div>
 
                 </div>
 
