@@ -170,7 +170,21 @@ class Image
 
     public static function searchPosts($query) {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 15");
+
+        // Make var with the first char of the query
+        $firstchar = $query[0];
+
+        // If the first char is '@' you are searching for a person
+        if($firstchar == "@") {
+            $query = str_replace("@", "", $query);
+            $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user.username like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 15");
+        }
+
+        // Else searching post with a the query in description
+        else {
+            $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 15");
+        }
+
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $results;
