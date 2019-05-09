@@ -50,14 +50,14 @@
 
             $response = [
                 "status" => "Disable",
-                "message" => "Inappropriate was saved and the post is disbaled!"
+                "message" => "This post was reported as inappropriate and has been disabled!"
             ]; 
         } 
 
         else {
             $response = [
                 "status" => "Success",
-                "message" => "Inappropriate was saved!"
+                "message" => "This post was reported as inappropriate!"
             ]; 
         } 
     }
