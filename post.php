@@ -9,8 +9,6 @@ if (isset($_SESSION['email'])) {
     header("location: login.php");
 }
 if (isset($_POST['upload'])) {
-    echo 'ok';
-
     if (!empty($_FILES['image']) && !empty($_POST['description'])) {
           
         // GET image name / filename / description
