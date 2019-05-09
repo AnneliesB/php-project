@@ -1,8 +1,8 @@
 let clicked = false;
-let hamburger = document.querySelector(".hamburgerLink");
+let hamburger = document.querySelector(".hamburger");
 let nav = document.querySelector(".mobileNav");
 
-hamburger.firstChild.addEventListener("click", function () {
+hamburger.addEventListener("click", function () {
     if (clicked == false) {
         nav.style.display = "block";
         clicked = true;
@@ -11,3 +11,8 @@ hamburger.firstChild.addEventListener("click", function () {
         clicked = false;
     }
 });
+
+window.addEventListener('resize', function(){
+    nav.style.display = "none";
+    clicked = false;
+})
