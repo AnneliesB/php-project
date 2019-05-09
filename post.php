@@ -303,7 +303,7 @@ if (isset($_POST['upload'])) {
 
         <div class="formField">
             <label for="description">Description</label>
-            <textarea id="description" name="description" rows="10"> </textarea>
+            <textarea id="description" name="description" rows="10"></textarea>
         </div>
 
         <div class="hidden">
