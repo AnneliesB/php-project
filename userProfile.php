@@ -19,7 +19,7 @@ $user_id = User::getUserId();
 $profile = Follow::getUserProfile($username);
 
 //if user is visiting his own profile, we should redirect to his full user profile with edit buttons
-if($user_id = $profile['id']){
+if($user_id === $profile['id']){
     header("location: profile.php");
 }
 
