@@ -9,7 +9,9 @@ if (isset($_SESSION['email'])) {
     header("location: login.php");
 }
 if (isset($_POST['upload'])) {
-    if (!empty($_FILES['image']) && !empty($_POST['description'])) {
+
+    
+    if (!empty($_FILES['image']) && !empty(trim($_POST['description']))) {
           
         // GET image name / filename / description
         $image = Image::getPostId() . $_FILES['image']['name'];
