@@ -1,4 +1,6 @@
-var loadFile = function(event) {
+var uploader = document.getElementById('image');
+
+image.addEventListener("change", function(event){
     // select all hidden elements and show them as soon as an image is selected
     var elements = document.querySelector(".filters");
     var imageWrapper = document.querySelector(".imageWrapper");
@@ -33,32 +35,36 @@ var loadFile = function(event) {
     var F_walden = document.querySelector(".F_walden");
     var F_willow = document.querySelector(".F_willow");
 
-    image.src = URL.createObjectURL(event.target.files[0]);
-    F_nofilter.src=URL.createObjectURL(event.target.files[0]);
-    F_1977.src=URL.createObjectURL(event.target.files[0]);
-    F_aden.src=URL.createObjectURL(event.target.files[0]);
-    F_brannan.src=URL.createObjectURL(event.target.files[0]);
-    F_brooklyn.src=URL.createObjectURL(event.target.files[0]);
-    F_clarendon.src=URL.createObjectURL(event.target.files[0]);
-    F_earlybird.src=URL.createObjectURL(event.target.files[0]);
-    F_gingham.src=URL.createObjectURL(event.target.files[0]);
-    F_hudson.src=URL.createObjectURL(event.target.files[0]);
-    F_inkwell.src=URL.createObjectURL(event.target.files[0]);
-    F_kelvin.src=URL.createObjectURL(event.target.files[0]);
-    F_lark.src=URL.createObjectURL(event.target.files[0]);
-    F_lofi.src=URL.createObjectURL(event.target.files[0]);
-    F_maven.src=URL.createObjectURL(event.target.files[0]);
-    F_mayfair.src=URL.createObjectURL(event.target.files[0]);
-    F_moon.src=URL.createObjectURL(event.target.files[0]);
-    F_nashville.src=URL.createObjectURL(event.target.files[0]);
-    F_perpetua.src=URL.createObjectURL(event.target.files[0]);
-    F_reyes.src=URL.createObjectURL(event.target.files[0]);
-    F_rise.src=URL.createObjectURL(event.target.files[0]);
-    F_slumber.src=URL.createObjectURL(event.target.files[0]);
-    F_stinson.src=URL.createObjectURL(event.target.files[0]);
-    F_toaster.src=URL.createObjectURL(event.target.files[0]);
-    F_valencia.src=URL.createObjectURL(event.target.files[0]);
-    F_walden.src=URL.createObjectURL(event.target.files[0]);
-    F_willow.src=URL.createObjectURL(event.target.files[0]);
+    var img = event.target.files[0];
 
-};
+
+
+    image.src = URL.createObjectURL(img);
+    F_nofilter.src=URL.createObjectURL(img);
+    F_1977.src=URL.createObjectURL(img);
+    F_aden.src=URL.createObjectURL(img);
+    F_brannan.src=URL.createObjectURL(img);
+    F_brooklyn.src=URL.createObjectURL(img);
+    F_clarendon.src=URL.createObjectURL(img);
+    F_earlybird.src=URL.createObjectURL(img);
+    F_gingham.src=URL.createObjectURL(img);
+    F_hudson.src=URL.createObjectURL(img);
+    F_inkwell.src=URL.createObjectURL(img);
+    F_kelvin.src=URL.createObjectURL(img);
+    F_lark.src=URL.createObjectURL(img);
+    F_lofi.src=URL.createObjectURL(img);
+    F_maven.src=URL.createObjectURL(img);
+    F_mayfair.src=URL.createObjectURL(img);
+    F_moon.src=URL.createObjectURL(img);
+    F_nashville.src=URL.createObjectURL(img);
+    F_perpetua.src=URL.createObjectURL(img);
+    F_reyes.src=URL.createObjectURL(img);
+    F_rise.src=URL.createObjectURL(img);
+    F_slumber.src=URL.createObjectURL(img);
+    F_stinson.src=URL.createObjectURL(img);
+    F_toaster.src=URL.createObjectURL(img);
+    F_valencia.src=URL.createObjectURL(img);
+    F_walden.src=URL.createObjectURL(img);
+    F_willow.src=URL.createObjectURL(img);
+
+})

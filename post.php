@@ -8,10 +8,9 @@ if (isset($_SESSION['email'])) {
     //User is not logged in, redirect to login.php!
     header("location: login.php");
 }
-
-if (!empty($_POST)) {
-    // UPLOAD image
-    if (isset($_POST['upload'])) {
+if (isset($_POST['upload'])) {
+    if (!empty($_POST['image']) && !empty($_POST['description'])) {
+          
         // GET image name / filename / description
         $image = Image::getPostId() . $_FILES['image']['name'];
         $imageSaveName = $_FILES['image']['tmp_name'];
@@ -30,10 +29,16 @@ if (!empty($_POST)) {
             Image::saveCroppedImage($image);
             Image::saveMainColors($image);
             header("location: index.php");
-        } else {
+        } 
+        
+        else {
             // Else error message
             $error = "You can only upload png or jpg.";
         }
+    }
+
+    else {
+        $error = "All fields must be filled in.";
     }
 }
 
@@ -70,7 +75,7 @@ if (!empty($_POST)) {
         <div class="formField">
             <label for="image">Upload a picture</label>
             <div class="uploadFileWrapper">
-                <input type="file" id="image" name="image" onchange="loadFile(event)">
+                <input type="file" id="image" name="image"">
             </div>
 
         </div>
