@@ -32,7 +32,7 @@ else if(!empty($_GET['tag'])) {
 else {
     // No Search
     // Show 20 posts of friends on startpage
-    // Get hashtags that a user follows
+    // Get hashtags that a user is following
     $hashtags = User::getFollowinghashtags($userId);
     // Get posts from DB and put them in $results
     $results = Image::getAllPosts($userId, $hashtags);
