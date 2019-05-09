@@ -334,5 +334,6 @@ if (isset($_POST['upload'])) {
 <script src="js/navigation.js"></script>
 <script src="js/showUploadedImage.js"></script>
 <script src="js/addFilter.js"></script>
+<script src="js/loading.js"></script>
 </body>
 </html>

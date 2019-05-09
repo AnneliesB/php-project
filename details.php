@@ -48,7 +48,30 @@ $comments = $commentStatement->fetchAll();
 <main class="feed">
     <div class="postContainer">
         <!-- echo picture -->
-        <a href="userProfile.php?username=<?php echo htmlspecialchars($username); ?>" class="postUsername"><?php echo htmlspecialchars($username); ?></a>
+
+        <div class="postTopBar">
+            <div class="topBar--flex topBar--username">
+                <a href="userProfile.php?username=<?php echo htmlspecialchars($username); ?>">
+                    <div class="postUsername"><?php echo htmlspecialchars($username); ?></div>
+                </a>
+                <p class="timeAgo"><?php echo Image::timeAgo($post['time']); ?></p>
+            </div>
+
+            <div class="topBar--flex topBar--report">
+                <?php if (User::userHasReported($post['id'], $userId) == true): ?>
+                    <a href="#" data-id="<?php echo $post['id'] ?>" class="inappropriate inappropriatedLink">
+                        <img src="images/report--red.svg" alt="grey button" class="inappropriateIcon">
+                    </a>
+
+                <?php else: ?>
+                    <a href="#" data-id="<?php echo $post['id'] ?>" class="inappropriate">
+                        <img src="images/report--red.svg" alt="red button" class="inappropriateIcon">
+                    </a>
+                <?php endif ?>
+            </div>
+
+        </div>
+
         <p class="postLocation"><?php echo htmlspecialchars($post['city']); ?></p>
 
         <!-- echo picture -->
