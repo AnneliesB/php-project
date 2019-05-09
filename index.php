@@ -30,11 +30,12 @@ else if(!empty($_GET['tag'])) {
 }
 
 else {
-    //No Search
-    //Show 20 posts of friends on startpage
-    //Get posts from DB and put them in $results
-    $results = Image::getAllPosts($userId);
-    
+    // No Search
+    // Show 20 posts of friends on startpage
+    // Get hashtags that a user follows
+    $hashtags = User::getFollowinghashtags($userId);
+    // Get posts from DB and put them in $results
+    $results = Image::getAllPosts($userId, $hashtags);
 }
 ?><!DOCTYPE html>
 <html lang="en">
