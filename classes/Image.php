@@ -223,4 +223,14 @@ class Image
             return $string ? implode(', ', $string) . ' ago' : 'just now';
         }        
 
+        //retrieve a single post by it's id
+        public static function getCurrentPost($post_id){
+            $conn = Db::getConnection();
+            $statement = $conn->prepare("select * from photo where id = :id");
+            $statement->bindParam(":id", $post_id);
+            $statement->execute();
+            $post = $statement->fetch(PDO::FETCH_ASSOC);
+            return $post;
+        }
+
     }
