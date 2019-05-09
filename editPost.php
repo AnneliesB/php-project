@@ -87,7 +87,7 @@ try {
 
 
         <input type="submit" value="Update post" name="edit" class="btn btnPrimary">
-    <input type="submit" value="remove post" name="delete" class="btn btnDanger">
+    <input type="submit" value="remove post" name="delete" class="btn btnPrimary">
 
 
 
