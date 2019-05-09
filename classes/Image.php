@@ -233,4 +233,26 @@ class Image
             return $post;
         }
 
+        //get the username of the person who posted the this post
+        public static function getPostUsername($post_id){
+            $conn = Db::getConnection();
+
+            //get the post's user_id
+            $statement = $conn->prepare("select photo.user_id from photo where id = :id");
+            $statement->bindParam(":id", $post_id);
+            $statement->execute();
+            $user_id = $statement->fetch(PDO::FETCH_ASSOC);
+            $user_id = $user_id['user_id'];
+
+            //retreive the username by that user_id
+            $statement = $conn->prepare("select username from user where id = :id");
+            $statement->bindParam(":id", $user_id);
+            $statement->execute();
+            $username = $statement->fetch(PDO::FETCH_ASSOC);
+            $username = $username['username'];
+
+            //return the username
+            return $username;
+        }
+
     }

@@ -19,6 +19,9 @@ $userId = User::getUserId();
 // GET current post
 $post = Image::getCurrentPost($id);
 
+//get the username of the user that has posted this image
+$username = Image::getPostUsername($id);
+
 // GET comments
 $commentStatement = $conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId");
 $commentStatement->bindParam(":postId", $id);
@@ -45,12 +48,13 @@ $comments = $commentStatement->fetchAll();
 <main class="feed">
     <div class="postContainer">
         <!-- echo picture -->
-        <p class="postLocation"><?php echo $post['city'] ?></p>
+        <a href="userProfile.php?username=<?php echo htmlspecialchars($username); ?>" class="postUsername"><?php echo htmlspecialchars($username); ?></a>
+        <p class="postLocation"><?php echo htmlspecialchars($post['city']); ?></p>
 
         <!-- echo picture -->
         <div class="detailsFilter">
-            <div class="<?php echo $post['filter']; ?>">
-                <img src="images/<?php echo $post['url']; ?>" alt="Post picture">
+            <div class="<?php echo htmlspecialchars($post['filter']); ?>">
+                <img src="images/<?php echo htmlspecialchars($post['url']); ?>" alt="Post picture">
             </div>
         </div>
 
