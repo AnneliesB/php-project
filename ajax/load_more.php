@@ -44,8 +44,14 @@
             $hasliked = Like::userHasLiked($results[$i]['id'], $user_id);
             $results[$i]["hasLiked"] = $hasliked;
 
+            // time ago
             $ago = Image::timeAgo($results[$i]['time']);
             $results[$i]['ago'] = $ago;
+
+
+            // get the reported status
+            $hasReported = User::userHasReported($result[$i]['id'], $user_id);
+            $results[$i]["hasReported"] = $hasReported;
         }
 
     }else if ($colorSearch !== null){

@@ -9,7 +9,7 @@ if (isset($_SESSION['email'])) {
     header("location: login.php");
 }
 if (isset($_POST['upload'])) {
-    if (!empty($_POST['image']) && !empty($_POST['description'])) {
+    if (!empty($_FILES['image']) && !empty($_POST['description'])) {
           
         // GET image name / filename / description
         $image = Image::getPostId() . $_FILES['image']['name'];
@@ -75,7 +75,7 @@ if (isset($_POST['upload'])) {
         <div class="formField">
             <label for="image">Upload a picture</label>
             <div class="uploadFileWrapper">
-                <input type="file" id="image" name="image"">
+                <input type="file" id="image" name="image">
             </div>
 
         </div>
@@ -303,7 +303,7 @@ if (isset($_POST['upload'])) {
 
         <div class="formField">
             <label for="description">Description</label>
-            <textarea id="description" name="description" rows="10"> </textarea>
+            <textarea id="description" name="description" rows="10"></textarea>
         </div>
 
         <div class="hidden">
