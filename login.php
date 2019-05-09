@@ -26,7 +26,8 @@ if (!empty($_POST)) {
     <title>IMDSTAGRAM - login</title>
 </head>
 
-<body>
+<body class="loginPage">
+
 
     <div class="login">
         <div class="form formLogin">

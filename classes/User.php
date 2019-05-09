@@ -432,6 +432,15 @@ class User
         }
     }
 
+    public static function getCurrentUserProfile(){
+        $conn = Db::getConnection();
+        $email = $_SESSION['email'];
+        $statement = $conn->prepare("select * from user where email = :email");
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
     public static function doChangeProfile($email, $password)
     {
         $sessionEmail = self::getSessionEmail();

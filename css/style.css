@@ -6,27 +6,106 @@ body {
     text-align: center;
     font-family: 'Roboto', sans-serif;
     color: #90a0ae;
+    background-color: #FAFAFA;
 }
 
-.navbar{
+.defaultAlign{
+    text-align: left;
+}
+
+/* navigation - mobile */
+.hamburgerLink {
+    display: block;
+    text-align: right;
+    padding: 1em 2em 1em 1em;
+    background-color: #97DCFB;
+}
+
+.hamburger {
+    width: 40px;
+}
+
+.navbar {
+    display: none;
     padding: 1em 25%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     text-align: center;
     justify-content: space-evenly;
     margin-bottom: 2em;
     background-color: #97DCFB;
-
 }
 
-.navbar a{
+.navbar a {
     text-decoration: none;
+    display: block;
     color: white;
     text-transform: uppercase;
-    padding: 0 2em;
+    padding: 0.5em 2em;
+    font-weight: bold;
 }
 
+.desktop {
+    display: none;
+}
+
+/* login/registration - mobile */
+.register .formTitle {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.loginPage, .registerPage {
+    background-color: white;
+}
+
+/* searchbar - mobile */
+header {
+    background-color: white;
+    margin: 1em auto 1em auto;
+    width: 95%;
+    -webkit-box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+}
+
+.loadMoreContainer {
+    margin: 0em auto 0.5em auto;
+    width: 100%;
+    padding: 1.5em 0em;
+    background-color: rgba(255, 255, 255, 1);
+    -webkit-box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+}
+
+#search {
+    display: flex;
+    width: 97%;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: space-between;
+}
+
+#query {
+    background-color: rgba(187, 187, 187, 0.15);
+    border: none;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#search input[type=submit] {
+    color: white;
+    background-color: rgba(187, 187, 187, 0.4);
+    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+}
+
+/* form layout - mobile */
 .formTitle {
     padding-top: 2em;
     padding-bottom: 1.5em;
@@ -63,7 +142,7 @@ body {
     text-align: left;
 }
 
-input[type=text], input[type=password], input[type=file], #description {
+input[type=text], input[type=password], #description {
     width: 100%;
     height: 2em;
     background-color: #e8f9ff;
@@ -74,9 +153,132 @@ input[type=text], input[type=password], input[type=file], #description {
     font-size: 1em;
 }
 
+.uploadFileWrapper {
+    width: 100%;
+    background-color: #e8f9ff;
+    border-radius: 5px;
+    color: #293241;
+    font-size: 1em;
+    padding: 0.3em 0em 0.3em 0.5em;
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+}
+
+.uploadedImage {
+    width: 100%;
+    max-width: 500px;
+}
+
+.imageWrapper {
+    display: none;
+    margin-bottom: 1.5em;
+}
+
+.filters {
+    display: none;
+    width: 100%;
+    max-width: 500px;
+}
+
+.filterContainer {
+    display: grid;
+    grid-gap: calc(20px / 2);
+    grid-template-columns: repeat(26, calc(50% - 20px * 2));
+    grid-template-rows: minmax(150px, 1fr);
+
+    overflow-x: scroll;
+    scroll-snap-type: x proximity;
+    padding-bottom: calc(.75 * 20px);
+    margin-bottom: calc(-.25 * 20px);
+}
+
+/*display: flex;
+flex-wrap: wrap;
+flex-direction: row;
+margin: 2em auto;*/
+
+.caption {
+    width: 100%;
+    margin: 0% auto 0% auto;
+}
+
+.filterButtons {
+    margin-bottom: 2%;
+}
+
+.caption p {
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 0.2em;
+    font-size: 0.8em;
+}
+
+.filterButtons div::after {
+    max-height: 97%;
+}
+
+.filterButtons div::before {
+    max-height: 97%;
+}
+
+.indexFilter div::after {
+    max-height: 99%;
+}
+
+.indexFilter div::before {
+    max-height: 99%;
+}
+
+.imageWrapper figure::after {
+    max-height: 98%;
+}
+
+.imageWrapper figure::before {
+    max-height: 98%;
+}
+
+.detailsFilter div::after {
+    max-height: calc(100% - 4px);
+}
+
+.detailsFilter div::before {
+    max-height: calc(100% - 4px);
+}
+
+.details main .postContainer {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.details main .postContainer img {
+    max-width: 100%;
+}
+
+
 /* Amount of rows in HTML */
 #description {
     height: auto;
+    resize: none;
+}
+
+/* Feed color extractor buttons - mobile */
+.colorBlock {
+    margin-top: 1em;
+}
+
+.colorBtn {
+    padding: 1em 0.5em;
+    font-size: 0.4em;
+    margin: 0em 0.6em;
+    border-radius: 0.3em;
+}
+
+.colorBtn p {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(256, 256, 256, 0);
 }
 
 .ajaxFeedback {
@@ -87,10 +289,7 @@ input[type=text], input[type=password], input[type=file], #description {
     display: none;
 }
 
-.formField .btnPrimary{
-
-}
-
+/* all white buttons with blue border - mobile */
 .btnPrimary {
     width: 60%;
     margin-left: 20%;
@@ -105,7 +304,6 @@ input[type=text], input[type=password], input[type=file], #description {
     color: #82deff;
     text-transform: uppercase;
     cursor: pointer;
-
 }
 
 .btnPrimary:hover {
@@ -114,10 +312,63 @@ input[type=text], input[type=password], input[type=file], #description {
     transition: 0.5s;
 }
 
-.btnProfile{
+.iconContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.profileLeft {
+    width: 40%;
+    margin-left: 30%;
+}
+
+.profileRight {
+    width: 30%;
+
+}
+
+.profileIcon {
+    width: 30px;
+}
+
+.iconPadding {
+    padding: 1em;
+}
+
+.smallBtnContainer {
+    margin: 1.5em auto;
+}
+
+.smallProfileButton {
+    width: 40%;
+
+    border: 1px solid #82deff;
+    background-color: white;
+    font-size: 0.8em;
+    padding: 0.5em;
+    text-decoration: none;
+    background-color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #82deff;
+    border-radius: 5px;
+}
+
+.smallProfileButton:hover {
+    color: white;
+    background-color: #82deff;
+    transition: 0.5s;
+}
+
+.profile{
+    background-color: white;
+    padding-top: 1em;
+}
+
+.btnProfile {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 1em auto;
     text-decoration: none;
     padding: 0.5em;
     width: 60%;
@@ -127,25 +378,26 @@ input[type=text], input[type=password], input[type=file], #description {
     text-transform: uppercase;
     cursor: pointer;
     color: #82deff;
-    margin-top: 1em;
-    margin-bottom: 1em;
 }
 
-.btnProfile:hover{
+.btnProfile:hover {
     color: white;
     background-color: #82deff;
     transition: 0.5s;
 }
 
-.lastItem{
+/* for extra padding at the bottom - mobile */
+.lastItem {
     margin-bottom: 4em;
 }
 
-.profilePicture{
+/* profile - mobile */
+.profilePicture {
     width: 40%;
     max-width: 200px;
 }
 
+/* grey links - mobile */
 .redirectLink {
     color: #b7c1cb;
 }
@@ -157,100 +409,114 @@ input[type=text], input[type=password], input[type=file], #description {
     text-decoration: underline;
 }
 
-.userPosts{
+/* profile post overview - mobile */
+.userPosts {
     padding-top: 2em;
 }
 
-.userPosts img{
+.profile .userPosts {
+    padding-bottom: 3em;
+}
+
+.userPosts img {
     width: 25%;
+}
+
+.marker{
+    display: block;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 /*--------------------------------------
             Index page
 --------------------------------------*/
-.index{
+.index {
     text-align: left;
     color: #333;
 }
 
-.feed{
-    width: 90%;
+.feed {
+    width: 95%;
     margin: 0 auto;
 }
 
-.icon{
+.postPage {
+    background-color: white;
+    padding: 2em 2.5%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.icon {
     width: 2em;
 }
 
-.postContainer{
-    padding: 2em 0em;
+.postContainer {
+    padding: 2em 2em;
+    background-color: white;
+    border-radius: 4px;
+    margin-bottom: 0.5em;
+    -webkit-box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.11);
+    -moz-box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.11);
+    box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.11);
 }
 
-span.like{
+span.like {
     cursor: pointer;
 }
 
-.postImg{
+.postImg {
     width: 100%;
     height: auto;
+    border: 1px solid #f7f7f7;
 }
 
-.postTopBar{
+.postTopBar {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
 }
 
-.postUsername{
+.postUsername {
     display: inline-block;
     width: calc(100% - 5em);
     text-align: left;
 }
 
-.postDescription{
+.postDescription {
     margin-top: 0;
 }
 
-.postStats{
+.postStats {
     display: flex;
     justify-content: space-between;
 }
 
-.postLikes{
+.postLikes {
     display: inline-block;
     font-size: 1.5em;
 }
 
-.colorBlock{
-    margin-top: 1em;
-    z-index: 25;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-}
-
-.colorBtn{
-    padding: 1em 0.5em;
-    font-size: 0.6em;
-    margin: 0em 0.6em;
-    border-radius: 0.3em;
-}
-.colorBtn p{
-    text-decoration: none;
-    display: inline-block;
-    color: rgba(256, 256, 256, 0);
-}
-
-.postComments{
+.postComments {
     display: inline-block;
     font-size: 1.5em;
 }
 
-.commentInput{
+.commentInput {
     width: calc(100% - 1em) !important;
     padding-right: 5em;
 }
 
-.commentBtn{
+.commentBtn {
     border: 1px solid #82deff;
     background-color: #82deff;
     border-radius: 0px 5px 5px 0px;
@@ -263,11 +529,11 @@ span.like{
     width: 5em;
 }
 
-.loadMoreBtn{
+/*.loadMoreBtn{
     width: 50%;
-    margin: 2em auto 4em auto;
+    margin: 0em auto 0em auto;
     border: 1px solid #82deff;
-    background-color: white;
+    background-color: rgba(256, 256, 256, 0.9);
     border-radius: 5px;
     padding: 0.5em 0em;
     font-weight: bold;
@@ -282,12 +548,25 @@ span.like{
     border: 1px solid #82deff;
     background-color: #82deff;
     color: #fff;
+}*/
+
+.loadMoreBtn {
+    /*padding-left: 1.5em;*/
+    text-align: center;
+    font-size: 1.2em;
+    color: grey;
 }
 
-.grow{
+.loadMoreBtn:hover {
+    font-size: 1.21em;
+    cursor: pointer;
+}
+
+.grow {
     transition: all 0.2s ease-in-out;
 }
-.grow:hover{
+
+.grow:hover {
     transform: scale(1.1);
 }
 
@@ -305,46 +584,192 @@ span.like{
     display: none;
 }
 
+.searchMap{
+    z-index: 5;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 1em;
+}
 
-@media (min-width: 980px) {
+#searchMapInput{
+    border-radius: 5px 0px 0px 5px;
+    background-color: #b5b5b57a;
+    border: 1px solid #b5b5b57a;
+}
+
+#searchMapBtn{
+    background-color: rgba(151, 220, 251, 0.7) !important;
+}
+
+@media (min-width: 598px) {
+    header {
+        width: 70%;
+        max-width: 800px;
+        margin-top: 0.5em;
+    }
+
+    #search {
+        width: 97%;
+        max-width: 800px;
+    }
+
+    .feed {
+        width: 70%;
+        margin: 0 auto;
+        max-width: 800px;
+    }
+
+    .details main {
+        width: 70%;
+        margin: 0 auto;
+        max-width: 700px;
+    }
+
+    .colorBtn {
+        padding: 1em 0.5em;
+        font-size: 0.7em;
+        margin: 0em 0.6em;
+        border-radius: 0.3em;
+    }
+
+}
+
+@media (min-width: 1083px) {
     body {
         background-color: #FAFAFA;
     }
 
-    .index{
+    .navIcon {
+        width: 20px;
+        margin-left: 0.5em;
+    }
+
+    .navbar {
+        padding: 1em 15%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        text-align: center;
+        justify-content: space-evenly;
+        margin-bottom: 1em;
+        background-color: #97DCFB;
+    }
+
+    .navbar a {
+        text-decoration: none;
+        color: white;
+        text-transform: uppercase;
+        padding: 0 2em;
+        display: flex;
+        align-items: center;
+    }
+
+    .mobile {
+        display: none;
+    }
+
+    header {
+        margin-top: 0.5em;
+    }
+
+    .index {
         background-image: none;
     }
 
-    .login, .profile, .editProfile, .editPassword {
+    .login, .profile, .editProfile, .editPassword, .register {
         width: 30%;
         margin-left: auto;
         margin-right: auto;
         background-color: white;
         padding-bottom: 2em;
         margin-top: 4em;
-        border: 1px solid #e9e9e9;
+        -webkit-box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.11);
+        -moz-box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.11);
+        box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.11);
+    }
+
+
+    .login, .register {
+        margin-bottom: 4em;
+    }
+
+    .formRegister .formTitle {
+        padding-top: 1.5em;
+        padding-bottom: 1em;
+    }
+
+    .register {
+        margin-top: 2.5em;
+    }
+
+    .register .formField {
+        padding-bottom: 1.4em;
+    }
+
+    .register .formField .btnPrimary {
+        margin-top: 1.5em;
+    }
+
+    .colorBtn {
+        padding: 1em 0.5em;
+        font-size: 0.2em;
+        margin: 0em 0.6em;
+        border-radius: 0.3em;
     }
 
     .flexbox {
-        display: flex;
+        width: 30%;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        padding: 1em 2em 1em 2em;
+        -webkit-box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.11);
+        -moz-box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.11);
+        box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.11);
+        margin-top: 0em;
+    }
+
+    .btnPost {
         width: 100%;
-        justify-content: space-around;
+        margin: 2em auto 1em auto;
+        border: 1px solid #82deff;
+        background-color: white;
+        border-radius: 5px;
+        padding: 0.5em 0em;
+        font-weight: bold;
+        font-size: 1em;
+        color: #82deff;
+        text-transform: uppercase;
+        cursor: pointer;
+        text-align: center;
     }
 
-    .flexbox .formField {
-        width: 40%;
-
+    .btnPost:hover {
+        border: 1px solid #82deff;
+        background-color: #82deff;
+        color: #fff;
     }
 
-    .profile{
+    .colorBlock {
+        margin-top: 1em;
+        z-index: 25;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+    }
+
+    #search {
+        width: 97%;
+        margin-bottom: 0.5em;
+    }
+
+    .profile {
         text-align: center;
         padding-top: 2em;
         padding-bottom: 3em;
         color: #333;
-    }
-
-    .profileContainer {
-        text-align: center;
+        margin-top: 3.5em;
+        margin-bottom: 3.5em;
     }
 
     .profileLabel {
@@ -353,10 +778,9 @@ span.like{
     }
 
 
-    .btnProfile{
+    .btnProfile {
         display: block;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 1em auto;
         text-decoration: none;
         padding: 0.5em;
         width: 30%;
@@ -366,8 +790,6 @@ span.like{
         text-transform: uppercase;
         cursor: pointer;
         color: #82deff;
-        margin-top: 1em;
-        margin-bottom: 1em;
     }
 
     .btnProfile:hover {
@@ -376,35 +798,53 @@ span.like{
         transition: 0.5s;
     }
 
-    .editProfile, .editPassword{
+    .editProfile, .editPassword {
         padding: 2em;
         margin-top: 5em;
     }
 
     .formError {
         width: 90%;
-
     }
 
-    .userPosts{
+    .userPosts {
         padding-top: 4em;
+
     }
 
-    .userPosts img{
+    .userPosts img {
         width: 25%;
+    }
+
+    .profile .userPosts {
+        padding-bottom: 2em;
     }
 
     /*--------------------------------------
             Index page
     --------------------------------------*/
-    .feed{
+    .feed {
         width: 30%;
         margin: 0 auto;
     }
 
-    header{
+    header {
         width: 30%;
-        margin: 0 auto;
+        margin: 0.5em auto 1em auto;
     }
 }
 
+@media (min-width: 1320px) {
+    .colorBtn {
+        padding: 1em 0.5em;
+        font-size: 0.6em;
+        margin: 0em 0.6em;
+        border-radius: 0.3em;
+    }
+}
+
+@media (min-width: 1375px) {
+    .navbar {
+        padding: 1em 20%;
+    }
+}

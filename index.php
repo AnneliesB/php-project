@@ -46,6 +46,7 @@ else {
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/cssgram.css">
     <title>Feed</title>
 </head>
 <body class="index">
@@ -53,7 +54,7 @@ else {
 
 <header>
     <form action="" method="GET">
-        <div class="formField">
+        <div class="searchBar" id="search">
             <input type="text" id="query" name="query">
             <input type="submit" name="submit" value="Search">
         </div>
@@ -76,31 +77,42 @@ else {
 
         foreach ($results as $result): ?>
 
-        <div class="postContainer">
+            <div class="postContainer">
 
-            <div class="postTopBar">
-
-                <a href="userProfile.php?username=<?php echo htmlspecialchars($result['username']); ?>"><div class="postUsername"><?php echo htmlspecialchars($result['username']); ?></div></a>
-                
-                <p><?php echo Image::timeAgo($result['time']); ?></p>
-                
-                <img class="icon postOptions" src="images/menu.svg" alt="options icon">
-
-                
-
-                <?php if(User::userHasReported($result['id'], $userId) == true): ?>
-                    <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">Inappropiate</a>
-
-                <?php else: ?>
-                    <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">Inappropiate</a>
-                <?php endif ?>
+                <div class="postTopBar">
 
 
 
-            </div>
+                    <a href="userProfile.php?username=<?php echo htmlspecialchars($result['username']); ?>">
+                        <div class="postUsername"><?php echo htmlspecialchars($result['username']); ?></div>
+                    </a>
 
 
-             <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"src="images/<?php echo $result['url_cropped'] ?>"> </a>
+                    <p><?php echo Image::timeAgo($result['time']); ?></p>
+
+                    <img class="icon postOptions" src="images/menu.svg" alt="options icon">
+
+
+                    <?php if (User::userHasReported($result['id'], $userId) == true): ?>
+                        <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">Inappropiate</a>
+
+                    <?php else: ?>
+                        <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">Inappropiate</a>
+                    <?php endif ?>
+
+
+                </div>
+
+
+                    <a href="details.php?id=<?php echo $result['id']; ?>">
+                        <div class="indexFilter">
+                            <div class="<?php echo $result['filter']; ?>">
+                                <img class="postImg" src="images/<?php echo $result['url_cropped'] ?>">
+                            </div>
+                        </div>
+                    </a>
+
+
 
                 <p class="postDescription"><?php echo preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1">#$1</a> ', htmlspecialchars($result['description']));?></p>                
 
@@ -147,15 +159,16 @@ else {
                 </form>
 
 
-
             </div>
 
 
         <?php endforeach; ?>
 
-        <a>
-            <div class="loadMoreBtn grow">Load More</div>
-        </a>
+        <div class="loadMoreContainer">
+            <a>
+                <div class="loadMoreBtn grow">Load More</div>
+            </a>
+        </div>
 
     <?php } //Closing if
     else { //No posts of friends found, show empty state message
@@ -166,11 +179,13 @@ else {
     <?php } //Closing else ?>
 </div>
 
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/saveLikes.js"></script>
     <script src="js/loadMore.js"></script>
     <script src="js/inappropriate.js"></script>
+    <script src="js/navigation.js"></script>
     <script src="js/followHashtag.js"></script>
 
 </body>

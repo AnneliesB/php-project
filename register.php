@@ -42,9 +42,9 @@
     <link rel="stylesheet" href="css/style.css">
     <title>IMDSTAGRAM - Signup</title>
 </head>
-<body>
+<body class="registerPage">
 
-<div class="login">
+<div class="register">
     <div class="form formLogin formRegister">
         <form action="" method="post">
             <h2 class="formTitle">Signup</h2>
