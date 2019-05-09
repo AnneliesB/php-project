@@ -47,12 +47,21 @@ loadMoreBtn.addEventListener("click", function(e){
                 $likeImage = "like.svg";
             }
 
+            if (elem['hasReported'] == true) {
+                $reportClass = "inappropriate inappropriatedLink";
+            }
+            else {
+                $reportClass = "inappropriate";
+            }
+
+
             //create template to put inside the postContainer div
             let postTemplate = `
                 <div class="postTopBar">
                     <a href="userProfile.php?username=${elem['username']}"><div class="postUsername">${elem['username']}</div></a>
                     <p> ${elem['ago']} </p>
                     <a href="#" class="options"><img class="icon postOptions" src="images/menu.svg" alt="options icon"></a>
+                    <a href="#" data-id="${elem['id']}" class="${$reportClass}">Inappropiate</a>
                 </div>
 
                 <a href="details.php?id=${elem['id']}">
