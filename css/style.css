@@ -470,6 +470,15 @@ margin: 2em auto;*/
     box-shadow: 0px 0px 300px -61px rgba(0, 0, 0, 0.11);
 }
 
+.timeAgo{
+    font-size: 0.8em;
+    color: grey;
+}
+
+.inappropriateIcon{
+    width: 25px;
+}
+
 span.like {
     cursor: pointer;
 }
@@ -482,8 +491,20 @@ span.like {
 
 .postTopBar {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row wrap;
     justify-content: space-between;
+}
+
+.topBar--report{
+    text-align: right;
+}
+
+.topBar--flex{
+    width: 50%;
+}
+
+.topBar--username{
+    text-align: left;
 }
 
 .postUsername {
@@ -493,7 +514,7 @@ span.like {
 }
 
 .postDescription {
-    margin-top: 0;
+    margin-top: 1em;
 }
 
 .postStats {
@@ -577,7 +598,7 @@ span.like {
 .inappropriatedLink {
     pointer-events: none;
     text-decoration: none;
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .disabled {
