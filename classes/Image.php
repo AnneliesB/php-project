@@ -57,11 +57,43 @@ class Image
         $result = $statement->execute();
     }
 
+    public static function resizeJPG($image, $imageSaveName){
+        $image_resized = imagescale(imagecreatefromjpeg($imageSaveName), 720);
+        imagejpeg($image_resized, "images/" . basename($image));
+    }
+
+    public static function resizePNG($image, $imageSaveName){
+        $image_resized = imagescale(imagecreatefrompng($imageSaveName), 720);
+        imagepng($image_resized, "images/" . basename($image));
+    }
+
+
     public static function saveImage($image, $imageSaveName)
     {
         // Image file directory
         $target = "images/" . basename($image);
-        move_uploaded_file($imageSaveName, $target);
+
+        // check current size of image
+        $data = getimagesize($imageSaveName);
+        $width = $data[0];
+        //var_dump($width);
+        //$height = $data[1];
+        if($width >720){
+            // resize image, check extention first
+            if(pathinfo($image, PATHINFO_EXTENSION) == 'jpg'){
+                self::resizeJPG($image, $imageSaveName);
+            } elseif (pathinfo($image, PATHINFO_EXTENSION) == 'png'){
+                self::resizePNG($image, $imageSaveName);
+            }
+        } else {
+            // saves original file
+            move_uploaded_file($imageSaveName, $target);
+        }
+
+
+
+
+
     }
 
     public static function saveCroppedImage($image)
@@ -222,5 +254,15 @@ class Image
             // return difference
             return $string ? implode(', ', $string) . ' ago' : 'just now';
         }        
+
+        //retrieve a single post by it's id
+        public static function getCurrentPost($post_id){
+            $conn = Db::getConnection();
+            $statement = $conn->prepare("select * from photo where id = :id");
+            $statement->bindParam(":id", $post_id);
+            $statement->execute();
+            $post = $statement->fetch(PDO::FETCH_ASSOC);
+            return $post;
+        }
 
     }
