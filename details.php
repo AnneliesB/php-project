@@ -44,7 +44,7 @@
         <!-- echo edit button -->
         <?php
         if($uid === $post["user_id"]){
-            echo "<a href=\"editPost.php?id=$id\">edit post</a>";
+            echo "<a href=\"editPost.php?id=$id\" class=\"btnEdit\" >edit post</a>";
         }
         ?>
         <!-- echo picture -->
