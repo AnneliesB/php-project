@@ -80,15 +80,11 @@ else {
             <div class="postContainer">
 
                 <div class="postTopBar">
-
-
                     <div class="topBar--flex">
-                    <a href="userProfile.php?username=<?php echo htmlspecialchars($result['username']); ?>">
-                        <div class="postUsername"><?php echo htmlspecialchars($result['username']); ?></div>
-                    </a>
-
-
-                    <p class="timeAgo"><?php echo Image::timeAgo($result['time']); ?></p>
+                        <a href="userProfile.php?username=<?php echo htmlspecialchars($result['username']); ?>">
+                            <div class="postUsername"><?php echo htmlspecialchars($result['username']); ?></div>
+                        </a>
+                        <p class="timeAgo"><?php echo Image::timeAgo($result['time']); ?></p>
                     </div>
 
                     <div class="topBar--flex topBar--report">

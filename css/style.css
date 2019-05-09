@@ -503,6 +503,10 @@ span.like {
     width: 50%;
 }
 
+.topBar--username{
+    text-align: left;
+}
+
 .postUsername {
     display: inline-block;
     width: calc(100% - 5em);
