@@ -19,7 +19,7 @@
     if( $searchQuery !== null){
 
         //we are on a search results page, show more search results!
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%". $searchQuery ."%' and photo.inappropriate = 0 order by id desc LIMIT $startpoint, 2"); 
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%". $searchQuery ."%' and photo.inappropriate = 0 order by id desc LIMIT $startpoint, 15"); 
         $statement->execute();   
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -51,7 +51,7 @@
     }else if ($colorSearch !== null){
 
         //we are on a search results page, show more search results!
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.color1 like '%" . $colorSearch . "%' OR  photo.color2 like '%" . $colorSearch . "%' OR  photo.color3 like '%" . $colorSearch . "%' OR  photo.color4 like '%" . $colorSearch . "%' and photo.inappropriate = 0 order by id desc LIMIT $startpoint, 2");
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.color1 like '%" . $colorSearch . "%' OR  photo.color2 like '%" . $colorSearch . "%' OR  photo.color3 like '%" . $colorSearch . "%' OR  photo.color4 like '%" . $colorSearch . "%' and photo.inappropriate = 0 order by id desc LIMIT $startpoint, 15");
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -83,7 +83,7 @@
     } else {
 
         //We are not on a search results page => Get posts from DB and put them in $results
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit $startpoint, 2");
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit $startpoint, 15");
         $statement->bindParam(":user_id", $user_id);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);

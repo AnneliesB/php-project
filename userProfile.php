@@ -54,6 +54,7 @@ $userPosts = User::getUserPosts($profile['id']);
         <img src="images/profilePictures/filler.png" alt="Profile Picture" class="profilePicture">
     <?php endif ?>
 
+
     <div class="profileContainer lastItem">
         <p class="profileLabel">Description</p>
         <p><?php echo $profile['description']; ?></p>
@@ -76,3 +77,4 @@ $userPosts = User::getUserPosts($profile['id']);
 <script src="js/navigation.js"></script>
 </body>
 </html>
+

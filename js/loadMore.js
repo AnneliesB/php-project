@@ -1,7 +1,7 @@
 //AJAX check for email and username via AXIOS
 
 //inital posts already shown on pageload
-let posts = 2;
+let posts = 15;
 
 //get the value of $_GET['query] when searching so we can pass this to PHP ajax file (needed for checking if search has been done)
 let url_string = window.location.href;
@@ -20,7 +20,7 @@ loadMoreBtn.addEventListener("click", function(e){
     shownPosts = posts;
 
     //increase posts to retrieve
-    posts +=2;
+    posts +=15;
 
     //make Ajax call via Axios to loadMore.php
     axios.post('ajax/load_more.php',{

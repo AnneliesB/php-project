@@ -13,22 +13,29 @@ $conn = Db::getConnection();
 $userId = User::getUserId();
 //Check if Search is used
 if (!empty($_GET['query'])) {
-    $query = "%" . $_GET['query'] . "%";
-    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like ? and photo.inappropriate = 0 order by id desc LIMIT 2");
-    $statement->bindParam("1", $query);
-    $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-} else if (!empty($_GET['color'])) {
+    $query = $_GET['query'];
+    $results = Image::searchPosts($query);
+} 
+
+else if (!empty($_GET['color'])) {
     $color = $_GET['color'];
     $results = Image::showImagesWithTheSameColor($color);
-} else {
-    //No Search
-    //Show 20 posts of friends on startpage
-    //Get posts from DB and put them in $results
-    $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit 2");
-    $statement->bindParam(":user_id", $userId);
-    $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+
+else if(!empty($_GET['tag'])) {
+    $tag = $_GET['tag'];
+    $results = Image::getPostsByTag($tag);
+    $follows = Follow::isFollowingHashTag($userId, $tag);
+
+}
+
+else {
+    // No Search
+    // Show 20 posts of friends on startpage
+    // Get hashtags that a user is following
+    $hashtags = User::getFollowinghashtags($userId);
+    // Get posts from DB and put them in $results
+    $results = Image::getAllPosts($userId, $hashtags);
 }
 ?><!DOCTYPE html>
 <html lang="en">
@@ -58,8 +65,16 @@ if (!empty($_GET['query'])) {
 <div class="feed">
     <?php
     //Check if no post results (no friends or posts of friends found)
-    if (!empty($results)) {
+    if (!empty($results)) { 
         //Posts of friends found, display them with a loop
+
+        // If you search hashtags
+        if (isset($_GET['tag'])): ?>
+            <a id="followHashtagBtn" data-tag="<?php echo '#' . $_GET['tag'] ?>" href=""><?php echo $follows . ' #' . $_GET['tag'] ?></a>
+        <!-- Close if -->
+        <?php endif;
+        
+
         foreach ($results as $result): ?>
 
             <div class="postContainer">
@@ -67,9 +82,11 @@ if (!empty($_GET['query'])) {
                 <div class="postTopBar">
 
 
+
                     <a href="userProfile.php?username=<?php echo htmlspecialchars($result['username']); ?>">
                         <div class="postUsername"><?php echo htmlspecialchars($result['username']); ?></div>
                     </a>
+
 
                     <p><?php echo Image::timeAgo($result['time']); ?></p>
 
@@ -97,7 +114,7 @@ if (!empty($_GET['query'])) {
 
 
 
-                <p class="postDescription"><?php echo htmlspecialchars($result['description']) ?></p>
+                <p class="postDescription"><?php echo preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1">#$1</a> ', htmlspecialchars($result['description']));?></p>                
 
                 <div class="postStats">
                     <div>
@@ -162,13 +179,14 @@ if (!empty($_GET['query'])) {
     <?php } //Closing else ?>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="js/saveLikes.js"></script>
-<script src="js/loadMore.js"></script>
-<script src="js/inappropriate.js"></script>
-<script src="js/navigation.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/saveLikes.js"></script>
+    <script src="js/loadMore.js"></script>
+    <script src="js/inappropriate.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/followHashtag.js"></script>
 
 </body>
 </html>

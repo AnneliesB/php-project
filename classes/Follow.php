@@ -45,12 +45,12 @@ class Follow {
     /*
     * Check if following record exists for a given user
     */
-    public static function isFollowing($user_id, $following_id)
+    public static function isFollowing($user_id, $hashtag)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("select * from followers where user_id = :user_id and following_id = :following_id ");
+        $statement = $conn->prepare("select * from followers where user_id = :user_id and hashtag = :hashtag ");
         $statement->bindParam(":user_id", $user_id);
-        $statement->bindParam(":following_id", $following_id);
+        $statement->bindParam(":hashtag", $hashtag);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -64,6 +64,25 @@ class Follow {
         }
         return $followBtn;
         
+    }
+
+    public static function isFollowingHashTag($userId, $hashtag) {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select * from hashtag where user_id = :userId and hashtag = :hashtag ");
+        $statement->bindParam(":userId", $userId);
+        $statement->bindParam(":hashtag", $hashtag);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if($result === false){
+            //we are not following this user
+            $followBtn = "Follow";
+        }
+        else{
+            //we are following this user
+            $followBtn = "Unfollow";
+        }
+        return $followBtn;
     }
 
     /*
