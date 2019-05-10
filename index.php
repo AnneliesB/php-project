@@ -90,12 +90,12 @@ else {
                     <div class="topBar--flex topBar--report">
                     <?php if (User::userHasReported($result['id'], $userId) == true): ?>
                         <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">
-                            <img src="images/report--red.svg" alt="grey button" class="inappropriateIcon">
+                            <img src="images/report.svg" alt="grey button" class="inappropriateIcon">
                         </a>
 
                     <?php else: ?>
                         <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">
-                            <img src="images/report--red.svg" alt="red button" class="inappropriateIcon">
+                            <img src="images/report.svg" alt="red button" class="inappropriateIcon">
                         </a>
                     <?php endif ?>
                     </div>
