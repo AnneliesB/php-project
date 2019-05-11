@@ -58,8 +58,12 @@ loadMoreBtn.addEventListener("click", function(e){
             //create template to put inside the postContainer div
             let postTemplate = `
                 <div class="postTopBar">
-                    <a href="userProfile.php?username=${elem['username']}"><div class="postUsername">${elem['username']}</div></a>
-                    <p> ${elem['ago']} </p>
+                <div class="topBar--flex">
+                    <a href="userProfile.php?username=${elem['username']}">
+                        <div class="postUsername">${elem['username']}</div>
+                    </a>
+                    <p class="timeAgo"> ${elem['ago']} </p>
+                </div>
                     
                     <a href="#" data-id="${elem['id']}" class="${$reportClass}">
                         <img src="images/report.svg" alt="grey button" class="inappropriateIcon">
