@@ -1,3 +1,5 @@
+
+
 const post = (postId) => {
     console.log(postId);
     const formInput = document.getElementById(postId).children.comment.value;
@@ -6,10 +8,12 @@ const post = (postId) => {
 }
 
 const postComment = async (comment, postId) => {
+    if(comment.length > null && 0){
+
+    
     data = {
         postid: postId,
-        comment, comment,
-        date: '00-00-00 00:00:00'
+        comment, comment
     };
 
     const toGetParams = `postid=${data.postid}&comment=${data.comment}&date=${data.date}`;
@@ -18,6 +22,7 @@ const postComment = async (comment, postId) => {
     } catch (e){
         console.log(e);
     }
+}
     
 }
 
@@ -26,30 +31,31 @@ function sleep(delay) {
     while (new Date().getTime() < start + delay);
   }
 
-// This function is a little broken
-// Works only in Details
-//WORK ON FIX!! 
 const changePosts = async (postId) => {
-    debugger;
-    const box = document.getElementById("commentContainer");
-    sleep(50);
+    const box = document.getElementById("commentContainer"); //select container box
+    sleep(50); //sleeps for 50 ms else crash
 
-    const { data } = await axios.get("ajax/getComments.php?id=" + postId);
-    if(data.length > box.children.length){
-        console.log(data);
-        const children = box.children.length;
-        let countFrom = 0;
-        if(box.children.length > 0) countFrom = children;
-        for(let i = countFrom; i < data.length; i++){
+    const { data } = await axios.get("ajax/getComments.php?id=" + postId); //get comment info from current post
+
+    if(data.length > box.children.length){ //checks if there is new data
+        //console.log(data);
+        const children = box.children.length; //get offset, voegt nieuwste comment toe
+        let countFrom = 0; //default state for comment.
+        if(box.children.length > 0) countFrom = children; //checks if there are comments
+
+        for(let i = countFrom; i < data.length; i++){ //loopt over nieuwe data 
             const main = document.createElement("DIV");
             main.className = "comments";
             const text = document.createElement("P");
-            text.innerHTML = `${data[i].date}: ${data[i].username}: ${data[i].comment}`;
+            text.innerHTML = `${data[i].username}: ${data[i].comment}`; //plaatst comment in div
             main.appendChild(text);
-            box.appendChild(main);
+            box.appendChild(main); //comment container
         }
     }
-
-
     changePosts(postId);
 }
+var test = document.querySelectorAll(".commentBtn");
+test.forEach((btn)=>{
+    const id = btn.dataset.id;
+    btn.onclick = ()=>post(id);
+})

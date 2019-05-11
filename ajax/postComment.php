@@ -5,7 +5,6 @@ $uid = User::getUserId();
 $pid = htmlspecialchars($_GET["postid"]);
 $comment = htmlspecialchars($_GET["comment"]);
 $time = htmlspecialchars($_GET["date"]);
-
 try{
     $conn = Db::getConnection();
     //QUERIE WEG IER 

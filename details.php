@@ -82,7 +82,7 @@
             <?php foreach($comments as $comment): ?>
                 <div class="comments">
                     <!-- echo timestamp, username and comment -->
-                    <p> <?php echo htmlspecialchars($comment['date']) . " " . htmlspecialchars($comment['username']) . " " . htmlspecialchars($comment['comment']) ?> </p>
+                    <p> <?php echo htmlspecialchars($comment['username']) . ": " . htmlspecialchars($comment['comment']) ?> </p>
                 </div>
             <?php endforeach;?>
             
@@ -92,16 +92,15 @@
                 <p class="postContainer">Be the first to comment!</p>
         <?php } //Closing else ?>
         </div>        
-        <form id="<?php echo $id; ?>">
+        <div id="<?php echo $id; ?>">
             <input class="commentInput" type="text" name="comment" placeholder="comment...">
             <!--
                 Change to button and don't post the form
                 onClick="() => sendpostmethod(<\?php echo $id; ?>)"
             -->
           <!--  <input class="commentBtn" type="submit" value="Post">  -->
-          <button class="commentBtn" type="button" onClick=post(<?php echo $id; ?>)>send</button>
-          
-        </form>
+          <button class="commentBtn" type="button" data-id="<?php echo $id; ?>">send</button>
+        </div>
         </div>
 
     </main>
