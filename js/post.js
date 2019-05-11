@@ -8,7 +8,7 @@ const post = (postId) => {
 }
 
 const postComment = async (comment, postId) => {
-    if(comment.length > null && 0){
+    if(comment.length > 0){
 
     
     data = {
