@@ -61,7 +61,9 @@ loadMoreBtn.addEventListener("click", function(e){
                     <a href="userProfile.php?username=${elem['username']}"><div class="postUsername">${elem['username']}</div></a>
                     <p> ${elem['ago']} </p>
                     <a href="#" class="options"><img class="icon postOptions" src="images/menu.svg" alt="options icon"></a>
-                    <a href="#" data-id="${elem['id']}" class="${$reportClass}">Inappropiate</a>
+                    <a href="#" data-id="${elem['id']}" class="${$reportClass}">
+                        <img src="images/report.svg" alt="grey button" class="inappropriateIcon">
+                    </a>
                 </div>
 
                 <a href="details.php?id=${elem['id']}">

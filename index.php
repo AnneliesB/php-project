@@ -131,7 +131,7 @@ else {
 
 
 
-                <p class="postDescription"><?php echo preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1">#$1</a> ', htmlspecialchars($result['description']));?></p>                
+                <p class="postDescription"><?php echo preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1" class="hashtag">#$1</a> ', htmlspecialchars($result['description']));?></p>
 
                 <div class="postStats">
                     <div>
