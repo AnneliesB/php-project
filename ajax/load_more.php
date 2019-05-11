@@ -45,7 +45,8 @@
             
             //escape special chars for XSS scripting before passing it back to JSON
             $description = $results[$i]['description'];
-            $description = htmlspecialchars($description);
+            //$description = htmlspecialchars($description);
+            $description = preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1" class="hashtag">#$1</a> ', htmlspecialchars($description));
             $results[$i]['description'] = $description;
             
             //get the amount of likes for each post and update the results array
@@ -83,7 +84,8 @@
 
             //escape special chars for XSS scripting before passing it back to JSON
             $description = $results[$i]['description'];
-            $description = htmlspecialchars($description);
+            //$description = htmlspecialchars($description);
+            $description = preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1" class="hashtag">#$1</a> ', htmlspecialchars($description));
             $results[$i]['description'] = $description;
 
             //get the amount of likes for each post and update the results array
@@ -96,6 +98,12 @@
 
             $ago = Image::timeAgo($results[$i]['time']);
             $results[$i]['ago'] = $ago;
+
+            // get the reported status
+            $hasReported = User::userHasReported($results[$i]['id'], $user_id);
+            $results[$i]["hasReported"] = $hasReported;
+
+
         }
 
     } else {
@@ -116,7 +124,8 @@
             
             //escape special chars for XSS scripting before passing it back to JSON
             $description = $results[$i]['description'];
-            $description = htmlspecialchars($description);
+            //$description = htmlspecialchars($description);
+            $description = preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1" class="hashtag">#$1</a> ', htmlspecialchars($description));
             $results[$i]['description'] = $description;
 
             //get the amount of likes for each post and update the results array
@@ -130,6 +139,10 @@
             // get time ago for each post
             $ago = Image::timeAgo($results[$i]['time']);
             $results[$i]['ago'] = $ago;
+
+            // get the reported status
+            $hasReported = User::userHasReported($results[$i]['id'], $user_id);
+            $results[$i]["hasReported"] = $hasReported;
         }
 
     }
