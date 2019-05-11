@@ -18,8 +18,20 @@
     //check if we are on a search results page (to show only search results and not actual index posts on loading more)
     if( $searchQuery !== null){
 
+        $firstchar = $searchQuery[0];
+
+        // If the first char is '@' you are searching for a person
+        if($firstchar == "@") {
+            $searchQuery = str_replace("@", "", $searchQuery);
+            $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user.username like '%" . $searchQuery . "%' and photo.inappropriate = 0 order by id desc LIMIT $startpoint, 15");
+        }
+
+        // Else searching post with a the query in description
+        else {
+            $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $searchQuery . "%' and photo.inappropriate = 0 order by id desc LIMIT $startpoint, 15");
+        }
+
         //we are on a search results page, show more search results!
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%". $searchQuery ."%' and photo.inappropriate = 0 order by id desc LIMIT $startpoint, 15"); 
         $statement->execute();   
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -50,7 +62,7 @@
 
 
             // get the reported status
-            $hasReported = User::userHasReported($result[$i]['id'], $user_id);
+            $hasReported = User::userHasReported($results[$i]['id'], $user_id);
             $results[$i]["hasReported"] = $hasReported;
         }
 

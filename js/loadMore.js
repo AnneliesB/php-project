@@ -9,6 +9,7 @@ let url = new URL(url_string);
 let searchQuery = url.searchParams.get("query");
 let colorSearch = url.searchParams.get("color");
 
+
 //get feed container, so we can later append elements to this.
 const feed = document.querySelector('.feed');
 
