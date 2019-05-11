@@ -324,6 +324,47 @@ margin: 2em auto;*/
     transition: 0.5s;
 }
 
+#followHashtagBtn{
+    padding: 0.5em;
+    border: 1px solid #82deff;
+    background-color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #82deff;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+#followHashtagBtn:hover{
+    color: white;
+    background-color: #82deff;
+    transition: 0.5s;
+}
+
+
+.hashtagBtnContainer{
+    text-align: center;
+
+    margin: 2em auto;
+
+}
+
+.resultContainer{
+    font-size: 0.9em;
+    margin-top: -0.3em;
+    margin-bottom: 1em;
+}
+
+.colorResult{
+    color: rgba(256, 256, 256, 0);
+    border-radius: 0.3em;
+    margin-left: 0.5em;
+}
+
+.queryResult{
+    font-weight: bolder;
+}
+
 .iconContainer {
     display: flex;
     align-items: center;

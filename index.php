@@ -68,9 +68,27 @@ else {
     if (!empty($results)) { 
         //Posts of friends found, display them with a loop
 
+        // show search results
+        if (!empty($_GET['query'])): ?>
+            <div class="resultContainer">
+                <p>Results for: <span class="queryResult"><?php echo $_GET['query'] ?></span></p>
+            </div>
+            <!-- Close if -->
+        <?php endif;
+
+        if (!empty($_GET['color'])): ?>
+            <div class="resultContainer">
+                <p>Results for: <span class="colorResult" style="background-color:<?php echo '#' .$_GET['color'] ?>"><?php echo $_GET['color'] ?></span></p>
+            </div>
+            <!-- Close if -->
+        <?php endif;
+
+
         // If you search hashtags
         if (isset($_GET['tag'])): ?>
-            <a id="followHashtagBtn" data-tag="<?php echo '#' . $_GET['tag'] ?>" href=""><?php echo $follows . ' #' . $_GET['tag'] ?></a>
+            <div class="hashtagBtnContainer">
+                <a id="followHashtagBtn" data-tag="<?php echo '#' . $_GET['tag'] ?>" href=""><?php echo $follows . ' #' . $_GET['tag'] ?></a>
+            </div>
         <!-- Close if -->
         <?php endif;
         
