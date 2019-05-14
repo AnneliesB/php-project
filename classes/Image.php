@@ -143,10 +143,35 @@ class Image
         // it defines an extract method which return the most “representative” colors
         $colors = $extractor->extract(4);
         #print_r($colors);
-        $color1 = ltrim(Color::fromIntToHex($colors[0]), '#');
-        $color2 = ltrim(Color::fromIntToHex($colors[1]), '#');
-        $color3 = ltrim(Color::fromIntToHex($colors[2]), '#');
-        $color4 = ltrim(Color::fromIntToHex($colors[3]), '#');
+        # check if we have 4 different colors
+
+        #if first two colors are equal, all the other colors will be equal too => 1 color
+        if($colors[0] == $colors[1]){
+            $color1 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color2 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color3 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color4 = ltrim(Color::fromIntToHex($colors[0]), '#');
+        } else if ($colors[1] == $colors[2]){
+            # if color 2 and 3 are equal, color 4 will be the same color => we have 2 colors
+            $color1 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color2 = ltrim(Color::fromIntToHex($colors[1]), '#');
+            $color3 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color4 = ltrim(Color::fromIntToHex($colors[1]), '#');
+        } else if ($colors[2] == $colors[3]){
+            # if color 3 and 4 are equal => we have 3 main colors
+            $color1 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color2 = ltrim(Color::fromIntToHex($colors[1]), '#');
+            $color3 = ltrim(Color::fromIntToHex($colors[2]), '#');
+            $color4 = ltrim(Color::fromIntToHex($colors[0]), '#');
+        } else {
+            # all colors are different
+            $color1 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color2 = ltrim(Color::fromIntToHex($colors[1]), '#');
+            $color3 = ltrim(Color::fromIntToHex($colors[2]), '#');
+            $color4 = ltrim(Color::fromIntToHex($colors[3]), '#');
+        }
+
+
 
         $statement = $conn->prepare("UPDATE photo set color1 = :color1, color2 = :color2, color3 = :color3, color4 = :color4 where url = :url");
         $statement->bindParam(":color1", $color1);
