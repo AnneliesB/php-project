@@ -1,43 +1,48 @@
-$("a.inappropriate").on("click", function (e) {
-    let postId = $(this).data("id");
-    let link = $(this);
-    // https://api.jquery.com/parent/
-    let post = $(this).parent().parent();
+$(".feed").on("click", function (e) {
+    if (e.target.matches("img.inappropriateIcon")) {
+        let inappropriateBtn = e.target.parentElement;
 
-
-    console.log(postId);
-
-    $.ajax({
-        method: "POST",
-        url: "ajax/inappropriate.php",
-        data: { postId: postId },
-        dataType: 'json'
-    })
-    .done(function (res) {
-        if(res.status == "Success"){
-            // Message if it is success
-            alert(res.message);
-
-            // Add css
-            link.css("pointer-events", "none");
-            link.css("text-decoration", "none");
-            link.css("opacity", "0.5");
-        }
         
-        else if (res.status == "Disable" ) {
-            // Message if it is disable
-            alert(res.message);
 
-            // Add css
-            link.css("pointer-events", "none");
-            link.css("text-decoration", "none");
-            link.css("opacity", "0.5");
+        let postId = inappropriateBtn.dataset.id;
+        let link = inappropriateBtn;
+        // https://api.jquery.com/parent/
+        let post = inappropriateBtn.parentElement.parentElement.parentElement;
 
-            // Disable post
-            post.css("display", "none");
-        }
+        console.log(postId);
 
-    });
+        $.ajax({
+                method: "POST",
+                url: "ajax/inappropriate.php",
+                data: {
+                    postId: postId
+                },
+                dataType: 'json'
+            })
+            .done(function (res) {
+                if (res.status == "Success") {
+                    // Message if it is success
+                    alert(res.message);
 
-    e.preventDefault();
+                    // Add css
+                    link.style.pointerEvents = "none";
+                    link.style.opacity = "0.5";
+                    
+                } else if (res.status == "Disable") {
+                    // Message if it is disable
+                    alert(res.message);
+
+                    // Add css
+                    link.style.pointerEvents = "none";
+                    link.style.opacity = "0.5";
+
+                    // Disable post                  
+                    post.style.display = "none";
+                }
+
+            });
+
+        e.preventDefault();
+    }
+
 });

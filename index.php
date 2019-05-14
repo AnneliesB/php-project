@@ -14,21 +14,26 @@ $userId = User::getUserId();
 //Check if Search is used
 if (!empty($_GET['query'])) {
     $query = $_GET['query'];
-    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' and photo.inappropriate = 0 AND enable=0 order by id desc LIMIT 2");
-    $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-} else if (!empty($_GET['color'])) {
+    $results = Image::searchPosts($query);
+} 
+
+else if (!empty($_GET['color'])) {
     $color = $_GET['color'];
     $results = Image::showImagesWithTheSameColor($color);
+  
+} else if(!empty($_GET['tag'])) {
+    $tag = $_GET['tag'];
+    $results = Image::getPostsByTag($tag);
+    $follows = Follow::isFollowingHashTag($userId, $tag);
+
 } else {
-    //No Search
-    //Show 20 posts of friends on startpage
-    //Get posts from DB and put them in $results
-    /*$statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit 2");
-    $statement->bindParam(":user_id", $userId);
-    $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);*/
-    $results = Image::getAllEnabledPostsForUser($userId);
+    // No Search
+    // Show 20 posts of friends on startpage
+    // Get hashtags that a user is following
+    $hashtags = User::getFollowinghashtags($userId);
+    // Get posts from DB and put them in $results
+    $results = Image::getAllPosts($userId, $hashtags);
+
 }
 ?><!DOCTYPE html>
 <html lang="en">
@@ -39,6 +44,7 @@ if (!empty($_GET['query'])) {
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/cssgram.css">
     <title>Feed</title>
 </head>
 <body class="index">
@@ -46,7 +52,7 @@ if (!empty($_GET['query'])) {
 
 <header>
     <form action="" method="GET">
-        <div class="formField">
+        <div class="searchBar" id="search">
             <input type="text" id="query" name="query">
             <input type="submit" name="submit" value="Search">
         </div>
@@ -57,39 +63,73 @@ if (!empty($_GET['query'])) {
 <div class="feed">
     <?php
     //Check if no post results (no friends or posts of friends found)
-    if (!empty($results)) {
+    if (!empty($results)) { 
         //Posts of friends found, display them with a loop
+
+        // show search results
+        if (!empty($_GET['query'])): ?>
+            <div class="resultContainer">
+                <p>Results for: <span class="queryResult"><?php echo $_GET['query'] ?></span></p>
+            </div>
+            <!-- Close if -->
+        <?php endif;
+
+        if (!empty($_GET['color'])): ?>
+            <div class="resultContainer">
+                <p>Results for: <span class="colorResult" style="background-color:<?php echo '#' .$_GET['color'] ?>"><?php echo $_GET['color'] ?></span></p>
+            </div>
+            <!-- Close if -->
+        <?php endif;
+
+
+        // If you search hashtags
+        if (isset($_GET['tag'])): ?>
+            <div class="hashtagBtnContainer">
+                <a id="followHashtagBtn" data-tag="<?php echo '#' . $_GET['tag'] ?>" href=""><?php echo $follows . ' #' . $_GET['tag'] ?></a>
+            </div>
+        <!-- Close if -->
+        <?php endif;
+        
+
         foreach ($results as $result): ?>
 
-        <div class="postContainer">
+            <div class="postContainer">
 
-            <div class="postTopBar">
+                <div class="postTopBar">
+                    <div class="topBar--flex">
+                        <a href="userProfile.php?username=<?php echo htmlspecialchars($result['username']); ?>">
+                            <div class="postUsername"><?php echo htmlspecialchars($result['username']); ?></div>
+                        </a>
+                        <p class="timeAgo"><?php echo Image::timeAgo($result['time']); ?></p>
+                    </div>
 
-               
+                    <div class="topBar--flex topBar--report">
+                    <?php if (User::userHasReported($result['id'], $userId) == true): ?>
+                        <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">
+                            <img src="images/report.svg" alt="grey button" class="inappropriateIcon">
+                        </a>
 
-                <a href="userProfile.php?username=<?php echo htmlspecialchars($result['username']); ?>"><div class="postUsername"><?php echo htmlspecialchars($result['username']); ?></div></a>
-                
-                <p><?php echo Image::timeAgo($result['time']); ?></p>
-                
-                <img class="icon postOptions" src="images/menu.svg" alt="options icon">
+                    <?php else: ?>
+                        <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">
+                            <img src="images/report.svg" alt="red button" class="inappropriateIcon">
+                        </a>
+                    <?php endif ?>
+                    </div>
 
-                
-
-                <?php if(User::userHasReported($result['id'], $userId) == true): ?>
-                    <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate inappropriatedLink">Inappropiate</a>
-
-                <?php else: ?>
-                    <a href="#" data-id="<?php echo $result['id'] ?>" class="inappropriate">Inappropiate</a>
-                <?php endif ?>
+                </div>
 
 
+                    <a href="details.php?id=<?php echo $result['id']; ?>">
+                        <div class="indexFilter">
+                            <div class="<?php echo $result['filter']; ?>">
+                                <img class="postImg" src="images/<?php echo $result['url_cropped'] ?>">
+                            </div>
+                        </div>
+                    </a>
 
-            </div>
 
 
-             <a href="details.php?id=<?php echo $result['id']; ?>"><img class="postImg"src="images/<?php echo $result['url_cropped'] ?>"> </a>
-
-                <p class="postDescription"><?php echo htmlspecialchars($result['description']) ?></p>
+                <p class="postDescription"><?php echo preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1" class="hashtag">#$1</a> ', htmlspecialchars($result['description']));?></p>
 
                 <div class="postStats">
                     <div>
@@ -128,11 +168,10 @@ if (!empty($_GET['query'])) {
                 </div>
 
 
-                <form action="" method="POST">
+                <div id="<?php echo $result['id'] ?>">
                     <input class="commentInput" type="text" name="comment" placeholder="comment...">
-                    <input class="commentBtn" type="submit" value="Post" data-id="<?php echo $result['id'] ?>">
-                </form>
-
+                    <input class="commentBtn" type="button" value="Post" data-id= "<?php echo $result['id']; ?>">
+                </div>
 
 
             </div>
@@ -140,9 +179,11 @@ if (!empty($_GET['query'])) {
 
         <?php endforeach; ?>
 
-        <a>
-            <div class="loadMoreBtn grow">Load More</div>
-        </a>
+        <div class="loadMoreContainer">
+            <a>
+                <div class="loadMoreBtn grow">Load More</div>
+            </a>
+        </div>
 
     <?php } //Closing if
     else { //No posts of friends found, show empty state message
@@ -153,11 +194,16 @@ if (!empty($_GET['query'])) {
     <?php } //Closing else ?>
 </div>
 
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/saveLikes.js"></script>
     <script src="js/loadMore.js"></script>
     <script src="js/inappropriate.js"></script>
+    <script src="js/post.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/followHashtag.js"></script>
+
 
 </body>
 </html>
