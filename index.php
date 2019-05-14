@@ -20,22 +20,20 @@ if (!empty($_GET['query'])) {
 else if (!empty($_GET['color'])) {
     $color = $_GET['color'];
     $results = Image::showImagesWithTheSameColor($color);
-}
-
-else if(!empty($_GET['tag'])) {
+  
+} else if(!empty($_GET['tag'])) {
     $tag = $_GET['tag'];
     $results = Image::getPostsByTag($tag);
     $follows = Follow::isFollowingHashTag($userId, $tag);
 
-}
-
-else {
+} else {
     // No Search
     // Show 20 posts of friends on startpage
     // Get hashtags that a user is following
     $hashtags = User::getFollowinghashtags($userId);
     // Get posts from DB and put them in $results
     $results = Image::getAllPosts($userId, $hashtags);
+
 }
 ?><!DOCTYPE html>
 <html lang="en">

@@ -1,3 +1,4 @@
+
 <?php
 require_once("bootstrap/bootstrap.php");
 
@@ -15,18 +16,13 @@ $id = $_GET['id'];
 // Connection
 $conn = Db::getConnection();
 $userId = User::getUserId();
-
 // GET current post
-$post = Image::getCurrentPost($id);
-
+$post = Image::getPostById($id);
 //get the username of the user that has posted this image
 $username = Image::getPostUsername($id);
-
+$comments = Image::getCommentsByPostId($post["id"]);
 // GET comments
-$commentStatement = $conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId");
-$commentStatement->bindParam(":postId", $id);
-$commentStatement->execute();
-$comments = $commentStatement->fetchAll();
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,8 +41,20 @@ $comments = $commentStatement->fetchAll();
 
 </header>
 
+
+    <main>
+        <div class="postContainer">
+        
+
 <main class="feed">
     <div class="postContainer">
+      <!-- echo edit button -->
+        <?php
+        if($userId === $post["user_id"]){
+            echo "<a href=\"editPost.php?id=$id\" class=\"btnEdit\" >edit post</a>";
+        }
+        ?>
+
         <!-- echo picture -->
 
         <div class="postTopBar">
@@ -86,7 +94,7 @@ $comments = $commentStatement->fetchAll();
         <p><?php echo htmlspecialchars($post['description']); ?></p>
         <div class="postStats">
             <div>
-                <?php if (Like::userHasLiked($post['id'], $userId) == true) : ?>
+                <?php if (Like::userHasLiked($post['id'], $uid) == true) : ?>
                     <a href="#" data-id="<?php echo $post['id'] ?>" class="like"><img
                                 class="icon postLikeIcon"
                                 src="images/liked.svg"
