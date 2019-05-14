@@ -9,7 +9,7 @@
     //var_dump($id);
     // Connection
     $conn = Db::getConnection();
-    $userId = User::getUserId();
+    
     // GET description and picture
     /*$statement = $conn->prepare("select * from photo where id = :id");
     $statement->bindParam(":id", $id);
@@ -21,7 +21,7 @@
     /*$commentStatement = $conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId AND enable=0");
     $commentStatement->bindParam(":postId", $id);
     $commentStatement->execute();
-    $comments = $commentStatement->fetchAll();*/
+    $comments = $commentStatement->fethAll();*/
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +54,7 @@
         <p><?php echo htmlspecialchars($post['description']); ?></p>
         <div class="postStats">
             <div>
-                <?php if (Like::userHasLiked($post['id'], $userId) == true) : ?>
+                <?php if (Like::userHasLiked($post['id'], $uid) == true) : ?>
                     <a href="#" data-id="<?php echo $post['id'] ?>" class="like"><img
                                 class="icon postLikeIcon"
                                 src="images/liked.svg"
