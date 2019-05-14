@@ -45,12 +45,12 @@ class Follow {
     /*
     * Check if following record exists for a given user
     */
-    public static function isFollowing($user_id, $hashtag)
+    public static function isFollowing($user_id, $profile_id)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("select * from followers where user_id = :user_id and hashtag = :hashtag ");
+        $statement = $conn->prepare("select * from followers where user_id = :user_id and following_id = :profile_id ");
         $statement->bindParam(":user_id", $user_id);
-        $statement->bindParam(":hashtag", $hashtag);
+        $statement->bindParam(":profile_id", $profile_id);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
