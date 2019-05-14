@@ -57,6 +57,7 @@ if (isset($_POST['upload'])) {
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/cssgram.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>IMSTAGRAM - add post</title>
 </head>
 
@@ -328,7 +329,7 @@ if (isset($_POST['upload'])) {
 
 
         <div class="formField">
-            <input type="submit" value="Post" name="upload" class="btn btnPrimary btnPost">
+            <button type="submit" name="upload" class="btn btnPrimary btnPost">Post<i class="hidden" id="loaderIcon"></i></button>
         </div>
     </div>
 </form>
