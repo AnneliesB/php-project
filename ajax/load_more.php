@@ -18,8 +18,20 @@
     //check if we are on a search results page (to show only search results and not actual index posts on loading more)
     if( $searchQuery !== null){
 
+        $firstchar = $searchQuery[0];
+
+        // If the first char is '@' you are searching for a person
+        if($firstchar == "@") {
+            $searchQuery = str_replace("@", "", $searchQuery);
+            $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user.username like '%" . $searchQuery . "%' and photo.inappropriate = 0 order by id desc LIMIT $startpoint, 15");
+        }
+
+        // Else searching post with a the query in description
+        else {
+            $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $searchQuery . "%' and photo.inappropriate = 0 order by id desc LIMIT $startpoint, 15");
+        }
+
         //we are on a search results page, show more search results!
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%". $searchQuery ."%' and photo.inappropriate = 0 order by id desc LIMIT $startpoint, 2"); 
         $statement->execute();   
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -33,7 +45,8 @@
             
             //escape special chars for XSS scripting before passing it back to JSON
             $description = $results[$i]['description'];
-            $description = htmlspecialchars($description);
+            //$description = htmlspecialchars($description);
+            $description = preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1" class="hashtag">#$1</a> ', htmlspecialchars($description));
             $results[$i]['description'] = $description;
             
             //get the amount of likes for each post and update the results array
@@ -44,14 +57,20 @@
             $hasliked = Like::userHasLiked($results[$i]['id'], $user_id);
             $results[$i]["hasLiked"] = $hasliked;
 
+            // time ago
             $ago = Image::timeAgo($results[$i]['time']);
             $results[$i]['ago'] = $ago;
+
+
+            // get the reported status
+            $hasReported = User::userHasReported($results[$i]['id'], $user_id);
+            $results[$i]["hasReported"] = $hasReported;
         }
 
     }else if ($colorSearch !== null){
 
         //we are on a search results page, show more search results!
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.color1 like '%" . $colorSearch . "%' OR  photo.color2 like '%" . $colorSearch . "%' OR  photo.color3 like '%" . $colorSearch . "%' OR  photo.color4 like '%" . $colorSearch . "%' and photo.inappropriate = 0 order by id desc LIMIT $startpoint, 2");
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.color1 like '%" . $colorSearch . "%' OR  photo.color2 like '%" . $colorSearch . "%' OR  photo.color3 like '%" . $colorSearch . "%' OR  photo.color4 like '%" . $colorSearch . "%' and photo.inappropriate = 0 order by id desc LIMIT $startpoint, 15");
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -65,7 +84,8 @@
 
             //escape special chars for XSS scripting before passing it back to JSON
             $description = $results[$i]['description'];
-            $description = htmlspecialchars($description);
+            //$description = htmlspecialchars($description);
+            $description = preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1" class="hashtag">#$1</a> ', htmlspecialchars($description));
             $results[$i]['description'] = $description;
 
             //get the amount of likes for each post and update the results array
@@ -78,12 +98,18 @@
 
             $ago = Image::timeAgo($results[$i]['time']);
             $results[$i]['ago'] = $ago;
+
+            // get the reported status
+            $hasReported = User::userHasReported($results[$i]['id'], $user_id);
+            $results[$i]["hasReported"] = $hasReported;
+
+
         }
 
     } else {
 
         //We are not on a search results page => Get posts from DB and put them in $results
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit $startpoint, 2");
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit $startpoint, 15");
         $statement->bindParam(":user_id", $user_id);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -98,7 +124,8 @@
             
             //escape special chars for XSS scripting before passing it back to JSON
             $description = $results[$i]['description'];
-            $description = htmlspecialchars($description);
+            //$description = htmlspecialchars($description);
+            $description = preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1" class="hashtag">#$1</a> ', htmlspecialchars($description));
             $results[$i]['description'] = $description;
 
             //get the amount of likes for each post and update the results array
@@ -112,6 +139,10 @@
             // get time ago for each post
             $ago = Image::timeAgo($results[$i]['time']);
             $results[$i]['ago'] = $ago;
+
+            // get the reported status
+            $hasReported = User::userHasReported($results[$i]['id'], $user_id);
+            $results[$i]["hasReported"] = $hasReported;
         }
 
     }
