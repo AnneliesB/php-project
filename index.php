@@ -170,10 +170,10 @@ else {
                 </div>
 
 
-                <form action="" method="POST">
+                <div id="<?php echo $result['id'] ?>">
                     <input class="commentInput" type="text" name="comment" placeholder="comment...">
-                    <input class="commentBtn" type="submit" value="Post" data-id="<?php echo $result['id'] ?>">
-                </form>
+                    <input class="commentBtn" type="button" value="Post" data-id= "<?php echo $result['id']; ?>">
+                </div>
 
 
             </div>
@@ -202,8 +202,10 @@ else {
     <script src="js/saveLikes.js"></script>
     <script src="js/loadMore.js"></script>
     <script src="js/inappropriate.js"></script>
+    <script src="js/post.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/followHashtag.js"></script>
+
 
 </body>
 </html>

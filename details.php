@@ -119,36 +119,48 @@ $comments = $commentStatement->fetchAll();
                 <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">
             </div>
         </div>
-        <div class="commentContainer">
-            <?php if (!empty($comments)) { ?>
-                <!-- echo comments -->
-                <?php foreach ($comments as $comment): ?>
-                    <div class="comments">
-                        <!-- echo timestamp, username and comment -->
-                        <p> <?php echo htmlspecialchars($comment['date']) . " " . htmlspecialchars($comment['username']) . " " . htmlspecialchars($comment['comment']) ?> </p>
-                    </div>
-                <?php endforeach; ?>
-
-
-            <?php } //Closing if
-            else { //No comments
-                ?>
+<div class="commentContainer">
+<div id="commentContainer">
+        <?php if( !empty($comments) ){ ?>        
+            <!-- echo comments -->
+            <?php foreach($comments as $comment): ?>
+                <div class="comments">
+                    <!-- echo timestamp, username and comment -->
+                    <p> <?php echo htmlspecialchars($comment['username']) . ": " . htmlspecialchars($comment['comment']) ?> </p>
+                </div>
+            <?php endforeach;?>
+            
+        
+        <?php } //Closing if
+            else{ //No comments ?>
                 <p class="postContainer">Be the first to comment!</p>
-            <?php } //Closing else ?>
-
-            <form>
-                <input class="commentInput" type="text" name="comment" placeholder="comment...">
-                <input class="commentBtn" type="submit" value="Post">
-            </form>
+        <?php } //Closing else ?>
+        </div>        
+        <div id="<?php echo $id; ?>">
+            <input class="commentInput" type="text" name="comment" placeholder="comment...">
+            <!--
+                Change to button and don't post the form
+                onClick="() => sendpostmethod(<\?php echo $id; ?>)"
+            -->
+          <!--  <input class="commentBtn" type="submit" value="Post">  -->
+          <button class="commentBtn" type="button" data-id="<?php echo $id; ?>">send</button>
+      </div>
         </div>
 
 </main>
 
 <footer>
 
-</footer>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="js/saveLikes.js"></script>
-<script src="js/navigation.js"></script>
+
+    <footer>
+    
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="js/saveLikes.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/post.js"></script>
+    <script>
+    changePosts(<?php echo($id); ?>);
+    </script>
 </body>
 </html>
