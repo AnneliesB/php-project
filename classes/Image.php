@@ -203,6 +203,12 @@ class Image
         if($firstchar == "@") {
             $query = str_replace("@", "", $query);
             $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user.username like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 15");
+        } 
+        //search for city using "!"+city
+        else if ($firstchar == "!"){
+            $query = str_replace("!", "", $query);
+            $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.city like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 15");
+            
         }
 
         // Else searching post with a the query in description
