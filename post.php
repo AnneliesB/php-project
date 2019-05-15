@@ -303,14 +303,14 @@ if (!empty($_POST)) {
         <div class="formField">
         <label for="category">category</label>
         <select name="category" id="category">
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
-            <option value="4"></option>
-            <option value="5"></option>
-            <option value="6"></option>
-            <option value="7"></option>
-            <option value="8"></option>
+            <option value="1">Lineart</option>
+            <option value="2">Emblems</option>
+            <option value="3">Logotypes</option>
+            <option value="4">Monogram Logo's</option>
+            <option value="5">Brand Marks</option>
+            <option value="6">Abstract Logo Marks</option>
+            <option value="7">Mascots</option>
+            <option value="8">Combination marks</option>
         </select>
         </div>
 
