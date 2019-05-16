@@ -59,18 +59,18 @@ if (!empty($_POST)) {
 
         <div class="formField">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" value="<?php echo $userProfile['username']; ?>">
+            <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($userProfile['username']); ?>">
         </div>
 
         <div class="formField">
             <label for="email">Email</label>
-            <input type="text" id="email" name="email" value="<?php echo $userProfile['email']; ?>">
+            <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($userProfile['email']); ?>">
         </div>
 
         <div class="formField">
             <label for="description">Description</label>
             <textarea rows="10" cols="30" id="description" name="description"
-                      class="textarea"><?php echo $userProfile['description']; ?></textarea>
+                      class="textarea"><?php echo htmlspecialchars($userProfile['description']); ?></textarea>
         </div>
 
         <div class="formField">
