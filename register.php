@@ -22,7 +22,7 @@
                 $user->setPasswordConfirmation($passwordConfirm);
 
                 if( $user->register() ){
-                    $user->login();
+                    $user->firstLogin();
                 }
 
             }catch( Exception $e){
