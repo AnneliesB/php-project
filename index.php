@@ -34,6 +34,20 @@ else if (!empty($_GET['color'])) {
     // Get posts from DB and put them in $results
     $results = Image::getAllPosts($userId, $hashtags);
 
+    //if no results -> not following anyone or any #
+    if(empty($result)){
+        //get some suggestions | top 5 most liked photo's
+        $suggestions = Image::getSuggestionsIds(); //returns posts_id's and their like count
+        
+        //get only the post_id and store them into their own array
+        $suggestion_ids = [];
+        foreach($suggestions as $s){
+            array_push($suggestion_ids, $s['post_id']);
+        }
+        //finally get the actual suggestion posts
+        $suggestions = Image::getSuggestionsPosts($suggestion_ids);
+                
+    }
 }
 ?><!DOCTYPE html>
 <html lang="en">
@@ -186,10 +200,99 @@ else if (!empty($_GET['color'])) {
         </div>
 
     <?php } //Closing if
-    else { //No posts of friends found, show empty state message
-        ?>
+    else { //No posts of friends found, show empty state message and suggestions?>
+        <div class="postContainer">
+            <p>Try following friends and other users to see what they have been up to!</p>
+            <h4>Here are some popular posts to get you started 🚀 </h4>
+        </div>
+        
+        <?php foreach ($suggestions as $s): ?>
 
-        <p class="postContainer">Try following friends and other users to see what they have been up to!</p>
+            <div class="postContainer">
+
+                <div class="postTopBar">
+                    <div class="topBar--flex">
+                        <a href="userProfile.php?username=<?php echo htmlspecialchars($s['username']); ?>">
+                            <div class="postUsername"><?php echo htmlspecialchars($s['username']); ?></div>
+                        </a>
+                        <p class="timeAgo"><?php echo Image::timeAgo($s['time']); ?></p>
+                    </div>
+
+                    <div class="topBar--flex topBar--report">
+                    <?php if (User::userHasReported($s['id'], $userId) == true): ?>
+                        <a href="#" data-id="<?php echo $s['id'] ?>" class="inappropriate inappropriatedLink">
+                            <img src="images/report.svg" alt="grey button" class="inappropriateIcon">
+                        </a>
+
+                    <?php else: ?>
+                        <a href="#" data-id="<?php echo $s['id'] ?>" class="inappropriate">
+                            <img src="images/report.svg" alt="red button" class="inappropriateIcon">
+                        </a>
+                    <?php endif ?>
+                    </div>
+
+                </div>
+
+
+                    <a href="details.php?id=<?php echo $s['id']; ?>">
+                        <div class="indexFilter">
+                            <div class="<?php echo $s['filter']; ?>">
+                                <img class="postImg" src="images/<?php echo $s['url_cropped'] ?>">
+                            </div>
+                        </div>
+                    </a>
+
+
+
+                <p class="postDescription"><?php echo preg_replace( '/\#([A-Za-z0-9]*)/is', ' <a href="index.php?tag=$1" class="hashtag">#$1</a> ', htmlspecialchars($s['description']));?></p>
+
+                <div class="postStats">
+                    <div>
+                        <?php if (Like::userHasLiked($s['id'], $userId) == true) : ?>
+                            <a href="#" data-id="<?php echo $s['id'] ?>" class="like"><img
+                                        class="icon postLikeIcon"
+                                        src="images/liked.svg"
+                                        alt="like icon"></a>
+                        <?php else: ?>
+                            <a href="#" data-id="<?php echo $s['id'] ?>" class="like"><img
+                                        class="icon postLikeIcon"
+                                        src="images/like.svg"
+                                        alt="like icon"></a>
+                        <?php endif ?>
+
+                        <p class="postLikes"><?php echo Like::getLikeAmount($s['id']); ?></p>
+                    </div>
+                    <div class="colorBlock">
+                        <a href="index.php?color=<?php echo $s['color1']; ?>"
+                           style="background-color:<?php echo "#" . $s['color1'] ?>;" class="colorBtn">
+                            <p><?php echo $s['color1'] ?></p></a>
+                        <a href="index.php?color=<?php echo $s['color2']; ?>"
+                           style="background-color:<?php echo "#" . $s['color2'] ?>;" class="colorBtn">
+                            <p><?php echo $s['color2'] ?></p></a>
+                        <a href="index.php?color=<?php echo $s['color3']; ?>"
+                           style="background-color:<?php echo "#" . $s['color3'] ?>;" class="colorBtn">
+                            <p><?php echo $s['color3'] ?></p></a>
+                        <a href="index.php?color=<?php echo $s['color4']; ?>"
+                           style="background-color:<?php echo "#" . $s['color4'] ?>;" class="colorBtn">
+                            <p><?php echo $s['color4'] ?></p></a>
+                    </div>
+                    <div>
+                        <p class="postComments">0<?php //echo number of comments ?></p>
+                        <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">
+                    </div>
+                </div>
+
+
+                <div id="<?php echo $s['id'] ?>">
+                    <input class="commentInput" type="text" name="comment" placeholder="comment...">
+                    <input class="commentBtn" type="button" value="Post" data-id= "<?php echo $s['id']; ?>">
+                </div>
+
+
+            </div>
+
+
+        <?php endforeach; ?>
 
     <?php } //Closing else ?>
 </div>

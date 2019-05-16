@@ -384,4 +384,26 @@ class Image
         }
 
 
+        //get suggestions post_id's for new users by their like count (most liked posts)
+        public static function getSuggestionsIds(){
+            $conn = Db::getConnection();
+            $statement = $conn->prepare("select post_id, COUNT(post_id) FROM `likes` WHERE liked_status = 1 GROUP BY post_id ORDER BY COUNT(post_id) desc limit 3");
+            $statement->execute();
+            $suggestions = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $suggestions;
+        }
+
+        //get suggestions posts data for new users
+        public static function getSuggestionsPosts($suggestion_ids){
+            //prepare query
+            $values = implode(',', $suggestion_ids);
+
+            //get result from DB
+            $conn = Db::getConnection();
+            $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.id IN (" . $values . ") order by id desc");
+            $statement->execute();
+            $suggestions = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $suggestions;
+        }
+
     }
