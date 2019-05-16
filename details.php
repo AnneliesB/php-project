@@ -167,6 +167,7 @@ $comments = Image::getCommentsByPostId($post["id"]);
     <script src="js/saveLikes.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/post.js"></script>
+    <script src="js/navigation.js"></script>
     <script>
     changePosts(<?php echo($id); ?>);
     </script>
