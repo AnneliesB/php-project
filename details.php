@@ -94,7 +94,7 @@ $comments = Image::getCommentsByPostId($post["id"]);
         <p><?php echo htmlspecialchars($post['description']); ?></p>
         <div class="postStats">
             <div>
-                <?php if (Like::userHasLiked($post['id'], $uid) == true) : ?>
+                <?php if (Like::userHasLiked($post['id'], $userId) == true) : ?>
                     <a href="#" data-id="<?php echo $post['id'] ?>" class="like"><img
                                 class="icon postLikeIcon"
                                 src="images/liked.svg"

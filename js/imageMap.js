@@ -20,6 +20,14 @@ let map = new mapboxgl.Map({
     
   });
 
+  //get location coords
+    navigator.geolocation.getCurrentPosition(position => {
+        //save lat and lng
+        let lat = position.coords.latitude;
+        let lng = position.coords.longitude;
+        map.setCenter([lng, lat]);
+    });
+
   //create a global currentMarkers variable that will store all added markers
   let currentMarkers = [];
 
