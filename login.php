@@ -44,7 +44,7 @@ if (!empty($_POST)) {
                 <div class="formInput">
                     <div class="formField">
                         <label for="email">Email</label>
-                        <input type="text" name="email" id="email>
+                        <input type="text" name="email" id="email">
                     </div>
                     <div class="formField">
                         <label for="password">Password</label>
