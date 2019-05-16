@@ -46,9 +46,6 @@ $comments = Image::getCommentsByPostId($post["id"]);
         <div class="postContainer">
         
 
-<main class="feed">
-    <div class="postContainer">
-      <!-- echo edit button -->
         <?php
         if($userId === $post["user_id"]){
             echo "<a href=\"editPost.php?id=$id\" class=\"btnEdit\" >edit post</a>";
@@ -167,6 +164,7 @@ $comments = Image::getCommentsByPostId($post["id"]);
     <script src="js/saveLikes.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/post.js"></script>
+    <script src="js/navigation.js"></script>
     <script>
     changePosts(<?php echo($id); ?>);
     </script>

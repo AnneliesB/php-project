@@ -60,11 +60,11 @@
             <div class="formInput">
                 <div class="formField">
                     <label for="firstname">Firstname</label>
-                    <input type="text" name="firstname">
+                    <input type="text" name="firstname" id="firstname">
                 </div>
                 <div class="formField">
                     <label for="lastname">Lastname</label>
-                    <input type="text" name="lastname">
+                    <input type="text" name="lastname" id="lastname">
                 </div>
                 <div class="formField">
                     <label for="username">Username</label>
@@ -78,11 +78,11 @@
                 </div>
                 <div class="formField">
                     <label for="password">Password</label>
-                    <input type="password" name="password">
+                    <input type="password" name="password" id="password">
                 </div>
                 <div class="formField">
                     <label for="passwordConfirm">Password Confirmation</label>
-                    <input type="password" name="passwordConfirm">
+                    <input type="password" name="passwordConfirm" id="passwordConfirm">
                 </div>
 
                 <div class="formField">

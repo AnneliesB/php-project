@@ -36,7 +36,8 @@ const changePosts = async (postId) => {
     sleep(50); //sleeps for 50 ms else crash
 
     const { data } = await axios.get("ajax/getComments.php?id=" + postId); //get comment info from current post
-
+    if(data.length > 0)
+        document.querySelector("p.postContainer").remove();   
     if(data.length > box.children.length){ //checks if there is new data
         //console.log(data);
         const children = box.children.length; //get offset, voegt nieuwste comment toe
