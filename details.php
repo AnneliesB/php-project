@@ -46,9 +46,6 @@ $comments = Image::getCommentsByPostId($post["id"]);
         <div class="postContainer">
         
 
-<main class="feed">
-    <div class="postContainer">
-      <!-- echo edit button -->
         <?php
         if($userId === $post["user_id"]){
             echo "<a href=\"editPost.php?id=$id\" class=\"btnEdit\" >edit post</a>";
@@ -94,7 +91,7 @@ $comments = Image::getCommentsByPostId($post["id"]);
         <p><?php echo htmlspecialchars($post['description']); ?></p>
         <div class="postStats">
             <div>
-                <?php if (Like::userHasLiked($post['id'], $uid) == true) : ?>
+                <?php if (Like::userHasLiked($post['id'], $userId) == true) : ?>
                     <a href="#" data-id="<?php echo $post['id'] ?>" class="like"><img
                                 class="icon postLikeIcon"
                                 src="images/liked.svg"
