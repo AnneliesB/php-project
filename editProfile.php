@@ -3,12 +3,8 @@
 require_once("bootstrap/bootstrap.php");
 
 //Check if user session is active (Is user logged in?)
-if (isset($_SESSION['email'])) {
-    //User is logged in, no redirect needed!
-} else {
-    //User is not logged in, redirect to login.php!
-    header("location: login.php");
-}
+User::userLoggedIn();
+
 # connect to load data
 $sessionEmail = User::getSessionEmail();
 $userProfile = User::findByEmail($sessionEmail);

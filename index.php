@@ -1,12 +1,7 @@
 <?php
 require_once("bootstrap/bootstrap.php");
 //Check if user session is active (Is user logged in?)
-if (isset($_SESSION['email'])) {
-    //User is logged in, no redirect needed!
-} else {
-    //User is not logged in, redirect to login.php!
-    header("location: login.php");
-}
+User::userLoggedIn();
 //Open connection
 $conn = Db::getConnection();
 //Get ID of logged in user so we can later fetch the posts of users he follows.
