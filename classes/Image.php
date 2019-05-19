@@ -70,6 +70,12 @@ class Image
 
     public static function saveImage($image, $imageSaveName)
     {
+        // Orientate the photo
+        $exif = exif_read_data($imageSaveName);
+        $exif['Orientation'];
+
+        
+
         // Image file directory
         $target = "images/" . basename($image);
 
@@ -89,11 +95,6 @@ class Image
             // saves original file
             move_uploaded_file($imageSaveName, $target);
         }
-
-
-
-
-
     }
 
     public static function saveCroppedImage($image)
