@@ -15,10 +15,18 @@ mapContainer.style.height = 'calc( 100vh - ' + navHeight + 'px)';
 let map = new mapboxgl.Map({
     container: 'map',
     center: [3.26792783, 50.8546051], //NOTE: LNG and then LAT -> inverted of what we are used to!
-    zoom: 9,
+    zoom: 14.5,
     style: "mapbox://styles/mapbox/light-v9"
     
   });
+
+  //get location coords
+    navigator.geolocation.getCurrentPosition(position => {
+        //save lat and lng
+        let lat = position.coords.latitude;
+        let lng = position.coords.longitude;
+        map.setCenter([lng, lat]);
+    });
 
   //create a global currentMarkers variable that will store all added markers
   let currentMarkers = [];

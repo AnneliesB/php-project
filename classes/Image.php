@@ -71,6 +71,12 @@ class Image
 
     public static function saveImage($image, $imageSaveName)
     {
+        // Orientate the photo
+        $exif = exif_read_data($imageSaveName);
+        $exif['Orientation'];
+
+        
+
         // Image file directory
         $target = "images/" . basename($image);
 
@@ -90,11 +96,6 @@ class Image
             // saves original file
             move_uploaded_file($imageSaveName, $target);
         }
-
-
-
-
-
     }
 
     public static function saveCroppedImage($image)
@@ -144,10 +145,36 @@ class Image
         // it defines an extract method which return the most “representative” colors
         $colors = $extractor->extract(4);
         #print_r($colors);
-        $color1 = ltrim(Color::fromIntToHex($colors[0]), '#');
-        $color2 = ltrim(Color::fromIntToHex($colors[1]), '#');
-        $color3 = ltrim(Color::fromIntToHex($colors[2]), '#');
-        $color4 = ltrim(Color::fromIntToHex($colors[3]), '#');
+        # check if we have 4 different colors
+
+        #if first two colors are equal, all the other colors will be equal too => 1 color
+
+        if(count($colors) == 1){
+            $color1 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color2 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color3 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color4 = ltrim(Color::fromIntToHex($colors[0]), '#');
+        } else if (count($colors) == 2){
+            # if color 2 and 3 are equal, color 4 will be the same color => we have 2 colors
+            $color1 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color2 = ltrim(Color::fromIntToHex($colors[1]), '#');
+            $color3 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color4 = ltrim(Color::fromIntToHex($colors[1]), '#');
+        } else if (count($colors) == 3){
+            # if color 3 and 4 are equal => we have 3 main colors
+            $color1 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color2 = ltrim(Color::fromIntToHex($colors[1]), '#');
+            $color3 = ltrim(Color::fromIntToHex($colors[2]), '#');
+            $color4 = ltrim(Color::fromIntToHex($colors[0]), '#');
+        } else {
+            # all colors are different
+            $color1 = ltrim(Color::fromIntToHex($colors[0]), '#');
+            $color2 = ltrim(Color::fromIntToHex($colors[1]), '#');
+            $color3 = ltrim(Color::fromIntToHex($colors[2]), '#');
+            $color4 = ltrim(Color::fromIntToHex($colors[3]), '#');
+        }
+
+
 
         $statement = $conn->prepare("UPDATE photo set color1 = :color1, color2 = :color2, color3 = :color3, color4 = :color4 where url = :url");
         $statement->bindParam(":color1", $color1);
@@ -182,13 +209,16 @@ class Image
         if($firstchar == "@") {
             $query = str_replace("@", "", $query);
             $selector = "user.username";
-            // $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user.username like '%" . $query . "%' and photo.inappropriate = 0 AND enable = 0 order by id desc LIMIT 15");
+        } 
+        //search for city using "!"+city
+        else if ($firstchar == "!"){
+            $query = str_replace("!", "", $query);
+           $selector = "photo.city"
         }
 
         // Else searching post with a the query in description
         else {
             $selector = "photo.description";
-            // $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' and photo.inappropriate = 0 AND enable = 0 order by id desc LIMIT 15");
         }
 
         $sql = "select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user.username like '%" . $query . "%' and photo.inappropriate = 0 AND enable = 0";
@@ -366,5 +396,27 @@ class Image
             return $username;
         }
 
+
+        //get suggestions post_id's for new users by their like count (most liked posts)
+        public static function getSuggestionsIds(){
+            $conn = Db::getConnection();
+            $statement = $conn->prepare("select post_id, COUNT(post_id) FROM `likes` WHERE liked_status = 1 GROUP BY post_id ORDER BY COUNT(post_id) desc limit 3");
+            $statement->execute();
+            $suggestions = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $suggestions;
+        }
+
+        //get suggestions posts data for new users
+        public static function getSuggestionsPosts($suggestion_ids){
+            //prepare query
+            $values = implode(',', $suggestion_ids);
+
+            //get result from DB
+            $conn = Db::getConnection();
+            $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.id IN (" . $values . ") order by id desc");
+            $statement->execute();
+            $suggestions = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $suggestions;
+        }
 
     }

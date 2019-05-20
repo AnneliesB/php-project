@@ -1,14 +1,8 @@
-
 <?php
 require_once("bootstrap/bootstrap.php");
 
 //Check if user session is active (Is user logged in?)
-if (isset($_SESSION['email'])) {
-    //User is logged in, no redirect needed!
-} else {
-    //User is not logged in, redirect to login.php!
-    header("location: login.php");
-}
+User::userLoggedIn();
 
 // GET id of post
 $id = $_GET['id'];
@@ -46,9 +40,6 @@ $comments = Image::getCommentsByPostId($post["id"]);
         <div class="postContainer">
         
 
-<main class="feed">
-    <div class="postContainer">
-      <!-- echo edit button -->
         <?php
         if($userId === $post["user_id"]){
             echo "<a href=\"editPost.php?id=$id\" class=\"btnEdit\" >edit post</a>";
@@ -94,7 +85,7 @@ $comments = Image::getCommentsByPostId($post["id"]);
         <p><?php echo htmlspecialchars($post['description']); ?></p>
         <div class="postStats">
             <div>
-                <?php if (Like::userHasLiked($post['id'], $uid) == true) : ?>
+                <?php if (Like::userHasLiked($post['id'], $userId) == true) : ?>
                     <a href="#" data-id="<?php echo $post['id'] ?>" class="like"><img
                                 class="icon postLikeIcon"
                                 src="images/liked.svg"
@@ -167,6 +158,7 @@ $comments = Image::getCommentsByPostId($post["id"]);
     <script src="js/saveLikes.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/post.js"></script>
+    <script src="js/navigation.js"></script>
     <script>
     changePosts(<?php echo($id); ?>);
     </script>

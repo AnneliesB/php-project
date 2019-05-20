@@ -251,10 +251,18 @@ class User
 
     }
 
-    public function login(){
+    public function firstLogin(){
         //session start is already done in bootstrap!
         //set email session
         $_SESSION['email'] = $this->getEmail();
+
+        $user_id = User::getUserId($this->getEmail() );
+        //follow yourself so you see your own posts on the feed
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("insert into followers (user_id, following_id) values (:user_id, :following_id)");
+        $statement->bindParam(":user_id", $user_id);
+        $statement->bindParam(":following_id", $user_id);
+        $statement->execute();
 
         //Redirect to index
         header("location: index.php");
@@ -608,6 +616,12 @@ class User
     public static function doLogin($email){
         $_SESSION['email'] = $email;
         header("location: index.php");
+    }
+
+    // check if the user is logged in
+    public static function userLoggedIn() {
+        if( isset($_SESSION['email']) ){ /* User is logged in, no redirect needed! */ }
+        else{ /* User is not logged in, redirect to login.php! */ header("location: login.php"); }
     }
 
     /*

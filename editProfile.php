@@ -3,12 +3,8 @@
 require_once("bootstrap/bootstrap.php");
 
 //Check if user session is active (Is user logged in?)
-if (isset($_SESSION['email'])) {
-    //User is logged in, no redirect needed!
-} else {
-    //User is not logged in, redirect to login.php!
-    header("location: login.php");
-}
+User::userLoggedIn();
+
 # connect to load data
 $sessionEmail = User::getSessionEmail();
 $userProfile = User::findByEmail($sessionEmail);
@@ -59,18 +55,18 @@ if (!empty($_POST)) {
 
         <div class="formField">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" value="<?php echo $userProfile['username']; ?>">
+            <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($userProfile['username']); ?>">
         </div>
 
         <div class="formField">
             <label for="email">Email</label>
-            <input type="text" id="email" name="email" value="<?php echo $userProfile['email']; ?>">
+            <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($userProfile['email']); ?>">
         </div>
 
         <div class="formField">
             <label for="description">Description</label>
             <textarea rows="10" cols="30" id="description" name="description"
-                      class="textarea"><?php echo $userProfile['description']; ?></textarea>
+                      class="textarea"><?php echo htmlspecialchars($userProfile['description']); ?></textarea>
         </div>
 
         <div class="formField">

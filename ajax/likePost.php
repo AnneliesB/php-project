@@ -1,13 +1,8 @@
 <?php
 # require bootstrap
 require_once("../bootstrap/bootstrap.php");
-# check if a session is running with the correct email
-if (isset($_SESSION['email'])) {
-    //User is logged in, no redirect needed!
-} else {
-    //User is not logged in, redirect to login.php!
-    header("location: login.php");
-}
+//Check if user session is active (Is user logged in?)
+User::userLoggedIn();
 # connect to the database
 $conn = Db::getConnection();
 # get clicked post info from database
