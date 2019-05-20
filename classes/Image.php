@@ -40,12 +40,12 @@ class Image
         }
     }
 
-    public static function saveImageToDb($image, $croppedImage, $description, $city, $lat, $lng, $filter)
+    public static function saveImageToDb($image, $croppedImage, $description, $city, $lat, $lng, $filter, $category)
     {
         $conn = Db::getConnection();
         $user_id = User::getUserId();
 
-        $statement = $conn->prepare("insert into photo (`description`, `url`, `url_cropped`, `user_id`, `city`, `lat`, `lng`, `filter`) VALUES (:description, :image, :croppedImage, :userId, :city, :lat, :lng, :filter)");
+        $statement = $conn->prepare("insert into photo (`description`, `url`, `url_cropped`, `user_id`, `city`, `lat`, `lng`, `filter`, `category_id`) VALUES (:description, :image, :croppedImage, :userId, :city, :lat, :lng, :filter, :category)");
         $statement->bindParam(":description", $description);
         $statement->bindParam(":image", $image);
         $statement->bindParam(":croppedImage", $croppedImage);
@@ -54,6 +54,7 @@ class Image
         $statement->bindParam(":lat", $lat);
         $statement->bindParam(":lng", $lng);
         $statement->bindParam(":filter", $filter);
+        $statement->bindParam(":category", $category);
         $result = $statement->execute();
     }
 
@@ -195,29 +196,40 @@ class Image
         return $results;
     }
 
-    public static function searchPosts($query) {
-        $conn = Db::getConnection();
+    public static function searchPosts($query, $category = "0") {
 
+        $firstchar = "";
         // Make var with the first char of the query
-        $firstchar = $query[0];
+        if(!empty($query))
+            $firstchar = $query[0];
+
+        $selector = "";
 
         // If the first char is '@' you are searching for a person
         if($firstchar == "@") {
             $query = str_replace("@", "", $query);
-            $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user.username like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 15");
+            $selector = "user.username";
         } 
         //search for city using "!"+city
         else if ($firstchar == "!"){
             $query = str_replace("!", "", $query);
-            $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.city like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 15");
-            
+           $selector = "photo.city"
         }
 
         // Else searching post with a the query in description
         else {
-            $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' and photo.inappropriate = 0 order by id desc LIMIT 15");
+            $selector = "photo.description";
         }
 
+        $sql = "select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user.username like '%" . $query . "%' and photo.inappropriate = 0 AND enable = 0";
+        // if(!empty($category)){
+            $sql .= " AND category_id = " . $category;
+        // }
+        $sql .= " order by id desc LIMIT 15";
+
+        $conn = Db::getConnection();
+        $statement =  $conn->prepare($sql);
+        $statement->bindParam(":selector", $selector);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $results;
@@ -225,7 +237,7 @@ class Image
 
     public static function getAllPosts($userId, $hashtags) {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) or photo.description REGEXP :hashtags and photo.inappropriate = 0 and enable = 1 order by id desc limit 15");
+        $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) or photo.description REGEXP :hashtags and photo.inappropriate = 0 and enable = 0 order by id desc limit 15");
         $statement->bindParam(":user_id", $userId);
         $statement->bindParam(":hashtags", $hashtags);
         $statement->execute();
@@ -236,7 +248,7 @@ class Image
 
     public static function getPostsByTag($tag) {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . '#' . $tag . "%' and photo.inappropriate = 0 order by id desc LIMIT 15");
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . '#' . $tag . "%' and photo.inappropriate = 0 AND enable = 0 order by id desc LIMIT 15");
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $results;
@@ -316,7 +328,7 @@ class Image
     public static function getPostById(int $post) {
         $conn = Db::getConnection();
             try{
-                $statement = $conn->prepare("select * from photo where id = :id");
+                $statement = $conn->prepare("select * from photo where id = :id AND enable = 0");
                 $statement->bindParam(":id", $post);
                 $statement->execute();
                 $post = $statement->fetch(PDO::FETCH_ASSOC);

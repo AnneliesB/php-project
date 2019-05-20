@@ -1,15 +1,12 @@
 <?php
 require_once("bootstrap/bootstrap.php");
-//Check if user session is active (Is user logged in?)
 User::userLoggedIn();
-//Open connection
-$conn = Db::getConnection();
 //Get ID of logged in user so we can later fetch the posts of users he follows.
 $userId = User::getUserId();
 //Check if Search is used
-if (!empty($_GET['query'])) {
+if ((isset($_GET["category"]))) {
     $query = $_GET['query'];
-    $results = Image::searchPosts($query);
+    $results = Image::searchPosts($query, $_GET["category"]);
 } 
 
 else if (!empty($_GET['color'])) {
@@ -63,6 +60,17 @@ else if (!empty($_GET['color'])) {
     <form action="" method="GET">
         <div class="searchBar" id="search">
             <input type="text" id="query" name="query">
+            <select name="category" id="category">
+                <option value="0">None</option>
+                <option value="1">Lineart</option>
+                <option value="2">Emblems</option>
+                <option value="3">Logotypes</option>
+                <option value="4">Monogram Logo's</option>
+                <option value="5">Brand Marks</option>
+                <option value="6">Abstract Logo Marks</option>
+                <option value="7">Mascots</option>
+                <option value="8">Combination marks</option>
+            </select>
             <input type="submit" name="submit" value="Search">
         </div>
     </form>
