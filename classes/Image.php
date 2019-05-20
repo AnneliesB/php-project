@@ -213,7 +213,7 @@ class Image
         //search for city using "!"+city
         else if ($firstchar == "!"){
             $query = str_replace("!", "", $query);
-           $selector = "photo.city"
+           $selector = "photo.city";
         }
 
         // Else searching post with a the query in description
