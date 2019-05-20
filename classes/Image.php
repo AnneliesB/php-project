@@ -58,11 +58,43 @@ class Image
         $result = $statement->execute();
     }
 
+    public static function resizeJPG($image, $imageSaveName){
+        $image_resized = imagescale(imagecreatefromjpeg($imageSaveName), 720);
+        imagejpeg($image_resized, "images/" . basename($image));
+    }
+
+    public static function resizePNG($image, $imageSaveName){
+        $image_resized = imagescale(imagecreatefrompng($imageSaveName), 720);
+        imagepng($image_resized, "images/" . basename($image));
+    }
+
+
     public static function saveImage($image, $imageSaveName)
     {
         // Image file directory
         $target = "images/" . basename($image);
-        move_uploaded_file($imageSaveName, $target);
+
+        // check current size of image
+        $data = getimagesize($imageSaveName);
+        $width = $data[0];
+        //var_dump($width);
+        //$height = $data[1];
+        if($width >720){
+            // resize image, check extention first
+            if(pathinfo($image, PATHINFO_EXTENSION) == 'jpg'){
+                self::resizeJPG($image, $imageSaveName);
+            } elseif (pathinfo($image, PATHINFO_EXTENSION) == 'png'){
+                self::resizePNG($image, $imageSaveName);
+            }
+        } else {
+            // saves original file
+            move_uploaded_file($imageSaveName, $target);
+        }
+
+
+
+
+
     }
 
     public static function saveCroppedImage($image)
@@ -135,7 +167,58 @@ class Image
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $results;
+    }
 
+    public static function searchPosts($query, $category) {
+        $conn = Db::getConnection();
+
+        // Make var with the first char of the query
+        $firstchar = $query[0];
+        $selector = "";
+
+        // If the first char is '@' you are searching for a person
+        if($firstchar == "@") {
+            $query = str_replace("@", "", $query);
+            $selector = "user.username";
+            // $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user.username like '%" . $query . "%' and photo.inappropriate = 0 AND enable = 0 order by id desc LIMIT 15");
+        }
+
+        // Else searching post with a the query in description
+        else {
+            $selector = "photo.description";
+            // $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . $query . "%' and photo.inappropriate = 0 AND enable = 0 order by id desc LIMIT 15");
+        }
+
+        $sql = "select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user.username like '%" . $query . "%' and photo.inappropriate = 0 AND enable = 0";
+        if(!empty($category)){
+            $sql .= " AND category_id = " . $category;
+        }
+        $sql .= " order by id desc LIMIT 15";
+
+        $statement =  $conn->prepare($sql);
+        $statement->bindParam(":selector", $selector);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
+    }
+
+    public static function getAllPosts($userId, $hashtags) {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) or photo.description REGEXP :hashtags and photo.inappropriate = 0 and enable = 0 order by id desc limit 15");
+        $statement->bindParam(":user_id", $userId);
+        $statement->bindParam(":hashtags", $hashtags);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $results;
+    }
+
+    public static function getPostsByTag($tag) {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like '%" . '#' . $tag . "%' and photo.inappropriate = 0 AND enable = 0 order by id desc LIMIT 15");
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
     }
 
 
@@ -196,8 +279,89 @@ class Image
 
             // return difference
             return $string ? implode(', ', $string) . ' ago' : 'just now';
+        }        
+
+        //retrieve a single post by it's id
+        public static function getCurrentPost($post_id){
+            $conn = Db::getConnection();
+            $statement = $conn->prepare("select * from photo where id = :id");
+            $statement->bindParam(":id", $post_id);
+            $statement->execute();
+            $post = $statement->fetch(PDO::FETCH_ASSOC);
+            return $post;
         }
 
+
+    public static function getPostById(int $post) {
+        $conn = Db::getConnection();
+            try{
+                $statement = $conn->prepare("select * from photo where id = :id AND enable = 0");
+                $statement->bindParam(":id", $post);
+                $statement->execute();
+                $post = $statement->fetch(PDO::FETCH_ASSOC);
+                return $post;
+            } catch (\PDOException $e){
+                // Log to error file
+                return false;
+            }
+        }
+    
+    public static function getCommentsByPostId(int $post) {
+        $conn = Db::getConnection();
+            try {
+                $commentStatement = $conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId and enable=0");
+                $commentStatement->bindParam(":postId", $post);
+                $commentStatement->execute();
+                $comments = $commentStatement->fetchAll();
+                return $comments;
+            }catch (\PDOException $e){
+                return false;
+            }
+        }
+    
         
+    public static function getAllEnabledPostsForUser(int $userId, int $limit=2) {
+        $conn = Db::getConnection();
+            try{
+                 $statement = $conn->prepare("SELECT photo.*, user.username, photo.id FROM photo INNER JOIN user ON photo.user_id = user.id WHERE user_id IN ( SELECT following_id FROM followers WHERE user_id = :user_id ) AND photo.inappropriate = 0 AND enable=0 order by id desc limit 2");
+                // $statement = self::$conn->prepare("SELECT photo.*, poster.id from photo JOIN `user` AS poster ON photo.user_id = poster.id WHERE user_id IN (SELECT following_id FROM followers WHERE user_id=) LIMIT $limit");
+                //$statement = self::$conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.inappropriate = 0 order by id desc limit 2");
+                // $statement->bindparam(":limit", $limit);
+                $statement->bindParam(":user_id", $userId);
+                $statement->execute();
+                $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+                //var_dump($userId);
+                //die(json_encode($results));
+                return $results;
+            } catch (\PDOException $e){
+                return false;
+            }
+        }
+
+    
+
+        
+     //get the username of the person who posted the this post
+        public static function getPostUsername($post_id){
+            $conn = Db::getConnection();
+
+            //get the post's user_id
+            $statement = $conn->prepare("select photo.user_id from photo where id = :id");
+            $statement->bindParam(":id", $post_id);
+            $statement->execute();
+            $user_id = $statement->fetch(PDO::FETCH_ASSOC);
+            $user_id = $user_id['user_id'];
+
+            //retreive the username by that user_id
+            $statement = $conn->prepare("select username from user where id = :id");
+            $statement->bindParam(":id", $user_id);
+            $statement->execute();
+            $username = $statement->fetch(PDO::FETCH_ASSOC);
+            $username = $username['username'];
+
+            //return the username
+            return $username;
+        }
+
 
     }

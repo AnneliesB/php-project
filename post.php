@@ -8,10 +8,11 @@ if (isset($_SESSION['email'])) {
     //User is not logged in, redirect to login.php!
     header("location: login.php");
 }
+if (isset($_POST['upload'])) {
 
-if (!empty($_POST)) {
-    // UPLOAD image
-    if (isset($_POST['upload'])) {
+    
+    if (!empty($_FILES['image']) && !empty(trim($_POST['description']))) {
+          
         // GET image name / filename / description
         $image = Image::getPostId() . $_FILES['image']['name'];
         $imageSaveName = $_FILES['image']['tmp_name'];
@@ -31,10 +32,16 @@ if (!empty($_POST)) {
             Image::saveCroppedImage($image);
             Image::saveMainColors($image);
             header("location: index.php");
-        } else {
+        } 
+        
+        else {
             // Else error message
             $error = "You can only upload png or jpg.";
         }
+    }
+
+    else {
+        $error = "All fields must be filled in.";
     }
 }
 
@@ -71,7 +78,7 @@ if (!empty($_POST)) {
         <div class="formField">
             <label for="image">Upload a picture</label>
             <div class="uploadFileWrapper">
-                <input type="file" id="image" name="image" onchange="loadFile(event)">
+                <input type="file" id="image" name="image">
             </div>
 
         </div>
@@ -299,7 +306,7 @@ if (!empty($_POST)) {
 
         <div class="formField">
             <label for="description">Description</label>
-            <textarea id="description" name="description" rows="10"> </textarea>
+            <textarea id="description" name="description" rows="10"></textarea>
         </div>
         <div class="formField">
         <label for="category">category</label>
@@ -343,5 +350,6 @@ if (!empty($_POST)) {
 <script src="js/navigation.js"></script>
 <script src="js/showUploadedImage.js"></script>
 <script src="js/addFilter.js"></script>
+<script src="js/loading.js"></script>
 </body>
 </html>

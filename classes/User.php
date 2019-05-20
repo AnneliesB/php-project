@@ -616,12 +616,32 @@ class User
     public static function getUserPosts($user_id)
     {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("select * from photo where user_id = :user_id");
+        $statement = $conn->prepare("select * from photo where user_id = :user_id AND enable = 0");
         $statement->bindParam(":user_id", $user_id);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         return $results;
+    }
+
+
+    public static function getFollowinghashtags($user_id) {
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select hashtag from hashtag where user_id = :user_id");
+        $statement->bindParam(":user_id", $user_id);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $sqlHashtag = "";
+
+        foreach($results as $result) {
+            $sqlHashtag .= $result['hashtag'] . "|" ;
+        }
+
+        $sqlHashtag = rtrim($sqlHashtag, '|');
+
+
+        return $sqlHashtag;
     }
 
 

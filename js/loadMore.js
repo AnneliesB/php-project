@@ -1,13 +1,14 @@
 //AJAX check for email and username via AXIOS
 
 //inital posts already shown on pageload
-let posts = 2;
+let posts = 15;
 
 //get the value of $_GET['query] when searching so we can pass this to PHP ajax file (needed for checking if search has been done)
 let url_string = window.location.href;
 let url = new URL(url_string);
 let searchQuery = url.searchParams.get("query");
 let colorSearch = url.searchParams.get("color");
+
 
 //get feed container, so we can later append elements to this.
 const feed = document.querySelector('.feed');
@@ -20,7 +21,7 @@ loadMoreBtn.addEventListener("click", function(e){
     shownPosts = posts;
 
     //increase posts to retrieve
-    posts +=2;
+    posts +=15;
 
     //make Ajax call via Axios to loadMore.php
     axios.post('ajax/load_more.php',{
@@ -47,12 +48,27 @@ loadMoreBtn.addEventListener("click", function(e){
                 $likeImage = "like.svg";
             }
 
+            if (elem['hasReported'] == true) {
+                $reportClass = "inappropriate inappropriatedLink";
+            }
+            else {
+                $reportClass = "inappropriate";
+            }
+
+
             //create template to put inside the postContainer div
             let postTemplate = `
                 <div class="postTopBar">
-                    <a href="userProfile.php?username=${elem['username']}"><div class="postUsername">${elem['username']}</div></a>
-                    <p> ${elem['ago']} </p>
-                    <a href="#" class="options"><img class="icon postOptions" src="images/menu.svg" alt="options icon"></a>
+                <div class="topBar--flex">
+                    <a href="userProfile.php?username=${elem['username']}">
+                        <div class="postUsername">${elem['username']}</div>
+                    </a>
+                    <p class="timeAgo"> ${elem['ago']} </p>
+                </div>
+                    
+                    <a href="#" data-id="${elem['id']}" class="${$reportClass}">
+                        <img src="images/report.svg" alt="grey button" class="inappropriateIcon">
+                    </a>
                 </div>
 
                 <a href="details.php?id=${elem['id']}">

@@ -1,3 +1,4 @@
+
 <?php
 require_once("bootstrap/bootstrap.php");
 
@@ -15,16 +16,13 @@ $id = $_GET['id'];
 // Connection
 $conn = Db::getConnection();
 $userId = User::getUserId();
-// GET description and picture
-$statement = $conn->prepare("select * from photo where id = :id");
-$statement->bindParam(":id", $id);
-$statement->execute();
-$post = $statement->fetch(PDO::FETCH_ASSOC);
+// GET current post
+$post = Image::getPostById($id);
+//get the username of the user that has posted this image
+$username = Image::getPostUsername($id);
+$comments = Image::getCommentsByPostId($post["id"]);
 // GET comments
-$commentStatement = $conn->prepare("select comment.*, user.username from comment inner join user on comment.user_id = user.id where post_id = :postId");
-$commentStatement->bindParam(":postId", $id);
-$commentStatement->execute();
-$comments = $commentStatement->fetchAll();
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,15 +41,51 @@ $comments = $commentStatement->fetchAll();
 
 </header>
 
+
+    <main>
+        <div class="postContainer">
+        
+
 <main class="feed">
     <div class="postContainer">
+      <!-- echo edit button -->
+        <?php
+        if($userId === $post["user_id"]){
+            echo "<a href=\"editPost.php?id=$id\" class=\"btnEdit\" >edit post</a>";
+        }
+        ?>
+
         <!-- echo picture -->
-        <p class="postLocation"><?php echo $post['city'] ?></p>
+
+        <div class="postTopBar">
+            <div class="topBar--flex topBar--username">
+                <a href="userProfile.php?username=<?php echo htmlspecialchars($username); ?>">
+                    <div class="postUsername"><?php echo htmlspecialchars($username); ?></div>
+                </a>
+                <p class="timeAgo"><?php echo Image::timeAgo($post['time']); ?></p>
+            </div>
+
+            <div class="topBar--flex topBar--report">
+                <?php if (User::userHasReported($post['id'], $userId) == true): ?>
+                    <a href="#" data-id="<?php echo $post['id'] ?>" class="inappropriate inappropriatedLink">
+                        <img src="images/report.svg" alt="grey button" class="inappropriateIcon">
+                    </a>
+
+                <?php else: ?>
+                    <a href="#" data-id="<?php echo $post['id'] ?>" class="inappropriate">
+                        <img src="images/report.svg" alt="red button" class="inappropriateIcon">
+                    </a>
+                <?php endif ?>
+            </div>
+
+        </div>
+
+        <p class="postLocation"><?php echo htmlspecialchars($post['city']); ?></p>
 
         <!-- echo picture -->
         <div class="detailsFilter">
-            <div class="<?php echo $post['filter']; ?>">
-                <img src="images/<?php echo $post['url']; ?>" alt="Post picture">
+            <div class="<?php echo htmlspecialchars($post['filter']); ?>">
+                <img src="images/<?php echo htmlspecialchars($post['url']); ?>" alt="Post picture">
             </div>
         </div>
 
@@ -60,7 +94,7 @@ $comments = $commentStatement->fetchAll();
         <p><?php echo htmlspecialchars($post['description']); ?></p>
         <div class="postStats">
             <div>
-                <?php if (Like::userHasLiked($post['id'], $userId) == true) : ?>
+                <?php if (Like::userHasLiked($post['id'], $uid) == true) : ?>
                     <a href="#" data-id="<?php echo $post['id'] ?>" class="like"><img
                                 class="icon postLikeIcon"
                                 src="images/liked.svg"
@@ -93,36 +127,48 @@ $comments = $commentStatement->fetchAll();
                 <img class="icon postCommentIcon" src="images/comment.svg" alt="comments icon">
             </div>
         </div>
-        <div class="commentContainer">
-            <?php if (!empty($comments)) { ?>
-                <!-- echo comments -->
-                <?php foreach ($comments as $comment): ?>
-                    <div class="comments">
-                        <!-- echo timestamp, username and comment -->
-                        <p> <?php echo htmlspecialchars($comment['date']) . " " . htmlspecialchars($comment['username']) . " " . htmlspecialchars($comment['comment']) ?> </p>
-                    </div>
-                <?php endforeach; ?>
-
-
-            <?php } //Closing if
-            else { //No comments
-                ?>
+<div class="commentContainer">
+<div id="commentContainer">
+        <?php if( !empty($comments) ){ ?>        
+            <!-- echo comments -->
+            <?php foreach($comments as $comment): ?>
+                <div class="comments">
+                    <!-- echo timestamp, username and comment -->
+                    <p> <?php echo htmlspecialchars($comment['username']) . ": " . htmlspecialchars($comment['comment']) ?> </p>
+                </div>
+            <?php endforeach;?>
+            
+        
+        <?php } //Closing if
+            else{ //No comments ?>
                 <p class="postContainer">Be the first to comment!</p>
-            <?php } //Closing else ?>
-
-            <form>
-                <input class="commentInput" type="text" name="comment" placeholder="comment...">
-                <input class="commentBtn" type="submit" value="Post">
-            </form>
+        <?php } //Closing else ?>
+        </div>        
+        <div id="<?php echo $id; ?>">
+            <input class="commentInput" type="text" name="comment" placeholder="comment...">
+            <!--
+                Change to button and don't post the form
+                onClick="() => sendpostmethod(<\?php echo $id; ?>)"
+            -->
+          <!--  <input class="commentBtn" type="submit" value="Post">  -->
+          <button class="commentBtn" type="button" data-id="<?php echo $id; ?>">send</button>
+      </div>
         </div>
 
 </main>
 
 <footer>
 
-</footer>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="js/saveLikes.js"></script>
-<script src="js/navigation.js"></script>
+
+    <footer>
+    
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="js/saveLikes.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/post.js"></script>
+    <script>
+    changePosts(<?php echo($id); ?>);
+    </script>
 </body>
 </html>
