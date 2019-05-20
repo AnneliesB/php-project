@@ -11,7 +11,7 @@ class Post {
 
     public static function getPostById(int $post) {
         try{
-            $statement = self::$conn->prepare("select * from photo where id = :id");
+            $statement = self::$conn->prepare("select * from photo where id = :id AND enable = 0");
             $statement->bindParam(":id", $post);
             $statement->execute();
             $post = $statement->fetch(PDO::FETCH_ASSOC);
@@ -51,6 +51,33 @@ class Post {
             return false;
         }
     }
+
+    public static function editPost(int $userId, int $id, string $description){
+       try{
+            // Check why this is not working
+            $updateStatement = self::$conn->prepare("UPDATE photo SET description=:description WHERE id=:id AND user_id=:uid");
+            $updateStatement->bindParam(":description", $description);
+            $updateStatement->bindParam(":id", $id);
+            $updateStatement->bindParam(":uid", $userId);
+            $updateStatement->execute();
+            return true;
+        } catch(\PDOException $e) {
+            return false;
+        } 
+    }
+
+    public static function deletePost (int $id, int $userid){
+        try{
+            $removeStatement = self::$conn->prepare("UPDATE photo SET `enable`=1 WHERE id=:id AND user_id=:uid");
+            $removeStatement->bindParam(":id", $id);
+            $removeStatement->bindParam(":uid", $userid);
+            $removeStatement->execute();
+            return true;
+        } catch(\PDOException $e){
+            return false;
+        }
+    }
+
 
    // public static function getPostByIdAndUserId(){
 
