@@ -311,6 +311,7 @@ if (isset($_POST['upload'])) {
         <div class="formField">
         <label for="category">category</label>
         <select name="category" id="category">
+            <option value="0">none</option>
             <option value="1">Lineart</option>
             <option value="2">Emblems</option>
             <option value="3">Logotypes</option>

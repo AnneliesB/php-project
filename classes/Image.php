@@ -169,11 +169,13 @@ class Image
         return $results;
     }
 
-    public static function searchPosts($query, $category) {
-        $conn = Db::getConnection();
+    public static function searchPosts($query, $category = "0") {
 
+        $firstchar = "";
         // Make var with the first char of the query
-        $firstchar = $query[0];
+        if(!empty($query))
+            $firstchar = $query[0];
+
         $selector = "";
 
         // If the first char is '@' you are searching for a person
@@ -190,11 +192,12 @@ class Image
         }
 
         $sql = "select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user.username like '%" . $query . "%' and photo.inappropriate = 0 AND enable = 0";
-        if(!empty($category)){
+        // if(!empty($category)){
             $sql .= " AND category_id = " . $category;
-        }
+        // }
         $sql .= " order by id desc LIMIT 15";
 
+        $conn = Db::getConnection();
         $statement =  $conn->prepare($sql);
         $statement->bindParam(":selector", $selector);
         $statement->execute();

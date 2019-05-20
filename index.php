@@ -1,5 +1,4 @@
 <?php
-die("test");
 require_once("bootstrap/bootstrap.php");
 //Check if user session is active (Is user logged in?)
 if (isset($_SESSION['email'])) {
@@ -8,12 +7,10 @@ if (isset($_SESSION['email'])) {
     //User is not logged in, redirect to login.php!
     header("location: login.php");
 }
-//Open connection
-$conn = Db::getConnection();
 //Get ID of logged in user so we can later fetch the posts of users he follows.
 $userId = User::getUserId();
 //Check if Search is used
-if ((isset($_GET["category"]) && !empty($_GET["category"])) {
+if ((isset($_GET["category"]))) {
     $query = $_GET['query'];
     $results = Image::searchPosts($query, $_GET["category"]);
 } 
@@ -56,7 +53,7 @@ else if (!empty($_GET['color'])) {
         <div class="searchBar" id="search">
             <input type="text" id="query" name="query">
             <select name="category" id="category">
-                <option value="">None</option>
+                <option value="0">None</option>
                 <option value="1">Lineart</option>
                 <option value="2">Emblems</option>
                 <option value="3">Logotypes</option>
