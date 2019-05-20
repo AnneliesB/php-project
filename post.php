@@ -22,10 +22,11 @@ if (!empty($_POST)) {
         $filter = $_POST['filterDb'];
         $lat = $_POST['lat'];
         $lng = $_POST['lng'];
+        $category = $_POST['category'];
 
         if (Image::checkExtention($image)) {
             // If extention is png or jpeg
-            Image::saveImageToDb($image, $croppedImage, $description, $city, $lat, $lng, $filter);
+            Image::saveImageToDb($image, $croppedImage, $description, $city, $lat, $lng, $filter, $category);
             Image::saveImage($image, $imageSaveName);
             Image::saveCroppedImage($image);
             Image::saveMainColors($image);

@@ -40,12 +40,12 @@ class Image
         }
     }
 
-    public static function saveImageToDb($image, $croppedImage, $description, $city, $lat, $lng, $filter)
+    public static function saveImageToDb($image, $croppedImage, $description, $city, $lat, $lng, $filter, $category)
     {
         $conn = Db::getConnection();
         $user_id = User::getUserId();
 
-        $statement = $conn->prepare("insert into photo (`description`, `url`, `url_cropped`, `user_id`, `city`, `lat`, `lng`, `filter`) VALUES (:description, :image, :croppedImage, :userId, :city, :lat, :lng, :filter)");
+        $statement = $conn->prepare("insert into photo (`description`, `url`, `url_cropped`, `user_id`, `city`, `lat`, `lng`, `filter`, `category_id`) VALUES (:description, :image, :croppedImage, :userId, :city, :lat, :lng, :filter, :category)");
         $statement->bindParam(":description", $description);
         $statement->bindParam(":image", $image);
         $statement->bindParam(":croppedImage", $croppedImage);
@@ -54,6 +54,7 @@ class Image
         $statement->bindParam(":lat", $lat);
         $statement->bindParam(":lng", $lng);
         $statement->bindParam(":filter", $filter);
+        $statement->bindParam(":category", $category);
         $result = $statement->execute();
     }
 
