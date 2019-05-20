@@ -12,9 +12,14 @@ $conn = Db::getConnection();
 //Get ID of logged in user so we can later fetch the posts of users he follows.
 $userId = User::getUserId();
 //Check if Search is used
-if (!empty($_GET['query'])) {
+if (!empty($_GET['query']) || (isset($_GET["category"]) && !empty($_GET["category"]))) {
     $query = "%" . $_GET['query'] . "%";
-    $statement = $conn->prepare("select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like ? and photo.inappropriate = 0 order by id desc LIMIT 2");
+    $sql = "select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.description like ? and photo.inappropriate = 0";
+    if(isset($_GET["category"]) && !empty($_GET["category"])){
+        $sql .= " AND category_id = " . $_GET["category"];
+    }
+    $sql .= " order by id desc LIMIT 2";
+    $statement = $conn->prepare($sql);
     $statement->bindParam("1", $query);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -49,6 +54,17 @@ if (!empty($_GET['query'])) {
     <form action="" method="GET">
         <div class="searchBar" id="search">
             <input type="text" id="query" name="query">
+            <select name="category" id="category">
+                <option value="">None</option>
+                <option value="1">Lineart</option>
+                <option value="2">Emblems</option>
+                <option value="3">Logotypes</option>
+                <option value="4">Monogram Logo's</option>
+                <option value="5">Brand Marks</option>
+                <option value="6">Abstract Logo Marks</option>
+                <option value="7">Mascots</option>
+                <option value="8">Combination marks</option>
+            </select>
             <input type="submit" name="submit" value="Search">
         </div>
     </form>
