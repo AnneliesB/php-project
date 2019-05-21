@@ -4,9 +4,10 @@ User::userLoggedIn();
 //Get ID of logged in user so we can later fetch the posts of users he follows.
 $userId = User::getUserId();
 //Check if Search is used
-if ((isset($_GET["category"]))) {
+if ((isset($_GET["category"]) && !empty($_GET["category"])) || (isset($_GET["query"]) && !empty($_GET["query"])))  { 
     $query = $_GET['query'];
     $results = Image::searchPosts($query, $_GET["category"]);
+
 } 
 
 else if (!empty($_GET['color'])) {
@@ -27,19 +28,20 @@ else if (!empty($_GET['color'])) {
     $results = Image::getAllPosts($userId, $hashtags);
 
     //if no results -> not following anyone or any #
-    if(empty($result)){
-        //get some suggestions | top 5 most liked photo's
-        $suggestions = Image::getSuggestionsIds(); //returns posts_id's and their like count
-        
-        //get only the post_id and store them into their own array
-        $suggestion_ids = [];
-        foreach($suggestions as $s){
-            array_push($suggestion_ids, $s['post_id']);
-        }
-        //finally get the actual suggestion posts
-        $suggestions = Image::getSuggestionsPosts($suggestion_ids);
-                
+    
+}
+if(empty($result)){
+    //get some suggestions | top 5 most liked photo's
+    $suggestions = Image::getSuggestionsIds(); //returns posts_id's and their like count
+    
+    //get only the post_id and store them into their own array
+    $suggestion_ids = [];
+    foreach($suggestions as $s){
+        array_push($suggestion_ids, $s['post_id']);
     }
+    //finally get the actual suggestion posts
+    $suggestions = Image::getSuggestionsPosts($suggestion_ids);
+            
 }
 ?><!DOCTYPE html>
 <html lang="en">

@@ -217,14 +217,19 @@ class Image
         }
 
         // Else searching post with a the query in description
-        else {
+        else if($query != ""){
             $selector = "photo.description";
         }
+        
 
-        $sql = "select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where user.username like '%" . $query . "%' and photo.inappropriate = 0 AND enable = 0";
-        // if(!empty($category)){
+        $sql = "select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where $selector like '%" . $query . "%' and photo.inappropriate = 0 AND enable = 0";
+
+        if($selector === ""){
+            $sql = "select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.inappropriate = 0 AND enable = 0"; 
+        }
+        if(!empty($category)){
             $sql .= " AND category_id = " . $category;
-        // }
+         }
         $sql .= " order by id desc LIMIT 15";
 
         $conn = Db::getConnection();
@@ -237,7 +242,7 @@ class Image
 
     public static function getAllPosts($userId, $hashtags) {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) or photo.description REGEXP :hashtags and photo.inappropriate = 0 and enable = 0 order by id desc limit 15");
+        $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.description REGEXP :hashtags and photo.inappropriate = 0 and enable = 0 order by id desc limit 15");
         $statement->bindParam(":user_id", $userId);
         $statement->bindParam(":hashtags", $hashtags);
         $statement->execute();
