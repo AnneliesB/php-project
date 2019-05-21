@@ -67,15 +67,40 @@ class Image
         imagepng($image_resized, "images/" . basename($image));
     }
 
+    public static function correctImageRotation($imageSaveName) {
+        // Orientate the photo
+        //$exif = exif_read_data($imageSaveName);
+        //$exif['Orientation'];
+
+        $exif = exif_read_data($imageSaveName);
+        var_dump($exif);
+
+        if($exif && isset($exif['Orientation'])) {
+            $orientation = $exif['Orientation'];
+            if($orientation != 1){
+                $img = imagecreatefromjpeg($imageSaveName);
+                $deg = 0;
+                switch ($orientation) {
+                  case 3:
+                    $deg = 180;
+                    break;
+                  case 6:
+                    $deg = 270;
+                    break;
+                  case 8:
+                    $deg = 90;
+                    break;
+                }
+                if ($deg) {
+                  $img = imagerotate($img, $deg, 0);        
+                }
+                imagejpeg($img, $imageSaveName, 95);
+        }
+    }
+}
 
     public static function saveImage($image, $imageSaveName)
     {
-        // Orientate the photo
-        $exif = exif_read_data($imageSaveName);
-        $exif['Orientation'];
-
-        
-
         // Image file directory
         $target = "images/" . basename($image);
 

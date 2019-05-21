@@ -13,6 +13,7 @@ if (isset($_POST['upload'])) {
         $image = Image::getPostId() . $_FILES['image']['name'];
         $imageSaveName = $_FILES['image']['tmp_name'];
 
+        
         $croppedImage = Image::getPostId() . "cropped-" . $_FILES['image']['name'];
         $description = $_POST['description'];
         $city = $_POST['city'];
@@ -24,6 +25,7 @@ if (isset($_POST['upload'])) {
             // If extention is png or jpeg
             Image::saveImageToDb($image, $croppedImage, $description, $city, $lat, $lng, $filter);
             Image::saveImage($image, $imageSaveName);
+            Image::correctImageRotation($imageSaveName);
             Image::saveCroppedImage($image);
             Image::saveMainColors($image);
             header("location: index.php");
