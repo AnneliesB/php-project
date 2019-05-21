@@ -20,10 +20,11 @@ if (isset($_POST['upload'])) {
         $filter = $_POST['filterDb'];
         $lat = $_POST['lat'];
         $lng = $_POST['lng'];
+        $category = $_POST['category'];
 
         if (Image::checkExtention($image)) {
             // If extention is png or jpeg
-            Image::saveImageToDb($image, $croppedImage, $description, $city, $lat, $lng, $filter);
+            Image::saveImageToDb($image, $croppedImage, $description, $city, $lat, $lng, $filter, $category);
             Image::saveImage($image, $imageSaveName);
             Image::correctImageRotation($imageSaveName);
             Image::saveCroppedImage($image);
@@ -305,6 +306,20 @@ if (isset($_POST['upload'])) {
         <div class="formField">
             <label for="description">Description</label>
             <textarea id="description" name="description" rows="10"></textarea>
+        </div>
+        <div class="formField">
+        <label for="category">category</label>
+        <select name="category" id="category">
+            <option value="0">none</option>
+            <option value="1">Lineart</option>
+            <option value="2">Emblems</option>
+            <option value="3">Logotypes</option>
+            <option value="4">Monogram Logo's</option>
+            <option value="5">Brand Marks</option>
+            <option value="6">Abstract Logo Marks</option>
+            <option value="7">Mascots</option>
+            <option value="8">Combination marks</option>
+        </select>
         </div>
 
         <div class="hidden">

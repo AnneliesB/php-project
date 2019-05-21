@@ -1,15 +1,13 @@
 <?php
 require_once("bootstrap/bootstrap.php");
-//Check if user session is active (Is user logged in?)
 User::userLoggedIn();
-//Open connection
-$conn = Db::getConnection();
 //Get ID of logged in user so we can later fetch the posts of users he follows.
 $userId = User::getUserId();
 //Check if Search is used
-if (!empty($_GET['query'])) {
+if ((isset($_GET["category"]) && !empty($_GET["category"])) || (isset($_GET["query"]) && !empty($_GET["query"])))  { 
     $query = $_GET['query'];
-    $results = Image::searchPosts($query);
+    $results = Image::searchPosts($query, $_GET["category"]);
+
 } 
 
 else if (!empty($_GET['color'])) {
@@ -30,19 +28,20 @@ else if (!empty($_GET['color'])) {
     $results = Image::getAllPosts($userId, $hashtags);
 
     //if no results -> not following anyone or any #
-    if(empty($result)){
-        //get some suggestions | top 5 most liked photo's
-        $suggestions = Image::getSuggestionsIds(); //returns posts_id's and their like count
-        
-        //get only the post_id and store them into their own array
-        $suggestion_ids = [];
-        foreach($suggestions as $s){
-            array_push($suggestion_ids, $s['post_id']);
-        }
-        //finally get the actual suggestion posts
-        $suggestions = Image::getSuggestionsPosts($suggestion_ids);
-                
+    
+}
+if(empty($result)){
+    //get some suggestions | top 5 most liked photo's
+    $suggestions = Image::getSuggestionsIds(); //returns posts_id's and their like count
+    
+    //get only the post_id and store them into their own array
+    $suggestion_ids = [];
+    foreach($suggestions as $s){
+        array_push($suggestion_ids, $s['post_id']);
     }
+    //finally get the actual suggestion posts
+    $suggestions = Image::getSuggestionsPosts($suggestion_ids);
+            
 }
 ?><!DOCTYPE html>
 <html lang="en">
@@ -63,6 +62,17 @@ else if (!empty($_GET['color'])) {
     <form action="" method="GET">
         <div class="searchBar" id="search">
             <input type="text" id="query" name="query">
+            <select name="category" id="category">
+                <option value="0">None</option>
+                <option value="1">Lineart</option>
+                <option value="2">Emblems</option>
+                <option value="3">Logotypes</option>
+                <option value="4">Monogram Logo's</option>
+                <option value="5">Brand Marks</option>
+                <option value="6">Abstract Logo Marks</option>
+                <option value="7">Mascots</option>
+                <option value="8">Combination marks</option>
+            </select>
             <input type="submit" name="submit" value="Search">
         </div>
     </form>

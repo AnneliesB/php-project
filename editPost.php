@@ -4,22 +4,16 @@ require_once("bootstrap/bootstrap.php");
 if(isset($_SESSION["email"])) {
     $uid = User::getUserId();
     try {
-        $conn = Db::getConnection();
         $id = $_GET['id'];
-        // Checks if the current user owns the post
-        $statement = $conn->prepare("select * from photo where id = :id AND user_id = :uid");
-        $statement->bindParam(":id", $id);
-        $statement->bindParam(":uid", $uid);
-        $statement->execute();
-        $post = $statement->fetch(PDO::FETCH_ASSOC);
+        $post = Post::getPostById($id);
         if(!$post){
             header("Location: /");
         }
     } catch (\PDOException $e) {
         // Log to error file
     }
-}else{
-    // User is not loged in
+}else {
+    // User is not logged in
     header("Location: /login.php");
 }
 
@@ -29,24 +23,15 @@ try {
         if((!isset($description) || trim($description) === '')){
 
         }else{
-            //var_dump($conn);
-            $updateStatement = $conn->prepare("SELECT * FROM photo");
-            // Check why this is not working
-            $updateStatement = $conn->prepare("UPDATE photo SET description=:description WHERE id=:id AND user_id=:uid");
-            $updateStatement->bindParam(":description", $description);
-            $updateStatement->bindParam(":id", $id);
-            $updateStatement->bindParam(":uid", $uid);
-            $updateStatement->execute();
-            
-            header("Location: /details.php?id=$id");
+            if(Post::editPost($uid, $id, $description)){
+                header("Location: /details.php?id=$id");
+            }
         }
     }
     if(isset($_POST["delete"])){
-        $removeStatement = $conn->prepare("UPDATE photo SET `enable`=1 WHERE id=:id AND user_id=:uid");
-        $removeStatement->bindParam(":id", $id);
-        $removeStatement->bindParam(":uid", $uid);
-        $removeStatement->execute();
+        if(Post::deletePost($id, $uid)){
         header("Location: /");
+        }
     }
 } catch (\PDOException $e){
     // Log to error file
