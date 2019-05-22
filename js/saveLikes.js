@@ -4,6 +4,7 @@ const postfeed = document.querySelector(".feed");
 postfeed.addEventListener('click', function (e) {
     //check for clicked element in feed that matches the like button
     if (e.target.matches(".postLikeIcon")) {
+
         // like button (heart img) clicked
 
             //get parent of the heart img (the actual a.like) because we'll need it's data-id
@@ -11,6 +12,7 @@ postfeed.addEventListener('click', function (e) {
 
             //make variables we need for Axios
             let postId = likeBtn.dataset.id;
+        console.log(postId);
             let likes = likeBtn.nextElementSibling;
             let image = likeBtn.firstChild;
         
