@@ -4,16 +4,16 @@ require_once("bootstrap/bootstrap.php");
 //Check if user session is active (Is user logged in?)
 User::userLoggedIn();
 
+// If you push on the upload-button
 if (isset($_POST['upload'])) {
 
-    
+    // Image and description can't be empty
+    // Trim because a push on the spacebar is not enough
     if (!empty($_FILES['image']) && !empty(trim($_POST['description']))) {
           
-        // GET image name / filename / description
+        // get the data and put it in a variable
         $image = Image::getPostId() . $_FILES['image']['name'];
         $imageSaveName = $_FILES['image']['tmp_name'];
-
-        
         $croppedImage = Image::getPostId() . "cropped-" . $_FILES['image']['name'];
         $description = $_POST['description'];
         $city = $_POST['city'];
@@ -22,23 +22,29 @@ if (isset($_POST['upload'])) {
         $lng = $_POST['lng'];
         $category = $_POST['category'];
 
+        // if the image has a right extention (png or jpeg)
         if (Image::checkExtention($image)) {
-            // If extention is png or jpeg
+            // save the fields in the db
             Image::saveImageToDb($image, $croppedImage, $description, $city, $lat, $lng, $filter, $category);
+            // save image in the images map
             Image::saveImage($image, $imageSaveName);
+            // set the correct rotation
             Image::correctImageRotation($imageSaveName);
+            // save a cropped image version in the map images
             Image::saveCroppedImage($image);
             Image::saveMainColors($image);
+            // If it is all done go to the index page
             header("location: index.php");
         } 
         
         else {
-            // Else error message
+            // else error message
             $error = "You can only upload png or jpg.";
         }
     }
 
     else {
+        // if image or description is empty
         $error = "All fields must be filled in.";
     }
 }

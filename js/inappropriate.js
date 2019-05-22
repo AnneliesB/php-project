@@ -1,11 +1,15 @@
 $(".feed").on("click", function (e) {
+    // select all the inappropriate buttons
     if (e.target.matches("img.inappropriateIcon")) {
+        // get the link around the image
         let inappropriateBtn = e.target.parentElement;
 
-        
-
+        // get the id of the post
         let postId = inappropriateBtn.dataset.id;
+
+        // link of the button to set the styling
         let link = inappropriateBtn;
+
         // https://api.jquery.com/parent/
         let post = inappropriateBtn.parentElement.parentElement.parentElement;
 

@@ -1,7 +1,7 @@
 <?php
     require_once("../bootstrap/bootstrap.php");
 
-    //Check if user session is active (Is user logged in?)
+    // check if user session is active (Is user logged in?)
     User::userLoggedIn();
 
     $response = []; 
@@ -17,13 +17,13 @@
     $inappropriateStatement->execute();
     $inappropriateAmount = $inappropriateStatement->fetch(PDO::FETCH_ASSOC);
     
-    // Count amount of inappropiate + 1
-    // Get count of rows
+    // count amount of inappropiate + 1
+    // get count of rows
     if ($inappropriateAmount['count'] == 0) {
         // Set inappropiate 1
         $inappropriate = 1;
 
-        // Insert new row in db
+        // insert new row in db
         $insertinappropriateStatement = $conn->prepare("insert into inappropriate (post_id, user_id, inappropriate) values (:postId, :userId, :inappropriate)");
         $insertinappropriateStatement->bindParam(":postId", $postId);
         $insertinappropriateStatement->bindParam(":userId", $userId);
@@ -31,7 +31,7 @@
         $insertinappropriateStatement->execute();     
         
         
-        // Count amount of reports
+        // count amount of reports
         $statement = $conn->prepare("select count(*) as count from inappropriate where post_id = :postId");
         $statement->bindParam(":postId", $postId);
         $statement->execute();
@@ -57,7 +57,7 @@
     }
 
     else {
-        // Nothing happen
+        // nothing happen
     } 
 
     header('Content-Type: application/json');

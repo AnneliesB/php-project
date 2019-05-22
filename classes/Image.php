@@ -27,12 +27,15 @@ class Image
         return $post_id;
     }
 
+    // you can only uploadpng and jpeg
     public static function checkExtention($image)
     {
-        // Check extention of the image
+        // check extention of the image
         $allowed = array('png', 'jpg', 'jpeg', 'JPG', 'PNG', 'JPEG');
+        // get extention of the uploaded image
         $ext = pathinfo($image, PATHINFO_EXTENSION);
 
+        // if the extention is in the array return true
         if (in_array($ext, $allowed)) {
             return true;
         } else {
@@ -40,11 +43,13 @@ class Image
         }
     }
 
+    // save the post information in the db
     public static function saveImageToDb($image, $croppedImage, $description, $city, $lat, $lng, $filter, $category)
     {
+        // get a connection with the database
         $conn = Db::getConnection();
         $user_id = User::getUserId();
-
+        // insert all post-information to database
         $statement = $conn->prepare("insert into photo (`description`, `url`, `url_cropped`, `user_id`, `city`, `lat`, `lng`, `filter`, `category_id`) VALUES (:description, :image, :croppedImage, :userId, :city, :lat, :lng, :filter, :category)");
         $statement->bindParam(":description", $description);
         $statement->bindParam(":image", $image);
@@ -69,13 +74,10 @@ class Image
     }
 
     public static function correctImageRotation($imageSaveName) {
-        // Orientate the photo
-        //$exif = exif_read_data($imageSaveName);
-        //$exif['Orientation'];
-
+        // get the data of the image
         $exif = exif_read_data($imageSaveName);
-        var_dump($exif);
-
+        // var_dump($exif);
+        // if the orientation info is available
         if($exif && isset($exif['Orientation'])) {
             $orientation = $exif['Orientation'];
             if($orientation != 1){
@@ -125,13 +127,16 @@ class Image
 
     public static function saveCroppedImage($image)
     {
-        // Image file directory
+        // image file directory
         $target = "images/" . basename($image);
 
+        // get the image size of the uploaded image
         $info = getimagesize($target);
+
+        // get the extention
         $mime = $info['mime'];
 
-
+        // swith for the extention
         switch ($mime) {
             case 'image/jpeg':
                 $image_create_func = 'imagecreatefromjpeg';
@@ -144,15 +149,17 @@ class Image
                 break;
         }
 
-        // GET image
+        // get image
         $im = $image_create_func($target);
 
-        // CROP image
+        // crop image
         $size = min(imagesx($im), imagesy($im));
+
+        // 
         $im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
 
         if ($im2 !== FALSE) {
-            // SAVE cropped image
+            // save cropped image
             $image_save_func($im2, "images/" . (Image::getPostId() - 1) . 'cropped-' . $_FILES['image']['name']);
             imagedestroy($im2);
         }
@@ -223,43 +230,56 @@ class Image
 
     public static function searchPosts($query, $category = "0") {
 
-        $firstchar = "";
+        //$firstchar = "";
         // Make var with the first char of the query
-        if(!empty($query))
+        if(!empty($query)) {
             $firstchar = $query[0];
-
-        $selector = "";
-
-        // If the first char is '@' you are searching for a person
-        if($firstchar == "@") {
-            $query = str_replace("@", "", $query);
-            $selector = "user.username";
-        } 
-        //search for city using "!"+city
-        else if ($firstchar == "!"){
-            $query = str_replace("!", "", $query);
-           $selector = "photo.city";
-        }
-
-        // Else searching post with a the query in description
-        else if($query != ""){
             $selector = "photo.description";
         }
-        
 
+        // the thing that comes after where in the sql
+        //$selector = "";
+
+        // if the first char is '@' you are searching for a person
+        if($firstchar == "@") {
+            // replace @ with nothing because there is no @ in the db
+            $query = str_replace("@", "", $query);
+            // you need to search on username
+            $selector = "user.username";
+        }
+
+        // search for city using "!"+city
+        else if ($firstchar == "!"){
+            $query = str_replace("!", "", $query);
+            $selector = "photo.city";
+        }
+
+        // else searching post with a the query in description
+        // normal search
+        //else if($query != ""){
+            
+        //}
+
+        // fill the qery with the selector and the word you are searching
         $sql = "select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where $selector like '%" . $query . "%' and photo.inappropriate = 0 AND enable = 0";
 
         if($selector === ""){
             $sql = "select photo.*, user.username from photo INNER JOIN user ON photo.user_id = user.id where photo.inappropriate = 0 AND enable = 0"; 
         }
+
         if(!empty($category)){
             $sql .= " AND category_id = " . $category;
          }
+        
+        
         $sql .= " order by id desc LIMIT 15";
 
+        // get connection
         $conn = Db::getConnection();
+        // prepare the query that we made
         $statement =  $conn->prepare($sql);
-        $statement->bindParam(":selector", $selector);
+        // !niet nodig!
+        // $statement->bindParam(":selector", $selector);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $results;
@@ -329,30 +349,29 @@ class Image
             if ($diff->$key) {
                 $value = $diff->$key . ' ' . $value . ($diff->$key > 1 ? 's' : '');
             } 
-            else 
-            {
+            else {
                 unset($string[$key]);
             }
         }
         
-            // if you want full notation of difference in time
-            if(!$full) {
-                $string = array_slice($string, 0, 1);
-            } 
+        // if you want full notation of difference in time
+        if(!$full) {
+            $string = array_slice($string, 0, 1);
+        } 
 
-            // return difference
-            return $string ? implode(', ', $string) . ' ago' : 'just now';
-        }        
+        // return difference
+        return $string ? implode(', ', $string) . ' ago' : 'just now';
+    }        
 
-        //retrieve a single post by it's id
-        public static function getCurrentPost($post_id){
-            $conn = Db::getConnection();
-            $statement = $conn->prepare("select * from photo where id = :id");
-            $statement->bindParam(":id", $post_id);
-            $statement->execute();
-            $post = $statement->fetch(PDO::FETCH_ASSOC);
-            return $post;
-        }
+    //retrieve a single post by it's id
+    public static function getCurrentPost($post_id){
+        $conn = Db::getConnection();
+        $statement = $conn->prepare("select * from photo where id = :id");
+        $statement->bindParam(":id", $post_id);
+        $statement->execute();
+        $post = $statement->fetch(PDO::FETCH_ASSOC);
+        return $post;
+    }
 
 
     public static function getPostById(int $post) {
