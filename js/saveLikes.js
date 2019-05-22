@@ -12,7 +12,7 @@ postfeed.addEventListener('click', function (e) {
 
             //make variables we need for Axios
             let postId = likeBtn.dataset.id;
-        console.log(postId);
+        //console.log(postId);
             let likes = likeBtn.nextElementSibling;
             let image = likeBtn.firstChild;
         
