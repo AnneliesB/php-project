@@ -36,7 +36,7 @@ $comments = Image::getCommentsByPostId($post["id"]);
 </header>
 
 
-    <main>
+    <main class="feed">
         <div class="postContainer">
         
 
