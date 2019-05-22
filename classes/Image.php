@@ -74,7 +74,7 @@ class Image
         //$exif['Orientation'];
 
         $exif = exif_read_data($imageSaveName);
-        var_dump($exif);
+        //var_dump($exif);
 
         if($exif && isset($exif['Orientation'])) {
             $orientation = $exif['Orientation'];
