@@ -29,7 +29,7 @@ if (isset($_POST['upload'])) {
             // save image in the images map
             Image::saveImage($image, $imageSaveName);
             // set the correct rotation
-            Image::correctImageRotation($imageSaveName);
+            //Image::correctImageRotation($imageSaveName);
             // save a cropped image version in the map images
             Image::saveCroppedImage($image);
             Image::saveMainColors($image);

@@ -287,7 +287,11 @@ class Image
 
     public static function getAllPosts($userId, $hashtags) {
         $conn = Db::getConnection();
-        $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) and photo.description REGEXP :hashtags and photo.inappropriate = 0 and enable = 0 order by id desc limit 15");
+        if($hashtags === ""){
+            $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) AND photo.description REGEXP :hashtags and photo.inappropriate = 0 and enable = 0 order by id desc limit 15");
+        }else{
+            $statement = $conn->prepare("select photo.*, user.username, photo.id from photo INNER JOIN user ON photo.user_id = user.id where user_id IN ( select following_id from followers where user_id = :user_id ) or photo.description REGEXP :hashtags and photo.inappropriate = 0 and enable = 0 order by id desc limit 15");
+        }
         $statement->bindParam(":user_id", $userId);
         $statement->bindParam(":hashtags", $hashtags);
         $statement->execute();
